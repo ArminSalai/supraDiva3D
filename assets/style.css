@@ -1,0 +1,41 @@
+.hero {
+    background: radial-gradient(#19A1BD, #1A97B0, #007187, #0F6070);
+    background-position: bottom;
+}
+
+canvas {
+    width: 80%;
+    height: 80%;
+}
+
+.leftSide {
+    background: radial-gradient(#f22e60 20%, #f40609);
+    background-attachment: fixed;
+    border-radius: 1em;
+}
+
+.whte {
+    height: 25vh;
+    width: auto;
+}
+
+.sub-title {
+    color: #f22e60;
+    font: 2.5em Verdana, sans-serif;
+}
+
+hr {
+    width: 85vw;
+    border-color: white;
+}
+
+.red {
+    width: 8em;
+    height: 8em;
+    background: radial-gradient(#f22e60, #f40609);
+    border-radius: 3em;
+}
+
+#backGround {
+    background: linear-gradient(#343a40, #111);
+}
