@@ -60,37 +60,59 @@ areaLight.position.set(-5, 12, 45);
 areaLight.lookAt(0, 0, 0);
 scene.add(areaLight);
 
-const forEco = new THREE.RectAreaLight(0xffffff, 20, 20, 20);
-forEco.position.set(45, 20, -13);
+const forEco = new THREE.RectAreaLight(0xffffff, 20, 40, 20);
+forEco.position.set(45, 20, 0);
 forEco.lookAt(0, 11, 0);
 scene.add(forEco);
 
 var mobil;
 
+let divaRed;
+
 let eco;
 
 var played = false;
+
+
+const divaLoader = new GLTFLoader()
+divaLoader.load("assets/models/cordlessEcoRed.glb", function(glb) {
+    divaRed = glb.scene;
+    scene.add(divaRed);
+    divaRed.scale.set(0.83,0.83,0.83);
+    divaRed.position.y += 16;
+    divaRed.position.x += 10.1;
+    divaRed.position.z += 6;
+    divaRed.rotation.y += 0.1;
+    divaRed.rotation.z -= Math.PI/2-0.8;
+}, function(xhr) {
+    console.log(xhr.loaded / xhr.total * 100 + "% betolve");
+});
 
 const ecoLoader = new GLTFLoader()
 ecoLoader.load("assets/models/ecoWithoutString.glb", function(glb) {
     eco = glb.scene;
     scene.add(eco);
     eco.scale.set(0.83,0.83,0.83);
-    eco.position.y += 13;
-    eco.position.x += 26.1;
-    eco.position.z -= 28.6;
-    eco.rotation.x -= 2.4;
-    eco.rotation.z -= Math.PI/2;
+    eco.position.y += 16;
+    eco.position.x -= 5.1;
+    eco.position.z -= 16.6;
+    eco.rotation.y -= 0.2;
+    eco.rotation.z -= Math.PI/2-1.4;
     canvas.onclick = function() {
         if(!played)
         {
             played = true;
             let tl = gsap.timeline({}, 
                 {smoothChildTiming: true});
-            tl.to(eco.position, {z: "-10.6", duration: 1.5, ease: "power2.inOut"})
+            tl.to(eco.position, {x: "26.1", z: "-10.6", duration: 1.5, ease: "power2.inOut"})
             .to(eco.rotation, {y: "0", z: -Math.PI/2, x: "0", delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
-            .to(camera, {zoom: "0.6", delay: "-1.5", duration: 1.5, ease:"power1.inOut"})
+            .to(camera, {zoom: "0.6", delay: "-1.5", duration: 1.5, ease:"power2.inOut"})
             .to(eco.position, {y: "9.8", duration: 0.5, ease: "power4.inOut"});
+            let tlParalell = gsap.timeline({}, 
+                {smoothChildTiming: true});
+            tlParalell.to(divaRed.position, {x: "26.1", z: "6", duration: 1.5, ease: "power2.inOut"})
+            .to(divaRed.rotation, {y: "0", z: -Math.PI/2, x: "0", delay: "-1.5", duration: 1.5, ease: "power3.inOut"})
+            .to(divaRed.position, {y: "9.8", duration: 0.5, ease: "power4.inOut"});
         }
     };
 }, function(xhr) {

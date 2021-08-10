@@ -77,10 +77,10 @@ divaLoader.load("assets/models/cordlessTouch.glb", function(glb) {
     scene.add(divaRed);
     divaRed.scale.y = 1.45;
     divaRed.position.y += 19;
-    divaRed.position.x += 21.6;
+    divaRed.position.x += 12.6;
     divaRed.position.z += 31.6;
     divaRed.rotation.x += 2.5;
-    divaRed.rotation.z -= Math.PI/2;
+    divaRed.rotation.z -= Math.PI/2-0.25;
 }, function(xhr) {
     console.log(xhr.loaded / xhr.total * 100 + "% betolve");
 });
@@ -92,25 +92,25 @@ ecoLoader.load("assets/models/cordlessMulti.glb", function(glb) {
     eco = glb.scene;
     scene.add(eco);
     eco.scale.y = 1.45;
-    eco.position.y += 17;
-    eco.position.x += 21.6;
+    eco.position.y += 19;
+    eco.position.x += 4.6;
     eco.position.z -= 28.6;
     eco.rotation.x -= 2.4;
-    eco.rotation.z -= Math.PI/2;
+    eco.rotation.z -= Math.PI/2-0.5;
     canvas.onclick = function() {
         if(!played)
         {
             played = true;
             let tl = gsap.timeline({}, 
                 {smoothChildTiming: true});
-            tl.to(eco.position, {z: "-9.52", duration: 1.5, ease: "power2.inOut"})
-            .to(eco.rotation, {y: "0", z: -Math.PI/2, x: "0", delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
-            .to(camera, {zoom: "0.6", delay: "-1.5", duration: 1.5, ease:"power1.inOut"})
+            tl.to(eco.position, {x: "21.6", z: "-9.52", duration: 1.5, ease: "power2.inOut"})
+            .to(eco.rotation, {y: "0", z: -Math.PI/2, x: "0", delay: "-1.5", duration: 1.4, ease: "power2.inOut"})
+            .to(camera, {zoom: "0.6", delay: "-1.5", duration: 1.5, ease:"power2.inOut"})
             .to(eco.position, {y: "13.5", duration: 0.5, ease: "power4.inOut"});
             let tlParalell = gsap.timeline({}, 
                 {smoothChildTiming: true});
-            tlParalell.to(divaRed.position, {z: "9.52", duration: 1.5, ease: "power2.inOut"})
-            .to(divaRed.rotation, {y: "0", z: -Math.PI/2, x: "0", delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
+            tlParalell.to(divaRed.position, {x: "21.6", z: "9.52", duration: 1.5, ease: "power2.inOut"})
+            .to(divaRed.rotation, {y: "0", z: -Math.PI/2, x: "0", delay: "-1.5", duration: 1.4, ease: "power2.inOut"})
             .to(divaRed.position, {y: "13.5", duration: 0.5, ease: "power4.inOut"});
         }
     };
