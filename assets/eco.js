@@ -57,7 +57,7 @@ const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
 backLight.position.set(0, -10, 10);
 scene.add(backLight);
 
-const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.6);
+const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.1);
 scene.add(hLight);
 
 const areaLight = new THREE.RectAreaLight(0xffffff, 20, 14, 14);
@@ -71,6 +71,7 @@ const loader = new GLTFLoader()
 loader.load("assets/models/eco.glb", function(glb) {
     mobil = glb.scene;
     scene.add(mobil);
+    mobil.rotation.y += -2;
 }, function(xhr) {
     console.log(xhr.loaded / xhr.total * 100 + "% betolve");
 });

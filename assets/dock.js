@@ -2,6 +2,7 @@ import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threej
 import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import {RectAreaLightUniformsLib} from 'https://threejs.org/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { gsap } from './gsap-core.js';
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
@@ -10,9 +11,9 @@ let width = window.innerWidth * 0.75;
 let height = window.innerHeight * 0.75;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
-camera.position.set(25, 18, 45);
+camera.position.set(58, 18, -10);
 camera.lookAt(0, 0, 0);
-camera.zoom = 0.5;
+camera.zoom = 0.3;
 camera.updateProjectionMatrix();
 scene.add(camera);
 
@@ -35,7 +36,7 @@ constrols.enableZoom = false;
 constrols.enablePan = false;
 
 const gLight = new THREE.PointLight(0x979DA6, 19 / 4, 300);
-gLight.position.set(19, 10, 14);
+gLight.position.set(36, 10, 14);
 gLight.castShadow = true;
 scene.add(gLight);
 
@@ -72,17 +73,75 @@ scene.add(areaLight);
 
 var mobil;
 
-const loader = new GLTFLoader()
-loader.load("assets/models/dock.glb", function(glb) {
-    mobil = glb.scene;
-    scene.add(mobil);
-    mobil.rotation.y = -2.3;
+let eco;
+
+let divaRed;
+
+
+const forEco = new THREE.RectAreaLight(0x979DA6, 20, 20, 20);
+forEco.position.set(45, 20, -13);
+forEco.lookAt(0, 11, 0);
+scene.add(forEco);
+
+const divaLoader = new GLTFLoader()
+divaLoader.load("assets/models/Diva.glb", function(glb) {
+    divaRed = glb.scene;
+    scene.add(divaRed);
+    divaRed.position.y += 21;
+    divaRed.position.x += 17.3;
+    divaRed.position.z += 23.6;
+    divaRed.rotation.x += 2.5;
+    divaRed.rotation.z -= Math.PI/2;
 }, function(xhr) {
     console.log(xhr.loaded / xhr.total * 100 + "% betolve");
 });
 
+var played = false;
+
+const ecoLoader = new GLTFLoader()
+ecoLoader.load("assets/models/DivaGrey.glb", function(glb) {
+    eco = glb.scene;
+    scene.add(eco);
+    eco.position.y += 19;
+    eco.position.x += 22.3;
+    eco.position.z -= 28.6;
+    eco.rotation.x += 0.5;
+    eco.rotation.z -= Math.PI/2;
+    canvas.onclick = function() {
+        if(!played)
+        {
+            played = true;
+            let tl = gsap.timeline({}, 
+                {smoothChildTiming: true});
+            tl.to(eco.position, {z: "0", duration: 1.5, ease: "power2.inOut"})
+              .to(eco.rotation, {y: "0", z: -Math.PI/2, x: Math.PI/2, delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
+              .to(camera, {zoom: "0.45", delay: "-1.5", duration: 1.5, ease:"power1.inOut"})
+              .to(eco.position, {y: "15.5", duration: 0.5, ease: "power4.inOut"});
+            let tlParalell = gsap.timeline({}, 
+                {smoothChildTiming: true});
+            tlParalell.to(divaRed.position, {z: "0", duration: 1.5, ease: "power2.inOut"})
+              .to(divaRed.rotation, {y: "0", z: -Math.PI/2, x: Math.PI/2, delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
+              .to(divaRed.position, {y: "15.5", duration: 0.5, ease: "power4.inOut"});
+        }
+    };
+}, function(xhr) {
+    console.log(xhr.loaded / xhr.total * 100 + "% betolve");
+});
+
+
+const loader = new GLTFLoader()
+loader.load("assets/models/dock.glb", function(glb) {
+    mobil = glb.scene;
+    scene.add(mobil);
+}, function(xhr) {
+    console.log(xhr.loaded / xhr.total * 100 + "% betolve");
+});
+
+
+
 function animate() {
     requestAnimationFrame(animate);
+    camera.updateProjectionMatrix();
     renderer.render(scene, camera);
 }
 
