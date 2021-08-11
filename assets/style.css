@@ -3,6 +3,10 @@
     background-position: bottom;
 }
 
+.hero2 {
+    background: linear-gradient(#609c63, rgb(15, 85, 52));
+}
+
 canvas {
     width: 80%;
     height: 80%;
