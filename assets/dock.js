@@ -3,6 +3,20 @@ import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/t
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import {RectAreaLightUniformsLib} from 'https://threejs.org/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { gsap } from './gsap-core.js';
+import * as CSSPlugin from './CSSPlugin.js';
+import * as CSSRulePlugin from './CSSRulePlugin.js';
+
+gsap.registerPlugin(CSSPlugin);
+gsap.registerPlugin(CSSRulePlugin);
+
+let loadLine = gsap.timeline({}, 
+    {smoothChildTiming: true});
+loadLine.to("#sq1", {rotationZ: 45, x: "7vw", y: "3vw", duration:0.5, ease: "sine.out"})
+        .to("#sq2", {rotationZ: -45, x: "-7vw", y: "3vw", delay: "-0.5", duration:0.5, ease: "sine.out"})
+        .to("#sq1", {x: "0vw", duration:0.5, ease: "sine.out"})
+        .to("#sq2", {x: "0vw", delay: "-0.5", duration:0.5, ease: "sine.out"})
+        .to(".screen", {y: "100vh", duration:0.5, ease:"sine.inOut"});
+
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
@@ -92,8 +106,6 @@ divaLoader.load("assets/models/Diva.glb", function(glb) {
     divaRed.position.z += 23.6;
     divaRed.rotation.x += 2.5;
     divaRed.rotation.z -= Math.PI/2;
-}, function(xhr) {
-    console.log(xhr.loaded / xhr.total * 100 + "% betolve");
 });
 
 var played = false;
@@ -107,34 +119,44 @@ ecoLoader.load("assets/models/DivaGrey.glb", function(glb) {
     eco.position.z -= 28.6;
     eco.rotation.x += 0.5;
     eco.rotation.z -= Math.PI/2;
-    canvas.onclick = function() {
-        if(!played)
-        {
-            played = true;
-            let tl = gsap.timeline({}, 
-                {smoothChildTiming: true});
-            tl.to(eco.position, {z: "0", duration: 1.5, ease: "power2.inOut"})
-              .to(eco.rotation, {y: "0", z: -Math.PI/2, x: Math.PI/2, delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
-              .to(camera, {zoom: "0.45", delay: "-1.5", duration: 1.5, ease:"power1.inOut"})
-              .to(eco.position, {y: "15.5", duration: 0.5, ease: "power4.inOut"});
-            let tlParalell = gsap.timeline({}, 
-                {smoothChildTiming: true});
-            tlParalell.to(divaRed.position, {z: "0", duration: 1.5, ease: "power2.inOut"})
-              .to(divaRed.rotation, {y: "0", z: -Math.PI/2, x: Math.PI/2, delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
-              .to(divaRed.position, {y: "15.5", duration: 0.5, ease: "power4.inOut"});
-        }
-    };
-}, function(xhr) {
-    console.log(xhr.loaded / xhr.total * 100 + "% betolve");
 });
+
+function play() {
+    if(!played)
+    {
+        let body = document.getElementsByTagName("body");
+        played = true;
+        let tl = gsap.timeline({}, 
+            {smoothChildTiming: true});
+        tl.to(eco.position, {z: "0", duration: 1.5, ease: "power2.inOut"})
+          .to(eco.rotation, {y: "0", z: -Math.PI/2, x: Math.PI/2, delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
+          .to(camera, {zoom: "0.45", delay: "-1.5", duration: 1.5, ease:"power1.inOut"})
+          .to(eco.position, {y: "15.5", duration: 0.5, ease: "power4.inOut"});
+        let tlParalell = gsap.timeline({}, 
+            {smoothChildTiming: true});
+        tlParalell.to(divaRed.position, {z: "0", duration: 1.5, ease: "power2.inOut"})
+          .to(divaRed.rotation, {y: "0", z: -Math.PI/2, x: Math.PI/2, delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
+          .to(divaRed.position, {y: "15.5", duration: 0.5, ease: "power4.inOut"})
+          .to(body[0], {overflow: "auto"});
+    }
+};
 
 
 const loader = new GLTFLoader()
 loader.load("assets/models/dock.glb", function(glb) {
     mobil = glb.scene;
     scene.add(mobil);
+    window.scrollTo(0,0);
 }, function(xhr) {
-    console.log(xhr.loaded / xhr.total * 100 + "% betolve");
+    function remove() {
+        let loadScreen = document.getElementById("loadingScreen");
+        loadScreen.remove();
+    }
+    if((xhr.loaded / xhr.total) == 1)
+    {
+        setTimeout(remove, 1500);
+        setTimeout(play, 2000);
+    }
 });
 
 

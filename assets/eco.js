@@ -2,6 +2,20 @@ import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threej
 import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import {RectAreaLightUniformsLib} from 'https://threejs.org/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { gsap } from './gsap-core.js';
+import * as CSSPlugin from './CSSPlugin.js';
+import * as CSSRulePlugin from './CSSRulePlugin.js';
+
+gsap.registerPlugin(CSSPlugin);
+gsap.registerPlugin(CSSRulePlugin);
+
+let loadLine = gsap.timeline({}, 
+    {smoothChildTiming: true});
+    loadLine.to("#sq1", {rotationZ: 45, x: "7vw", y: "3vw", duration:0.5, ease: "power1.inOut"})
+        .to("#sq2", {rotationZ: -45, x: "-7vw", y: "3vw", delay: "-0.5", duration:0.5, ease: "power1.inOut"})
+        .to("#sq1", {x: "0vw", duration:0.5, ease: "power2.inOut"})
+        .to("#sq2", {x: "0vw", delay: "-0.5", duration:0.5, ease: "power2.inOut"})
+        .to(".screen", {y: "100vh", duration:0.5, ease:"sine.inOut"});
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
@@ -67,13 +81,35 @@ scene.add(areaLight);
 
 var mobil;
 
+var played = false;
+
+function play() {
+    if(!played)
+    {
+        let body = document.getElementsByTagName("body");
+        played = true;
+            let tl = gsap.timeline({}, 
+                {smoothChildTiming: true});
+            tl.to(body[0], {overflow: "auto"});
+    }
+};
+
 const loader = new GLTFLoader()
 loader.load("assets/models/eco.glb", function(glb) {
     mobil = glb.scene;
     scene.add(mobil);
     mobil.rotation.y += -2;
+    window.scrollTo(0,0);
 }, function(xhr) {
-    console.log(xhr.loaded / xhr.total * 100 + "% betolve");
+    function remove() {
+        let loadScreen = document.getElementById("loadingScreen");
+        loadScreen.remove();
+    }
+    if((xhr.loaded / xhr.total) == 1)
+    {
+        setTimeout(remove, 1500);
+        setTimeout(play, 2000);
+    }
 });
 
 function animate() {
