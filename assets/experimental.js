@@ -1,7 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import {RectAreaLightUniformsLib} from 'https://threejs.org/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { gsap } from './gsap-core.js';
+import { gsap, _colorStringFilter } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
 
@@ -19,8 +19,8 @@ let loadLine = gsap.timeline({},
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
 
-let width = window.innerWidth * 0.75;
-let height = window.innerHeight * 0.75;
+let width = window.innerWidth*0.919;
+let height = window.innerHeight*0.919;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
 camera.position.set(6, 12, 28);
@@ -73,70 +73,26 @@ secondaryBackLight.lookAt(0, 0, 0);
 scene.add(secondaryBackLight);
 
 var played = false;
-
-function play() {
-    if(!played)
-    {
-        let body = document.getElementsByTagName("body");
-        played = true;
-            let tl = gsap.timeline({}, 
-                {smoothChildTiming: true});
-            tl.to(body[0], {overflow: "auto"});
-    }
-};
-
 var mobil;
 
-var dk;
-var dva;
-
-const dock = new GLTFLoader()
-dock.load("assets/models/dock.glb", function(glb) {
-    dk = glb.scene;
-    scene.add(dk);
-    dk.position.z += 7;
-    dk.position.x -= 15;
-    dk.position.y -= 1.2;
-    dk.rotation.y -= 0.6;
-    dk.scale.set(0.2,0.2,0.2);
-});
-
-const divaLoader = new GLTFLoader()
-divaLoader.load("assets/models/divaGrey.glb", function(glb) {
-    dva = glb.scene;
-    scene.add(dva);
-    dva.position.x -= 11.35;
-    dva.position.z = 9.35;
-    dva.position.y = 1.95;
-    dva.rotation.x += Math.PI/2;
-    dva.rotation.z = -0.97;
-    dva.scale.set(0.2,0.2,0.2);
-});
+let mixer;
+let clock = new THREE.Clock();
 
 const loader = new GLTFLoader()
 loader.load("assets/models/laptop.glb", function(glb) {
+    mixer= new THREE.AnimationMixer(glb.scene);
+    glb.animations.forEach((clip) => {mixer.clipAction(clip).play(); });
     mobil = glb.scene;
     scene.add(mobil);
-    mobil.position.y -= 1.2;
-    mobil.position.z += 5;
-    mobil.position.x += 10;
-    mobil.rotation.y = -2.8;
-    mobil.scale.set(3,3,3);
+    let body = document.getElementsByTagName("body");
+    body[0].style.overflow = "auto";
     window.scrollTo(0,0);
-}, function(xhr) {
-    function remove() {
-        let loadScreen = document.getElementById("loadingScreen");
-        loadScreen.remove();
-    }
-    if((xhr.loaded / xhr.total) == 1)
-    {
-        setTimeout(remove, 1500);
-        setTimeout(play, 2000);
-    }
 });
+
 
 function animate() {
     requestAnimationFrame(animate);
+    mixer.setTime( (window.pageYOffset/((height*2)-76)) * 4.2);
     renderer.render(scene, camera);
 }
 
