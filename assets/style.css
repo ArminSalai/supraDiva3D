@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&display=swap');
+
 .hero {
     background: radial-gradient(#19A1BD, #1A97B0, #007187, #0F6070);
     background-position: bottom;
@@ -11,9 +13,33 @@
     height: 100vh;
 }
 
+.hero3 {
+    background: linear-gradient(#F26EF5,#A674E8);
+}
+
 .scrollable {
-    height:200vh;
+    height:400vh;
     width: 100%;
+}
+
+.info {
+    position: fixed;
+    top: 30vh;
+    right: 5vw;
+    width: 40vw;
+    height: 20vh;
+    background-color: rgba(200, 200, 200, 0.4);
+    backdrop-filter: blur(20px);
+    display: grid;
+    justify-content: end;
+    align-items: center;
+    border-radius: 2rem;
+}
+
+.infoText {
+    max-width: 25vw;
+    margin-right: 5vw;
+    font: 1.5rem 'Titillium Web', sans-serif;
 }
 
 canvas {

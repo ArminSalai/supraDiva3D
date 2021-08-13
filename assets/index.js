@@ -1,7 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
-import { gsap } from './gsap-core.js';
+import { gsap, random } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
 
@@ -18,6 +18,57 @@ let loadLine = gsap.timeline({},
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
+
+function generateGradient() {
+    let lessOne = 28;
+    let moreOne = 0;
+    let lessTwo = 181;
+    let moreTwo = 8;
+    let lessThree = 224;
+    let moreThree = 81;
+    var gradients = [0, 1, 2, 3];
+    var rand = gradients[Math.floor(Math.random()*gradients.length)];
+    if(rand == 0){
+        console.log(rand);
+        lessOne = 28;
+        moreOne = 0;
+        lessTwo = 181;
+        moreTwo = 8;
+        lessThree = 224;
+        moreThree = 81;
+    }
+    if(rand == 1){
+        console.log(rand);
+        moreOne = 213;
+        lessOne = 218;
+        moreTwo = 51;
+        lessTwo = 174;
+        moreThree = 105;
+        lessThree = 81;
+    }
+    if(rand == 2){
+        console.log(rand);
+        moreOne = 63;
+        lessOne = 168;
+        moreTwo = 43;
+        lessTwo = 192;
+        moreThree = 150;
+        lessThree = 255;
+    }
+    if(rand == 3){
+        console.log(rand);
+        moreOne = 0;
+        lessOne = 146;
+        moreTwo = 201;
+        lessTwo = 254;
+        moreThree = 255;
+        lessThree = 157;
+    }
+
+    document.getElementById("backDrop").style.backgroundImage = 'radial-gradient(rgb(' + lessOne + ',' + lessTwo + ',' + lessThree + ')25%, rgb(' + moreOne + ',' + moreTwo + ',' + moreThree + '))';
+}
+
+generateGradient();
 
 let width = window.innerWidth * 0.75;
 let height = window.innerHeight * 0.75;

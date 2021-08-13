@@ -23,8 +23,8 @@ let width = window.innerWidth*0.919;
 let height = window.innerHeight*0.919;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
-camera.position.set(6, 12, 28);
-camera.lookAt(0, 0, 0);
+camera.position.set(2, 5, 18);
+camera.lookAt(1, 0, 0);
 camera.zoom = 1;
 camera.updateProjectionMatrix();
 scene.add(camera);
@@ -78,6 +78,7 @@ var mobil;
 let mixer;
 let clock = new THREE.Clock();
 
+
 const loader = new GLTFLoader()
 loader.load("assets/models/laptop.glb", function(glb) {
     mixer= new THREE.AnimationMixer(glb.scene);
@@ -92,8 +93,23 @@ loader.load("assets/models/laptop.glb", function(glb) {
 
 function animate() {
     requestAnimationFrame(animate);
-    mixer.setTime( (window.pageYOffset/((height*2)-76)) * 4.2);
+    if(mixer) {
+        mixer.setTime( (window.pageYOffset/((height*2)-76)) * 2.7);
+    }
+    camera.updateProjectionMatrix();
     renderer.render(scene, camera);
 }
 
 animate();
+
+document.getElementById("mainFrame").onclick = function show(event) {
+    if((event.clientX/width < 0.5) && ((window.pageYOffset/((height*2)-76)) > 1.184))
+    {
+        let clickTimeLine = gsap.timeline({}, 
+            {smoothChildTiming: true});
+        clickTimeLine.to(camera.rotation, {y: "+=0.7", x: "+=0.3", duration:1, ease: "power1.inOut"})
+                     .to(camera.position, {z: "-=7", x: "-=4", y: "-=3", delay: "-0.5", duration: 1, ease: "power1.inOut"})
+                     .to(camera, {zoom: "+=5", delay: 0.5, duration: 0.5, ease:"Power1.in"})
+                     .add(function(){self.location = "./museumItems.html";})
+    }
+}

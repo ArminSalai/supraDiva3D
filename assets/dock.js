@@ -2,7 +2,7 @@ import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threej
 import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import {RectAreaLightUniformsLib} from 'https://threejs.org/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { gsap } from './gsap-core.js';
+import { gsap, _colorStringFilter } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
 
@@ -25,7 +25,7 @@ let width = window.innerWidth * 0.75;
 let height = window.innerHeight * 0.75;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
-camera.position.set(58, 18, -10);
+camera.position.set(58, 30, -10);
 camera.lookAt(0, 0, 0);
 camera.zoom = 0.3;
 camera.updateProjectionMatrix();
@@ -38,6 +38,58 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 RectAreaLightUniformsLib.init();
+
+function generateGradient() {
+    let lessOne = 28;
+    let moreOne = 0;
+    let lessTwo = 181;
+    let moreTwo = 8;
+    let lessThree = 224;
+    let moreThree = 81;
+    var gradients = [0, 1, 2, 3];
+    var rand = gradients[Math.floor(Math.random()*gradients.length)];
+    if(rand == 0){
+        console.log(rand);
+        lessOne = 28;
+        moreOne = 0;
+        lessTwo = 181;
+        moreTwo = 8;
+        lessThree = 224;
+        moreThree = 81;
+    }
+    if(rand == 1){
+        console.log(rand);
+        moreOne = 213;
+        lessOne = 218;
+        moreTwo = 51;
+        lessTwo = 174;
+        moreThree = 105;
+        lessThree = 81;
+    }
+    if(rand == 2){
+        console.log(rand);
+        moreOne = 63;
+        lessOne = 168;
+        moreTwo = 43;
+        lessTwo = 192;
+        moreThree = 150;
+        lessThree = 255;
+    }
+    if(rand == 3){
+        console.log(rand);
+        moreOne = 0;
+        lessOne = 146;
+        moreTwo = 201;
+        lessTwo = 254;
+        moreThree = 255;
+        lessThree = 157;
+    }
+
+    document.getElementById("backDrop").style.backgroundImage = 'radial-gradient(rgb(' + lessOne + ',' + lessTwo + ',' + lessThree + ')25%, rgb(' + moreOne + ',' + moreTwo + ',' + moreThree + '))';
+}
+
+generateGradient();
+
 
 scene.background = null;
 
@@ -81,7 +133,7 @@ scene.add(portLight);
 
 
 const areaLight = new THREE.RectAreaLight(0xffffff, 20, 14, 14);
-areaLight.position.set(-5, 10, -5);
+areaLight.position.set(30, 10, 30);
 areaLight.lookAt(0, 0, 0);
 scene.add(areaLight);
 
@@ -102,7 +154,7 @@ divaLoader.load("assets/models/Diva.glb", function(glb) {
     divaRed = glb.scene;
     scene.add(divaRed);
     divaRed.position.y += 21;
-    divaRed.position.x += 17.3;
+    divaRed.position.x += 27.3;
     divaRed.position.z += 23.6;
     divaRed.rotation.x += 2.5;
     divaRed.rotation.z -= Math.PI/2;
@@ -115,7 +167,7 @@ ecoLoader.load("assets/models/DivaGrey.glb", function(glb) {
     eco = glb.scene;
     scene.add(eco);
     eco.position.y += 19;
-    eco.position.x += 22.3;
+    eco.position.x += 32.3;
     eco.position.z -= 28.6;
     eco.rotation.x += 0.5;
     eco.rotation.z -= Math.PI/2;
@@ -146,6 +198,7 @@ const loader = new GLTFLoader()
 loader.load("assets/models/dock.glb", function(glb) {
     mobil = glb.scene;
     scene.add(mobil);
+    mobil.rotation.y = Math.PI;
     window.scrollTo(0,0);
 }, function(xhr) {
     function remove() {
