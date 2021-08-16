@@ -97,6 +97,7 @@ hr {
 }
 
 #zoomButton {
+    background-color: #aa2438;
     background-image: url("./magnifying-glass-3-256.png");
 }
 

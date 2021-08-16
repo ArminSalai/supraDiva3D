@@ -1,7 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
-import {RectAreaLightUniformsLib} from 'https://threejs.org/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import {RectAreaLightUniformsLib} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
@@ -102,6 +102,7 @@ renderer.shadowMap = true;
 
 const constrols = new OrbitControls(camera, renderer.domElement);
 constrols.enablePan = false;
+constrols.enableZoom = false;
 
 let zoomButton = document.querySelector("#zoomButton");
 zoomButton.addEventListener("click", function() {
@@ -153,17 +154,25 @@ backLight.position.set(-20, -30, 80);
 backLight.lookAt(0, 0, -30);
 scene.add(backLight);
 
-
 const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 1.4);
 scene.add(hLight);
 
+const portLightFront = new THREE.RectAreaLight(0xffffff, 6, 30, 3);
+portLightFront.rotation.y = Math.PI/2;
+portLightFront.position.set(50, -2, 0);
+scene.add(portLightFront);
+
+const portLightBack = new THREE.RectAreaLight(0xffffff, 18, 30, 3);
+portLightBack.rotation.y = -Math.PI/2;
+portLightBack.position.set(-60, -2, 0);
+scene.add(portLightBack);
 
 const areaLight = new THREE.RectAreaLight(0xffffff, 20, 14, 14);
 areaLight.position.set(-5, 12, 45);
 areaLight.lookAt(0, 0, 0);
 scene.add(areaLight);
 
-const forEco = new THREE.RectAreaLight(0xffffff, 20, 40, 20);
+const forEco = new THREE.RectAreaLight(0xffffff, 10, 40, 20);
 forEco.position.set(45, 20, 0);
 forEco.lookAt(0, 11, 0);
 scene.add(forEco);

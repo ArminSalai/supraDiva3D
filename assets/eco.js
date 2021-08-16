@@ -1,7 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
-import {RectAreaLightUniformsLib} from 'https://threejs.org/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import {RectAreaLightUniformsLib} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
@@ -46,6 +46,7 @@ renderer.shadowMap = true;
 
 const constrols = new OrbitControls(camera, renderer.domElement);
 constrols.enablePan = false;
+constrols.enableZoom = false;
 
 let zoomButton = document.querySelector("#zoomButton");
 zoomButton.addEventListener("click", function() {
@@ -101,15 +102,15 @@ roughnessLight2.position.set(0, -10, 20);
 roughnessLight2.rotateOnWorldAxis("x", Math.PI);
 scene.add(roughnessLight2);
 
-const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
-backLight.position.set(0, -10, 10);
+const backLight = new THREE.SpotLight(0xffffff, 4, 40, 80, 0, 1);
+backLight.position.set(-2, -18, -5);
 scene.add(backLight);
 
 const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.1);
 scene.add(hLight);
 
-const areaLight = new THREE.RectAreaLight(0xffffff, 20, 14, 14);
-areaLight.position.set(-5, 10, -5);
+const areaLight = new THREE.RectAreaLight(0xffffff, 15, 14, 14);
+areaLight.position.set(10, 10, -15);
 areaLight.lookAt(0, 0, 0);
 scene.add(areaLight);
 
