@@ -47,10 +47,9 @@ function generateGradient() {
     let moreTwo = 8;
     let lessThree = 224;
     let moreThree = 81;
-    var gradients = [0, 1, 2, 3];
+    var gradients = [0, 1, 2, 3, 4];
     var rand = gradients[Math.floor(Math.random()*gradients.length)];
     if(rand == 0){
-        console.log(rand);
         lessOne = 28;
         moreOne = 0;
         lessTwo = 181;
@@ -59,7 +58,6 @@ function generateGradient() {
         moreThree = 81;
     }
     if(rand == 1){
-        console.log(rand);
         moreOne = 213;
         lessOne = 218;
         moreTwo = 51;
@@ -68,25 +66,31 @@ function generateGradient() {
         lessThree = 81;
     }
     if(rand == 2){
-        console.log(rand);
-        moreOne = 63;
-        lessOne = 168;
-        moreTwo = 43;
-        lessTwo = 192;
-        moreThree = 150;
-        lessThree = 255;
+        lessOne = 37;
+        moreOne = 165;
+        lessTwo = 208;
+        moreTwo = 90;
+        lessThree = 199;
+        moreThree = 240;
     }
     if(rand == 3){
-        console.log(rand);
-        moreOne = 0;
-        lessOne = 146;
-        moreTwo = 201;
-        lessTwo = 254;
-        moreThree = 255;
-        lessThree = 157;
+        lessOne = 14;
+        moreOne = 12;
+        lessTwo = 174;
+        moreTwo = 116;
+        lessThree = 87;
+        moreThree = 117;
+    }
+    if(rand == 4) {
+        lessOne = 115;
+        moreOne = 28;
+        lessTwo = 18;
+        moreTwo = 28;
+        lessThree = 81;
+        moreThree = 28;
     }
 
-    document.getElementById("backDrop").style.backgroundImage = 'radial-gradient(rgb(' + lessOne + ',' + lessTwo + ',' + lessThree + ')25%, rgb(' + moreOne + ',' + moreTwo + ',' + moreThree + '))';
+    document.getElementById("backDrop").style.backgroundImage = 'radial-gradient(rgb(' + lessOne + ',' + lessTwo + ',' + lessThree + ')30%, rgb(' + moreOne + ',' + moreTwo + ',' + moreThree + '))';
 }
 
 generateGradient();

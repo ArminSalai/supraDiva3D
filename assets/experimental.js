@@ -5,6 +5,7 @@ import { gsap, _colorStringFilter } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
 
+gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
@@ -107,9 +108,7 @@ document.getElementById("mainFrame").onclick = function show(event) {
     {
         let clickTimeLine = gsap.timeline({}, 
             {smoothChildTiming: true});
-        clickTimeLine.to(camera.rotation, {y: "+=0.7", x: "+=0.3", duration:1, ease: "power1.inOut"})
-                     .to(camera.position, {z: "-=7", x: "-=4", y: "-=3", delay: "-0.5", duration: 1, ease: "power1.inOut"})
-                     .to(camera, {zoom: "+=5", delay: 0.5, duration: 0.5, ease:"Power1.in"})
-                     .add(function(){self.location = "./museumItems.html";})
+        clickTimeLine.to(window, {scrollTo: (window.pageYOffset/((height*2)-76)) * 1320, duration: 1, ease:"power2.in"})
+                     .to(window, {scrollTo: 0, duration: 0});
     }
 }
