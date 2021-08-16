@@ -20,7 +20,7 @@ let loadLine = gsap.timeline({},
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
 
-let width = window.innerWidth * 0.75;
+let width = window.innerWidth * 0.99;
 let height = window.innerHeight * 0.75;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 200);
@@ -97,9 +97,43 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap = true;
 
 const constrols = new OrbitControls(camera, renderer.domElement);
-constrols.enableZoom = false;
 constrols.enablePan = false;
 
+let zoomButton = document.querySelector("#zoomButton");
+zoomButton.addEventListener("click", function() {
+    if(constrols.enableZoom == true) {
+        zoomButton.style.backgroundColor = "#aa2438";
+        constrols.enableZoom = false;
+    }
+    else {
+        zoomButton.style.backgroundColor = "#343a4067"
+        constrols.enableZoom = true;
+    }
+});
+
+let panButton = document.querySelector("#panButton");
+panButton.addEventListener("click", function() {
+    if(constrols.enablePan == true) {
+        panButton.style.backgroundColor = "#aa2438";
+        constrols.enablePan = false;
+    }
+    else {
+        panButton.style.backgroundColor = "#343a4067"
+        constrols.enablePan = true;
+    }
+});
+
+let rotateButton = document.querySelector("#rotateButton");
+rotateButton.addEventListener("click", function() {
+    if(constrols.enableRotate == true) {
+        rotateButton.style.backgroundColor = "#aa2438";
+        constrols.enableRotate = false;
+    }
+    else {
+        rotateButton.style.backgroundColor = "#343a4067"
+        constrols.enableRotate = true;
+    }
+});
 const gLight = new THREE.PointLight(0x979DA6, 19 / 4, 300);
 gLight.position.set(19, 10, 50);
 gLight.castShadow = true;

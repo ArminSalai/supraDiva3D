@@ -18,6 +18,7 @@ let loadLine = gsap.timeline({},
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
+let body = document.getElementsByTagName("body");
 
 function generateGradient() {
     let lessOne = 28;
@@ -29,7 +30,6 @@ function generateGradient() {
     var gradients = [0, 1, 2, 3];
     var rand = gradients[Math.floor(Math.random()*gradients.length)];
     if(rand == 0){
-        console.log(rand);
         lessOne = 28;
         moreOne = 0;
         lessTwo = 181;
@@ -38,7 +38,6 @@ function generateGradient() {
         moreThree = 81;
     }
     if(rand == 1){
-        console.log(rand);
         moreOne = 213;
         lessOne = 218;
         moreTwo = 51;
@@ -47,7 +46,6 @@ function generateGradient() {
         lessThree = 81;
     }
     if(rand == 2){
-        console.log(rand);
         moreOne = 63;
         lessOne = 168;
         moreTwo = 43;
@@ -56,7 +54,6 @@ function generateGradient() {
         lessThree = 255;
     }
     if(rand == 3){
-        console.log(rand);
         moreOne = 0;
         lessOne = 146;
         moreTwo = 201;
@@ -70,7 +67,7 @@ function generateGradient() {
 
 generateGradient();
 
-let width = window.innerWidth * 0.75;
+let width = window.innerWidth * 0.99;
 let height = window.innerHeight * 0.75;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
@@ -93,8 +90,43 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap = true;
 
 const constrols = new OrbitControls(camera, renderer.domElement);
-constrols.enableZoom = false;
 constrols.enablePan = false;
+
+let zoomButton = document.querySelector("#zoomButton");
+zoomButton.addEventListener("click", function() {
+    if(constrols.enableZoom == true) {
+        zoomButton.style.backgroundColor = "#aa2438";
+        constrols.enableZoom = false;
+    }
+    else {
+        zoomButton.style.backgroundColor = "#343a4067"
+        constrols.enableZoom = true;
+    }
+});
+
+let panButton = document.querySelector("#panButton");
+panButton.addEventListener("click", function() {
+    if(constrols.enablePan == true) {
+        panButton.style.backgroundColor = "#aa2438";
+        constrols.enablePan = false;
+    }
+    else {
+        panButton.style.backgroundColor = "#343a4067"
+        constrols.enablePan = true;
+    }
+});
+
+let rotateButton = document.querySelector("#rotateButton");
+rotateButton.addEventListener("click", function() {
+    if(constrols.enableRotate == true) {
+        rotateButton.style.backgroundColor = "#aa2438";
+        constrols.enableRotate = false;
+    }
+    else {
+        rotateButton.style.backgroundColor = "#343a4067"
+        constrols.enableRotate = true;
+    }
+});
 
 const gLight = new THREE.PointLight(0x979DA6, 19 / 2, 300);
 gLight.position.set(19, 10, 14);
@@ -135,7 +167,6 @@ var mobil;
 function play() {
     if(!played)
     {
-        let body = document.getElementsByTagName("body");
         played = true;
             let tl = gsap.timeline({}, 
                 {smoothChildTiming: true});
@@ -156,7 +187,7 @@ loader.load("assets/models/DivaGrey.glb", function(glb) {
     if((xhr.loaded / xhr.total) == 1)
     {
         setTimeout(remove, 1500);
-        setTimeout(play, 2000);
+        setTimeout(play, 1500);
     }
 });
 

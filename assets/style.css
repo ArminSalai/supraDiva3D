@@ -68,6 +68,47 @@ hr {
     border-color: white;
 }
 
+.controlButton {
+    display: inline-block;
+    background-color: #343a4067;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 20%;
+}
+
+#ctrlButtons {
+    list-style-type: none;
+    position: absolute;
+    bottom: 5%;
+    right: 10%;
+}
+
+#backDrop {
+    position: relative;
+}
+
+.ctrlBtn {
+    display: inline;
+    padding-right: 5rem;
+}
+
+#zoomButton {
+    background-image: url("./magnifying-glass-3-256.png");
+}
+
+#rotateButton {
+    background-image: url("./rotate-2-256.png");
+}
+
+#panButton {
+    background-color: #aa2438;
+    background-image: url("./hand-cursor-256.png");
+}
+
 .red {
     width: 8em;
     height: 8em;
