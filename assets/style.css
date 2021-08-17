@@ -1,14 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&display=swap');
 
+body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    font-size: 1em;
+}
+
+html {
+    margin: 0;
+    height: 100%;
+}
 .hero {
     background: radial-gradient(#19A1BD, #1A97B0, #007187, #0F6070);
     background-position: bottom;
 }
 
+#expBody{
+    position: relative;
+    height: auto;
+}
+
 .hero2 {
     background: linear-gradient(#A674E8 ,#8973FF, #6E7DF5);
     position: sticky;
-    top:0vh;
+    top:0;
     width: 100%;
     height: 100vh;
 }
@@ -22,29 +38,16 @@
     width: 100%;
 }
 
-.info {
-    position: fixed;
-    top: 30vh;
-    right: 5vw;
-    width: 40vw;
-    height: 20vh;
-    background-color: rgba(200, 200, 200, 0.4);
-    backdrop-filter: blur(20px);
-    display: grid;
-    justify-content: end;
-    align-items: center;
-    border-radius: 2rem;
-}
-
 .infoText {
     max-width: 25vw;
     margin-right: 5vw;
-    font: 1.5rem 'Titillium Web', sans-serif;
+    font: 1.5em 'Titillium Web', sans-serif;
 }
 
 canvas {
-    width: 80%;
-    height: 80%;
+    width: 100vw !important;
+    height: 80vh;
+    display: block;
 }
 
 .leftSide {
@@ -55,16 +58,16 @@ canvas {
 
 .whte {
     height: 25vh;
-    width: auto;
+    width: 100%;
 }
 
 .sub-title {
     color: #f22e60;
-    font: 2.5em Verdana, sans-serif;
+    font: 3em Verdana, sans-serif;
 }
 
 hr {
-    width: 85vw;
+    width: 85%;
     border-color: white;
 }
 
@@ -75,16 +78,20 @@ hr {
     background-repeat: no-repeat;
     background-position: center;
     position: absolute;
-    width: 4rem;
-    height: 4rem;
+    width: 4em;
+    height: 4em;
     border-radius: 20%;
 }
 
 #ctrlButtons {
     list-style-type: none;
     position: absolute;
-    bottom: 5%;
+    bottom: 5vh;
     right: 10%;
+}
+
+.featuresContainer .lead {
+    font-size: 2em;
 }
 
 #backDrop {
@@ -93,7 +100,7 @@ hr {
 
 .ctrlBtn {
     display: inline;
-    padding-right: 5rem;
+    padding-right: 5em;
 }
 
 #zoomButton {
@@ -110,11 +117,22 @@ hr {
     background-image: url("./hand-cursor-256.png");
 }
 
+@media screen and (max-width: 767px) {
+    #ctrlButtons {
+        position: relative;
+        bottom: 5vh;
+        right: 0;
+    }
+    footer {
+        font-size: 1em !important;
+    }
+}
+
 .red {
-    width: 8em;
-    height: 8em;
+    width: 6em;
+    height: 6em;
     background: radial-gradient(#f22e60, #f40609);
-    border-radius: 3em;
+    border-radius: 2em;
 }
 
 #backGround {
@@ -131,20 +149,18 @@ hr {
 }
 
 #sq1 {
-    width: 20vw;
+    width: 20%;
     position: absolute;
     top:30%;
     left: 40vw;
     z-index: 20;
 }
 
+
+
 #sq2 {
-    width: 20vw;
+    width: 20%;
     position: absolute;
     top:30%;
     left: 40vw;
-}
-
-body {
-    overflow: hidden;
 }

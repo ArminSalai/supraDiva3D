@@ -1,7 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
-import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
-import {GLTFLoader} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
-import {RectAreaLightUniformsLib} from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
@@ -9,24 +9,24 @@ import * as CSSRulePlugin from './CSSRulePlugin.js';
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
-let loadLine = gsap.timeline({}, 
-    {smoothChildTiming: true});
-    loadLine.to("#sq1", {rotationZ: 45, x: "7vw", y: "3vw", duration:0.5, ease: "sine.out"})
-        .to("#sq2", {rotationZ: -45, x: "-7vw", y: "3vw", delay: "-0.5", duration:0.5, ease: "sine.out"})
-        .to("#sq1", {x: "0vw", duration:0.5, ease: "sine.out"})
-        .to("#sq2", {x: "0vw", delay: "-0.5", duration:0.5, ease: "sine.out"})
-        .to(".screen", {y: "100vh", duration:0.5, ease:"sine.inOut"});
+let loadLine = gsap.timeline({},
+    { smoothChildTiming: true });
+loadLine.to("#sq1", { rotationZ: 45, x: "7vw", y: "3vw", duration: 0.5, ease: "sine.out" })
+    .to("#sq2", { rotationZ: -45, x: "-7vw", y: "3vw", delay: "-0.5", duration: 0.5, ease: "sine.out" })
+    .to("#sq1", { x: "0vw", duration: 0.5, ease: "sine.out" })
+    .to("#sq2", { x: "0vw", delay: "-0.5", duration: 0.5, ease: "sine.out" })
+    .to(".screen", { y: "100vh", duration: 0.5, ease: "sine.inOut" });
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
 
-let width = window.innerWidth * 0.99;
-let height = window.innerHeight * 0.75;
+let width = canvas.clientWidth;
+let height = canvas.clientHeight;
 
-const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 200);
+const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
 camera.position.set(60, 24, -15);
 camera.lookAt(0, 0, 0);
-camera.zoom = 0.45;
+camera.zoom = ((width * height) / (height * height)) / 7;
 camera.updateProjectionMatrix();
 scene.add(camera);
 
@@ -48,8 +48,8 @@ function generateGradient() {
     let lessThree = 224;
     let moreThree = 81;
     var gradients = [0, 1, 2, 3, 4];
-    var rand = gradients[Math.floor(Math.random()*gradients.length)];
-    if(rand == 0){
+    var rand = gradients[Math.floor(Math.random() * gradients.length)];
+    if (rand == 0) {
         lessOne = 28;
         moreOne = 0;
         lessTwo = 181;
@@ -57,7 +57,7 @@ function generateGradient() {
         lessThree = 224;
         moreThree = 81;
     }
-    if(rand == 1){
+    if (rand == 1) {
         moreOne = 213;
         lessOne = 218;
         moreTwo = 51;
@@ -65,7 +65,7 @@ function generateGradient() {
         moreThree = 105;
         lessThree = 81;
     }
-    if(rand == 2){
+    if (rand == 2) {
         lessOne = 37;
         moreOne = 165;
         lessTwo = 208;
@@ -73,7 +73,7 @@ function generateGradient() {
         lessThree = 199;
         moreThree = 240;
     }
-    if(rand == 3){
+    if (rand == 3) {
         lessOne = 14;
         moreOne = 12;
         lessTwo = 174;
@@ -81,7 +81,7 @@ function generateGradient() {
         lessThree = 87;
         moreThree = 117;
     }
-    if(rand == 4) {
+    if (rand == 4) {
         lessOne = 115;
         moreOne = 28;
         lessTwo = 18;
@@ -104,9 +104,19 @@ const constrols = new OrbitControls(camera, renderer.domElement);
 constrols.enablePan = false;
 constrols.enableZoom = false;
 
+function resizeRendererToDisplaySize(renderer) {
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+        renderer.setSize(width, height, false);
+    }
+    return needResize;
+}
+
+resizeRendererToDisplaySize(renderer);
+
 let zoomButton = document.querySelector("#zoomButton");
-zoomButton.addEventListener("click", function() {
-    if(constrols.enableZoom == true) {
+zoomButton.addEventListener("click", function () {
+    if (constrols.enableZoom == true) {
         zoomButton.style.backgroundColor = "#aa2438";
         constrols.enableZoom = false;
     }
@@ -117,8 +127,8 @@ zoomButton.addEventListener("click", function() {
 });
 
 let panButton = document.querySelector("#panButton");
-panButton.addEventListener("click", function() {
-    if(constrols.enablePan == true) {
+panButton.addEventListener("click", function () {
+    if (constrols.enablePan == true) {
         panButton.style.backgroundColor = "#aa2438";
         constrols.enablePan = false;
     }
@@ -129,8 +139,8 @@ panButton.addEventListener("click", function() {
 });
 
 let rotateButton = document.querySelector("#rotateButton");
-rotateButton.addEventListener("click", function() {
-    if(constrols.enableRotate == true) {
+rotateButton.addEventListener("click", function () {
+    if (constrols.enableRotate == true) {
         rotateButton.style.backgroundColor = "#aa2438";
         constrols.enableRotate = false;
     }
@@ -158,12 +168,12 @@ const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 1.4);
 scene.add(hLight);
 
 const portLightFront = new THREE.RectAreaLight(0xffffff, 6, 30, 3);
-portLightFront.rotation.y = Math.PI/2;
+portLightFront.rotation.y = Math.PI / 2;
 portLightFront.position.set(50, -2, 0);
 scene.add(portLightFront);
 
 const portLightBack = new THREE.RectAreaLight(0xffffff, 18, 30, 3);
-portLightBack.rotation.y = -Math.PI/2;
+portLightBack.rotation.y = -Math.PI / 2;
 portLightBack.position.set(-60, -2, 0);
 scene.add(portLightBack);
 
@@ -187,60 +197,58 @@ var played = false;
 
 
 const divaLoader = new GLTFLoader()
-divaLoader.load("assets/models/cordlessEcoRed.glb", function(glb) {
+divaLoader.load("assets/models/cordlessEcoRed.glb", function (glb) {
     divaRed = glb.scene;
     scene.add(divaRed);
-    divaRed.scale.set(0.83,0.83,0.83);
+    divaRed.scale.set(0.83, 0.83, 0.83);
     divaRed.position.y += 16;
     divaRed.position.x += 10.1;
     divaRed.position.z += 6;
     divaRed.rotation.y += 0.1;
-    divaRed.rotation.z -= Math.PI/2-0.8;
+    divaRed.rotation.z -= Math.PI / 2 - 0.8;
 });
 
 const ecoLoader = new GLTFLoader()
-ecoLoader.load("assets/models/ecoWithoutString.glb", function(glb) {
+ecoLoader.load("assets/models/ecoWithoutString.glb", function (glb) {
     eco = glb.scene;
     scene.add(eco);
-    eco.scale.set(0.83,0.83,0.83);
+    eco.scale.set(0.83, 0.83, 0.83);
     eco.position.y += 16;
     eco.position.x -= 5.1;
     eco.position.z -= 16.6;
     eco.rotation.y -= 0.2;
-    eco.rotation.z -= Math.PI/2-1.4;
+    eco.rotation.z -= Math.PI / 2 - 1.4;
 });
 
 function play() {
-    if(!played)
-    {
+    if (!played) {
         let body = document.getElementsByTagName("body");
         played = true;
-            let tl = gsap.timeline({}, 
-                {smoothChildTiming: true});
-            tl.to(eco.position, {x: "26.1", z: "-10.6", duration: 1.5, ease: "power2.inOut"})
-            .to(eco.rotation, {y: "0", z: -Math.PI/2, x: "0", delay: "-1.5", duration: 1.5, ease: "power2.inOut"})
-            .to(camera, {zoom: "0.6", delay: "-1.5", duration: 1.5, ease:"power2.inOut"})
-            .to(eco.position, {y: "9.8", duration: 0.5, ease: "power4.inOut"});
-            let tlParalell = gsap.timeline({}, 
-                {smoothChildTiming: true});
-            tlParalell.to(divaRed.position, {x: "26.1", z: "6", duration: 1.5, ease: "power2.inOut"})
-            .to(divaRed.rotation, {y: "0", z: -Math.PI/2, x: "0", delay: "-1.5", duration: 1.5, ease: "power3.inOut"})
-            .to(divaRed.position, {y: "9.8", duration: 0.5, ease: "power4.inOut"})
-            .to(body[0], {overflow: "auto"});
+        let tl = gsap.timeline({},
+            { smoothChildTiming: true });
+        tl.to(eco.position, { x: "26.1", z: "-10.6", duration: 1.5, ease: "power2.inOut" })
+            .to(eco.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
+            .to(camera, { zoom: "+=0.2", delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
+            .to(eco.position, { y: "9.8", duration: 0.5, ease: "power4.inOut" });
+        let tlParalell = gsap.timeline({},
+            { smoothChildTiming: true });
+        tlParalell.to(divaRed.position, { x: "26.1", z: "6", duration: 1.5, ease: "power2.inOut" })
+            .to(divaRed.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.5, ease: "power3.inOut" })
+            .to(divaRed.position, { y: "9.8", duration: 0.5, ease: "power4.inOut" })
+            .to(body[0], { overflowX: "hidden", overflowY: "auto" });
     }
 };
 
 const loader = new GLTFLoader()
-loader.load("assets/models/ecoCharger.glb", function(glb) {
+loader.load("assets/models/ecoCharger.glb", function (glb) {
     mobil = glb.scene;
     scene.add(mobil);
-}, function(xhr) {
+}, function (xhr) {
     function remove() {
         let loadScreen = document.getElementById("loadingScreen");
         loadScreen.remove();
     }
-    if((xhr.loaded / xhr.total) == 1)
-    {
+    if ((xhr.loaded / xhr.total) == 1) {
         setTimeout(remove, 1500);
         setTimeout(play, 2000);
     }
