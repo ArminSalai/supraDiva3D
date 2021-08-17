@@ -1,7 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { gsap, _colorStringFilter } from './gsap-core.js';
+import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
 
@@ -47,6 +47,18 @@ function resizeRendererToDisplaySize(renderer) {
 }
 
 resizeRendererToDisplaySize(renderer);
+
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize(){
+    let width = canvas.clientWidth;
+    let height = window.innerHeight;
+    camera.aspect = width / (height);
+    camera.zoom = ((width*height)/(height*height))/2;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( width, height );
+}
 
 scene.background = null;
 
@@ -114,10 +126,10 @@ function animate() {
 animate();
 
 document.getElementById("mainFrame").onclick = function show(event) {
-    if ((event.clientX / width < 0.5) && ((window.pageYOffset / ((height * 2) - 76)) > 1.184)) {
+    if ((event.clientX / width < 0.5) && ((window.pageYOffset / ((window.innerHeight * 2) - 76)) > 2.33)) {
         let clickTimeLine = gsap.timeline({},
             { smoothChildTiming: true });
-        clickTimeLine.to(window, { scrollTo: (window.pageYOffset / ((height * 2) - 76)) * 1320, duration: 1, ease: "power2.in" })
+        clickTimeLine.to(window, { scrollTo: (window.pageYOffset / ((window.innerHeight * 2) - 76)) * 1200, duration: 1, ease: "power2.in" })
             .to(window, { scrollTo: 0, duration: 0 });
     }
 }

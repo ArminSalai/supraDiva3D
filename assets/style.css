@@ -34,7 +34,7 @@ html {
 }
 
 .scrollable {
-    height:400vh;
+    height:450vh;
     width: 100%;
 }
 
@@ -50,10 +50,39 @@ canvas {
     display: block;
 }
 
+#mainFrame canvas {
+    height: 100vh;
+}
+
 .leftSide {
     background: radial-gradient(#f22e60 20%, #f40609);
     background-attachment: fixed;
     border-radius: 1em;
+}
+
+footer {
+    z-index: 5;
+}
+
+.upScroll {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    bottom: 25vh;
+}
+
+.topIcon {
+    display: inline-block;
+    right: 2vw;
+    background-color: #9e9e9e67;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    width: 3em;
+    height: 3em;
+    border-radius: 100%;
+    background-image: url("./Frame 1.svg");
 }
 
 .whte {
@@ -155,8 +184,6 @@ hr {
     left: 40vw;
     z-index: 20;
 }
-
-
 
 #sq2 {
     width: 20%;

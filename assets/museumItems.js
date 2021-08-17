@@ -6,6 +6,7 @@ import { gsap, _colorStringFilter } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
 
+gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
@@ -58,6 +59,18 @@ function resizeRendererToDisplaySize(renderer) {
 }
 
 resizeRendererToDisplaySize(renderer);
+
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize(){
+    let width = canvas.clientWidth;
+    let height = window.innerHeight * 0.8;
+    camera.aspect = width / (height);
+    camera.zoom = ((width*height)/(height*height))/4;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( width, height );
+}
 
 let zoomButton = document.querySelector("#zoomButton");
 zoomButton.addEventListener("click", function () {
