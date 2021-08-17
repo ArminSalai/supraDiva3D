@@ -5,7 +5,9 @@ import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threej
 import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
+import * as ScrollTrigger from './ScrollTrigger.js';
 
+gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
@@ -126,6 +128,13 @@ function onWindowResize(){
 
     renderer.setSize( width, height );
 }
+
+gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
+    trigger: "#PageContainer",
+    start: "top top+=300",
+    end: "end+=800 +=800",
+    scrub: true
+}});
 
 document.querySelector(".topIcon").addEventListener("click", function() {gsap.to(window, { scrollTo: 0, duration: 1, ease:"power2.inOut" });});
 

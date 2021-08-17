@@ -5,7 +5,9 @@ import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threej
 import { gsap, _colorStringFilter } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
+import * as ScrollTrigger from './ScrollTrigger.js';
 
+gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
@@ -95,6 +97,12 @@ function generateGradient() {
 
 generateGradient();
 
+gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
+    trigger: "#PageContainer",
+    start: "top top+=300",
+    end: "end+=800 +=800",
+    scrub: true
+}});
 
 scene.background = null;
 
@@ -180,10 +188,15 @@ const roughnessLight1 = new THREE.SpotLight(0xffffff, 5 / 8, 40, 80, 0, 1);
 roughnessLight1.position.set(0, -10, -18);
 scene.add(roughnessLight1);
 
-const roughnessLight2 = new THREE.SpotLight(0xffffff, 5 / 4, 40, 80, 0, 1);
-roughnessLight2.position.set(0, -10, 20);
-roughnessLight2.rotateOnWorldAxis("x", Math.PI);
+const roughnessLight2 = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
+roughnessLight2.position.set(-40, -5, 5);
+roughnessLight2.lookAt(0, 0, 0);
 scene.add(roughnessLight2);
+
+const topLight = new THREE.RectAreaLight(0xffddff, 20, 14, 14);
+topLight.position.set(-38, 25, 0);
+topLight.lookAt(0, 0, 0);
+scene.add(topLight);
 
 const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
 backLight.position.set(0, -10, 10);

@@ -4,7 +4,9 @@ import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/th
 import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
+import * as ScrollTrigger from './ScrollTrigger.js';
 
+gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
@@ -74,8 +76,14 @@ function generateGradient() {
     document.getElementById("backDrop").style.backgroundImage = 'radial-gradient(rgb(' + lessOne + ',' + lessTwo + ',' + lessThree + ')30%, rgb(' + moreOne + ',' + moreTwo + ',' + moreThree + '))';
 }
 
-
 generateGradient();
+
+gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
+    trigger: "#PageContainer",
+    start: "top top+=300",
+    end: "end+=800 +=800",
+    scrub: true
+}});
 
 let width = canvas.clientWidth;
 let height = canvas.clientHeight;

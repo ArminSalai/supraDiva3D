@@ -5,7 +5,9 @@ import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threej
 import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
+import * as ScrollTrigger from './ScrollTrigger.js';
 
+gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
@@ -71,6 +73,13 @@ function onWindowResize(){
     renderer.setSize( width, height );
 }
 
+gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
+    trigger: "#PageContainer",
+    start: "top top+=300",
+    end: "end+=800 +=800",
+    scrub: true
+}});
+
 document.querySelector(".topIcon").addEventListener("click", function() {gsap.to(window, { scrollTo: 0, duration: 1, ease:"power2.inOut" });});
 
 let zoomButton = document.querySelector("#zoomButton");
@@ -118,16 +127,16 @@ yLight.position.set(-10, 12, -23);
 yLight.castShadow = true;
 scene.add(yLight);
 
-const roughnessLight1 = new THREE.SpotLight(0xffffff, 5 / 8, 40, 80, 0, 1);
-roughnessLight1.position.set(0, -10, -18);
+const roughnessLight1 = new THREE.SpotLight(0xffffff, 5 / 3, 40, 80, 0, 1);
+roughnessLight1.position.set(8, -14, -26);
 scene.add(roughnessLight1);
 
 const roughnessLight2 = new THREE.SpotLight(0xffffff, 5 / 4, 40, 80, 0, 1);
-roughnessLight2.position.set(0, -10, 20);
-roughnessLight2.rotateOnWorldAxis("x", Math.PI);
+roughnessLight2.position.set(-12, -8, 20);
+roughnessLight2.lookAt(0, 0, 0);
 scene.add(roughnessLight2);
 
-const backLight = new THREE.SpotLight(0xffffff, 4, 40, 80, 0, 1);
+const backLight = new THREE.SpotLight(0xffffff, 2, 40, 80, 0, 1);
 backLight.position.set(-2, -18, -5);
 scene.add(backLight);
 
