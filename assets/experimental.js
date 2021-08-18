@@ -23,8 +23,8 @@ const scene = new THREE.Scene();
 let width = canvas.clientWidth;
 let height = canvas.clientHeight;
 
-const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
-camera.position.set(2, 5, 18);
+let camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
+camera.position.set(1, 0.8, 11.1);
 camera.lookAt(1, 0, 0);
 camera.zoom = ((width*height)/(height*height))/2;
 camera.updateProjectionMatrix();
@@ -66,7 +66,7 @@ renderer.setSize(width, height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap = true;
 
-const gLight = new THREE.PointLight(0x979DA6, 19 / 3, 300);
+/*const gLight = new THREE.PointLight(0x979DA6, 19 / 3, 300);
 gLight.position.set(10, 12, 15);
 gLight.castShadow = true;
 scene.add(gLight);
@@ -93,7 +93,7 @@ scene.add(areaLight);
 const secondaryBackLight = new THREE.RectAreaLight(0xffffff, 8, 8, 8);
 secondaryBackLight.position.set(10, -15, -10);
 secondaryBackLight.lookAt(0, 0, 0);
-scene.add(secondaryBackLight);
+scene.add(secondaryBackLight);*/
 
 var played = false;
 var mobil;
@@ -103,10 +103,13 @@ let clock = new THREE.Clock();
 
 
 const loader = new GLTFLoader()
-loader.load("assets/models/laptop.glb", function (glb) {
+loader.load("assets/models/test.glb", function (glb) {
     mixer = new THREE.AnimationMixer(glb.scene);
     glb.animations.forEach((clip) => { mixer.clipAction(clip).play(); });
     mobil = glb.scene;
+    mobil.traverse((object) => {
+        if (object.isCamera) camera = object;
+      });
     scene.add(mobil);
     let body = document.getElementsByTagName("body");
     body[0].style.overflowY = "auto";
@@ -117,7 +120,7 @@ loader.load("assets/models/laptop.glb", function (glb) {
 function animate() {
     requestAnimationFrame(animate);
     if (mixer) {
-        mixer.setTime((window.pageYOffset / ((height * 2) - 76)) * 2.7);
+        mixer.setTime((window.pageYOffset / ((height * 2) - 76)) * 1.9);
     }
     camera.updateProjectionMatrix();
     renderer.render(scene, camera);

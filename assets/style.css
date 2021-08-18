@@ -21,9 +21,13 @@ html {
     height: auto;
 }
 
+nav {
+    z-index: 1;
+}
+
 .hero2 {
-    background: linear-gradient(#A674E8 ,#8973FF, #6E7DF5);
-    position: sticky;
+    background: transparent;
+    position: fixed;
     top:0;
     width: 100%;
     height: 100vh;
@@ -34,8 +38,32 @@ html {
 }
 
 .scrollable {
-    height:450vh;
+    background: #272727;
+    height:200vh;
     width: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    font: 8em 'Titillium Web', sans-serif;
+    color: white;
+}
+
+.dvaSpace {
+    width: 25vw;
+    height: 1em;
+}
+.laptopSpace {
+    width: 60vw;
+    height: 1em;
+}
+
+.bigPadding {
+    width: 10vw;;
+}
+
+.fullWidth {
+    width: 100vw !important;
+    height: auto;
 }
 
 .infoText {
@@ -87,10 +115,6 @@ footer {
 
 .whte {
     height: 25vh;
-    width: 100%;
-}
-whteS {
-    height: 10vh;
     width: 100%;
 }
 
