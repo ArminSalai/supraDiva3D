@@ -23,7 +23,7 @@ const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
 
 let width = canvas.clientWidth;
-let height = window.innerHeight;
+let height = canvas.clientHeight;
 
 let camera = new THREE.PerspectiveCamera(50, width / (height), 0.1, 300);
 camera.position.set(1, 0.8, 11.1);
@@ -86,7 +86,19 @@ function play() {
 const loader = new GLTFLoader()
 loader.load("assets/models/test.glb", function (glb) {
     mixer = new THREE.AnimationMixer(glb.scene);
-    glb.animations.forEach((clip) => { mixer.clipAction(clip).play(); });
+    var clip = glb.animations[ 0 ];
+    var action = mixer.clipAction( clip );
+    action.clampWhenFinished = true;
+    action.setLoop( THREE.LoopOnce );
+    action.play().reset();
+    action.startAt(1.5);
+    mixer.addEventListener( 'finished', function() {
+        document.querySelector(".replayScreen").style.visibility = "visible";
+        document.querySelector("#replayButton").addEventListener('click', function() {
+            action.play().reset();
+            document.querySelector(".replayScreen").style.visibility = "hidden";
+        })
+     });     
     mobil = glb.scene;
     mobil.traverse((object) => {
         if (object.isCamera) camera = object;
@@ -108,16 +120,16 @@ loader.load("assets/models/test.glb", function (glb) {
     }
 });
 
+var clock = new THREE.Clock();
 
 function animate() {
     requestAnimationFrame(animate);
     if (mixer) {
-        mixer.setTime((window.pageYOffset / ((height * 2) - 76)) * 1.9);
+        mixer.update( clock.getDelta() );
     }
     camera.updateProjectionMatrix();
     renderer.render(scene, camera);
 }
-
 animate();
 
 document.getElementById("mainFrame").onclick = function show(event) {

@@ -26,7 +26,7 @@ nav {
 }
 
 .hero2 {
-    background: transparent;
+    background: linear-gradient(0deg,#111, #333);
     position: fixed;
     top:0;
     width: 100%;
@@ -35,38 +35,6 @@ nav {
 
 .hero3 {
     background: linear-gradient(#F26EF5,#A674E8);
-}
-
-.scrollable {
-    background: #272727;
-    height:200vh;
-    width: 100%;
-    display: grid;
-    justify-content: space-around;
-    align-items: center;
-    font: 8vw 'Titillium Web', sans-serif;
-    color: white;
-}
-
-.halfScroll {
-    background: #272727;
-    height:100vh;
-    width: 100%;
-    display: grid;
-    justify-content: space-around;
-    align-items: center;
-    font: 8vw 'Titillium Web', sans-serif;
-    color: white;
-}
-
-.Swhte {
-    width: 100%;
-    height: 20vh;    
-}
-
-.textCont {
-    height: 80vh;
-    width: 70vw;
 }
 
 .dvaSpace {
@@ -100,6 +68,29 @@ nav {
     height: 80vh;
 }
 
+.replayScreen {
+    visibility: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    background-color: #111111aa;
+    backdrop-filter: blur(4px);
+}
+
+#replayButton {
+    width: 8vh;
+    height: 8vh;
+    margin-bottom: 12vh;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 100%;
+    background-image: url("./Frame\ 1ReplayButton.svg");
+    background-position: center;
+    background-size: 80%;
+    background-repeat: no-repeat;
+}
+
 canvas {
     width: 100vw !important;
     height: 80vh;
@@ -107,7 +98,8 @@ canvas {
 }
 
 #mainFrame canvas {
-    height: 100vh;
+    margin-top: auto;
+    height: 92vh;
 }
 
 .leftSide {
