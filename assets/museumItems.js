@@ -45,7 +45,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap = true;
 
 
-const constrols = new OrbitControls(camera, renderer.domElement);
+const constrols = new OrbitControls(camera, document.querySelector(".touchable"));
 constrols.enablePan = false;
 constrols.enableZoom = false;
 

@@ -22,7 +22,7 @@ html {
 }
 
 nav {
-    z-index: 1;
+    z-index: 3;
 }
 
 .hero2 {
@@ -42,10 +42,31 @@ nav {
     height:200vh;
     width: 100%;
     display: grid;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    font: 8em 'Titillium Web', sans-serif;
+    font: 8vw 'Titillium Web', sans-serif;
     color: white;
+}
+
+.halfScroll {
+    background: #272727;
+    height:100vh;
+    width: 100%;
+    display: grid;
+    justify-content: space-around;
+    align-items: center;
+    font: 8vw 'Titillium Web', sans-serif;
+    color: white;
+}
+
+.Swhte {
+    width: 100%;
+    height: 20vh;    
+}
+
+.textCont {
+    height: 80vh;
+    width: 70vw;
 }
 
 .dvaSpace {
@@ -58,18 +79,25 @@ nav {
 }
 
 .bigPadding {
-    width: 10vw;;
+    width: 12vw;;
 }
 
-.fullWidth {
-    width: 100vw !important;
-    height: auto;
+.editCont {
+    width: 80vw;
 }
 
 .infoText {
     max-width: 25vw;
     margin-right: 5vw;
     font: 1.5em 'Titillium Web', sans-serif;
+}
+
+.touchable {
+    position: absolute;
+    margin: auto;
+    z-index: 1;
+    width:50vw;
+    height: 80vh;
 }
 
 canvas {
@@ -182,6 +210,20 @@ hr {
     }
     footer {
         font-size: 1em !important;
+    }
+    canvas {
+        height: 60vh;
+    }
+
+    .halfScroll {
+        padding-top: 20vh;
+    }
+    .textCont {
+        padding-top: 10vh;
+    }
+
+    .touchable {
+        height: 60vh;
     }
 }
 

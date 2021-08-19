@@ -4,7 +4,9 @@ import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threej
 import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
+import * as ScrollTrigger from './ScrollTrigger.js';
 
+gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
@@ -21,9 +23,9 @@ const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
 
 let width = canvas.clientWidth;
-let height = canvas.clientHeight;
+let height = window.innerHeight;
 
-let camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
+let camera = new THREE.PerspectiveCamera(50, width / (height), 0.1, 300);
 camera.position.set(1, 0.8, 11.1);
 camera.lookAt(1, 0, 0);
 camera.zoom = ((width*height)/(height*height))/2;
@@ -66,41 +68,20 @@ renderer.setSize(width, height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap = true;
 
-/*const gLight = new THREE.PointLight(0x979DA6, 19 / 3, 300);
-gLight.position.set(10, 12, 15);
-gLight.castShadow = true;
-scene.add(gLight);
-
-const yLight = new THREE.PointLight(0xF2E4C3, 3, 200);
-yLight.position.set(-15, 12, -21);
-yLight.castShadow = true;
-scene.add(yLight);
-
-const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 40, 90, 0, 1);
-backLight.position.set(-10, -12, 18);
-backLight.lookAt(5, 0, 10)
-scene.add(backLight);
-
-const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.6);
-scene.add(hLight);
-
-const areaLight = new THREE.RectAreaLight(0xe6d1ff, 7, 18, 16);
-areaLight.rotation.y += 2;
-areaLight.position.set(3, 10, -3);
-areaLight.lookAt(0, 0, 0);
-scene.add(areaLight);
-
-const secondaryBackLight = new THREE.RectAreaLight(0xffffff, 8, 8, 8);
-secondaryBackLight.position.set(10, -15, -10);
-secondaryBackLight.lookAt(0, 0, 0);
-scene.add(secondaryBackLight);*/
-
 var played = false;
 var mobil;
 
 let mixer;
-let clock = new THREE.Clock();
+let body = document.getElementsByTagName("body");
 
+function play() {
+    if (!played) {
+        played = true;
+        let tl = gsap.timeline({},
+            { smoothChildTiming: true });
+        tl.to(body[0], { overflowX: "hidden", overflowY: "auto" });
+    }
+};
 
 const loader = new GLTFLoader()
 loader.load("assets/models/test.glb", function (glb) {
@@ -110,10 +91,21 @@ loader.load("assets/models/test.glb", function (glb) {
     mobil.traverse((object) => {
         if (object.isCamera) camera = object;
       });
+    camera.aspect = width / (height);
+    camera.zoom = ((width*height)/(height*height))/2;
+    camera.updateProjectionMatrix();
     scene.add(mobil);
-    let body = document.getElementsByTagName("body");
     body[0].style.overflowY = "auto";
     window.scrollTo(0, 0);
+}, function (xhr) {
+    function remove() {
+        let loadScreen = document.getElementById("loadingScreen");
+        loadScreen.remove();
+    }
+    if ((xhr.loaded / xhr.total) == 1) {
+        setTimeout(remove, 1500);
+        setTimeout(play, 1500);
+    }
 });
 
 
