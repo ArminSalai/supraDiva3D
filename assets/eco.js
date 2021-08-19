@@ -49,7 +49,6 @@ renderer.shadowMap = true;
 
 const constrols = new OrbitControls(camera, document.querySelector(".touchable"));
 constrols.enablePan = false;
-constrols.enableZoom = false;
 
 function resizeRendererToDisplaySize(renderer) {
     const needResize = canvas.width !== width || canvas.height !== height;
@@ -157,39 +156,39 @@ function generateGradient() {
     let moreTwo = 8;
     let lessThree = 224;
     let moreThree = 81;
-    var gradients = [0, 1, 2, 3, 4];
+    var gradients = [0, 1, 2, 3 ,4];
     var rand = gradients[Math.floor(Math.random() * gradients.length)];
     if (rand == 0) {
-        lessOne = 28;
+        lessOne = 0;
         moreOne = 0;
-        lessTwo = 181;
-        moreTwo = 8;
-        lessThree = 224;
-        moreThree = 81;
+        lessTwo = 125;
+        moreTwo = 46;
+        lessThree = 150;
+        moreThree = 83;
     }
     if (rand == 1) {
-        moreOne = 213;
-        lessOne = 218;
-        moreTwo = 51;
-        lessTwo = 174;
-        moreThree = 105;
-        lessThree = 81;
+        lessOne = 158;
+        moreOne = 98;
+        lessTwo = 10;
+        moreTwo = 6;
+        lessThree = 30;
+        moreThree = 20;
     }
     if (rand == 2) {
-        lessOne = 37;
-        moreOne = 165;
-        lessTwo = 208;
-        moreTwo = 90;
-        lessThree = 199;
-        moreThree = 240;
+        lessOne = 123;
+        moreOne = 56;
+        lessTwo = 0;
+        moreTwo = 2;
+        lessThree = 143;
+        moreThree = 69;
     }
     if (rand == 3) {
-        lessOne = 14;
-        moreOne = 12;
-        lessTwo = 174;
-        moreTwo = 116;
-        lessThree = 87;
-        moreThree = 117;
+        lessOne = 0;
+        moreOne = 0;
+        lessTwo = 191;
+        moreTwo = 120;
+        lessThree = 165;
+        moreThree = 102;
     }
     if (rand == 4) {
         lessOne = 115;
@@ -202,7 +201,6 @@ function generateGradient() {
 
     document.getElementById("backDrop").style.backgroundImage = 'radial-gradient(rgb(' + lessOne + ',' + lessTwo + ',' + lessThree + ')30%, rgb(' + moreOne + ',' + moreTwo + ',' + moreThree + '))';
 }
-
 
 generateGradient();
 
