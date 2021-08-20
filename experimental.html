@@ -32,18 +32,20 @@
                             Technology
                         </a>
                         <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item disabled lead text-muted" href="#">Devices</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item lead text-light" href="/index.html">D.I.V.A</a>
-                          <a class="dropdown-item lead text-light" href="/touch.html">Touch</a>
-                          <a class="dropdown-item lead text-light" href="/multi.html">Multi</a>
-                          <a class="dropdown-item lead text-light" href="/eco.html">eco</a>
-                          <a class="dropdown-item disabled lead text-muted" href="#">Chargers</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item lead text-light" href="/ecoCharge.html">supraCharger eco</a>
-                          <a class="dropdown-item lead text-light" href="/supraCharge.html">supraCharger</a>
-                          <a class="dropdown-item lead text-light" href="/dock.html">supraCharge II</a>
-                          <div class="dropdown-divider"></div>
+                            <a class="dropdown-item disabled lead text-muted" href="#">Devices</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item lead text-light font-weight-lighter" href="/index.html">D.I.V.A</a>
+                            <a class="dropdown-item lead text-light" href="/touch.html">Touch</a>
+                            <a class="dropdown-item lead text-light" href="/multi.html">Multi</a>
+                            <a class="dropdown-item lead text-light" href="/eco.html">eco</a>
+                            <a class="dropdown-item disabled lead text-muted" href="#">Chargers</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item lead text-light" href="/ecoCharge.html">supraCharger eco</a>
+                            <a class="dropdown-item lead text-light" href="/supraCharge.html">supraCharger</a>
+                            <a class="dropdown-item lead text-light" href="/dock.html">supraCharge II</a>
+                            <a class="dropdown-item lead text-light font-weight-bold" href="/chargers.html">All Chargers</a>
+                            <a class="dropdown-item disabled lead text-muted" href="#">Showcase</a>
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item lead text-light" href="/experimental.html">Usage Guide</a>
                         </div>
                       </li>
@@ -60,9 +62,10 @@
             </div>
         </div>
     </nav>
-    <div id="mainFrame" class="row hero2 m-0 d-flex align-items-center justify-content-center">
-        <canvas class="webgl"></canvas>
-        <div class="touchable"></div>
+    <div id="mainFrame" class="row hero2 m-0 d-flex align-items-end justify-content-center">
+        <div class="col">
+            <canvas id="expCanvas" class="webgl"></canvas>
+        </div>
     </div>
     <div class="replayScreen d-flex justify-content-center align-items-center">
         <span id="replayButton"></span>

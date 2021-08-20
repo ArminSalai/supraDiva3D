@@ -74,7 +74,7 @@ function onWindowResize(){
 
 gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
     trigger: "#PageContainer",
-    start: "top top+=300",
+    start: "top top+=400",
     end: "end+=800 +=800",
     scrub: true
 }});

@@ -64,7 +64,7 @@ nav {
     position: absolute;
     margin: auto;
     z-index: 1;
-    width:50vw;
+    width:30vw;
     height: 80vh;
 }
 
@@ -77,6 +77,15 @@ nav {
     background-color: #111111aa;
     backdrop-filter: blur(4px);
 }
+
+
+
+.heLY {
+    height: 1000vh;
+    width: 100%;
+}
+
+
 
 #replayButton {
     width: 8vh;
@@ -160,6 +169,38 @@ hr {
     border-radius: 20%;
 }
 
+.leftArrow {
+    position: absolute;
+    left:0;
+    width: 20vh;
+    height: 10vh;
+    background-color: #202020b7;
+    background-image: url("Frame\ 2.svg");
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    rotate: -90deg;
+    transform: translateY(-5vh);
+    border-bottom-right-radius:2vh;
+    border-bottom-left-radius:2vh;
+}
+
+.rightArrow {
+    position: absolute;
+    right:0;
+    width: 20vh;
+    height: 10vh;
+    background-color: #202020b7;
+    background-image: url("Frame\ 2.svg");
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    rotate: 90deg;
+    transform: translateY(-5vh);
+    border-bottom-right-radius:2vh;
+    border-bottom-left-radius:2vh;
+}
+
 #ctrlButtons {
     list-style-type: none;
     position: absolute;
@@ -206,6 +247,10 @@ hr {
         height: 60vh;
     }
 
+    #expCanvas {
+        height: 50vh !important;
+    }
+
     .halfScroll {
         padding-top: 20vh;
     }
@@ -234,7 +279,7 @@ hr {
     top: 0;
     z-index: 100;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: #343a40;
 }
 
