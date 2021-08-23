@@ -51,13 +51,21 @@ resizeRendererToDisplaySize(renderer);
 window.addEventListener( 'resize', onWindowResize, false );
 
 function onWindowResize(){
-    let width = canvas.clientWidth;
-    let height = window.innerHeight;
+    width = canvas.clientWidth;
+    height = window.innerHeight;
     camera.aspect = width / (height);
     camera.zoom = ((width*height)/(height*height))/2;
     camera.updateProjectionMatrix();
-
     renderer.setSize( width, height );
+    if(window.innerWidth < 767)
+    {
+        width = canvas.clientWidth;
+        height = window.innerHeight / 2;
+        camera.aspect = width / (height);
+        camera.zoom = ((width*height)/(height*height))/2;
+        camera.updateProjectionMatrix();
+        renderer.setSize( width, height );
+    }
 }
 
 scene.background = null;

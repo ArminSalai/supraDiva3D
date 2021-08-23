@@ -26,7 +26,7 @@ let width = canvas.clientWidth;
 let height = canvas.clientHeight;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
-camera.position.set(60, 24, -15);
+camera.position.set(60, 36, -15);
 camera.lookAt(0, 12, 0);
 camera.zoom = ((width * height) / (height * height)) / 7;
 camera.updateProjectionMatrix();
@@ -125,6 +125,39 @@ gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
     start: "top top+=400",
     end: "end+=800 +=800",
     scrub: true
+}});
+
+const leftSides = gsap.utils.toArray('.leftSide');
+leftSides.forEach(box => {
+  gsap.from(box, { 
+    x: -1000,
+    scrollTrigger: {
+      trigger: box,
+      start: "top top+=500",
+      end: "bottom-=400 bottom",
+      scrub: 1
+    }
+  })
+});
+
+const texts = gsap.utils.toArray('.text-left');
+texts.forEach(box => {
+  gsap.from(box, { 
+    y: 1000,
+    scrollTrigger: {
+      trigger: box,
+      start: "top-=1000 top+=700",
+      end: "bottom-=1000 bottom",
+      scrub: 2
+    }
+  })
+});
+
+gsap.from(".rightSide", {x: 1000, scrollTrigger: {
+    trigger: ".rightSide",
+    start: "top top+=500",
+    end: "bottom-=400 bottom",
+    scrub: true,
 }});
 
 document.querySelector(".topIcon").addEventListener("click", function() {gsap.to(window, { scrollTo: 0, duration: 1, ease:"power2.inOut" });});

@@ -91,6 +91,39 @@ gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
     scrub: true
 }});
 
+const leftSides = gsap.utils.toArray('.leftSide');
+leftSides.forEach(box => {
+  gsap.from(box, { 
+    x: -1000,
+    scrollTrigger: {
+      trigger: box,
+      start: "top top+=500",
+      end: "bottom-=400 bottom",
+      scrub: 1
+    }
+  })
+});
+
+const texts = gsap.utils.toArray('.text-left');
+texts.forEach(box => {
+  gsap.from(box, { 
+    y: 1000,
+    scrollTrigger: {
+      trigger: box,
+      start: "top-=1000 top+=700",
+      end: "bottom-=1000 bottom",
+      scrub: 2
+    }
+  })
+});
+
+gsap.from(".rightSide", {x: 1000, scrollTrigger: {
+    trigger: ".rightSide",
+    start: "top top+=500",
+    end: "bottom-=400 bottom",
+    scrub: true,
+}});
+
 scene.background = null;
 
 renderer.setSize(width, height);

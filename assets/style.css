@@ -114,6 +114,12 @@ canvas {
     border-radius: 1em;
 }
 
+.rightSide {
+    background: radial-gradient(#f22e60 20%, #f40609);
+    background-attachment: fixed;
+    border-radius: 1em;
+}
+
 footer {
     z-index: 5;
 }
@@ -244,6 +250,10 @@ hr {
 
     #expCanvas {
         height: 50vh !important;
+        background: linear-gradient(0deg,#222, #333);
+        transform: translateY(-25vh);
+        border-top: solid white 1px;
+        border-bottom: solid white 1px;
     }
 
     .halfScroll {
@@ -255,6 +265,7 @@ hr {
 
     .touchable {
         height: 60vh;
+        width: 60vw;
     }
 }
 
