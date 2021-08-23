@@ -7,6 +7,11 @@ body {
     font-size: 1em;
 }
 
+#loaderLoop {
+    width: 7vw;
+    height: 7vw;
+}
+
 html {
     margin: 0;
     height: 100%;
@@ -23,6 +28,7 @@ html {
 
 nav {
     z-index: 3;
+    box-shadow: 0px 2px 10px #111;
 }
 
 .hero2 {
@@ -77,15 +83,6 @@ nav {
     background-color: #111111aa;
     backdrop-filter: blur(4px);
 }
-
-
-
-.heLY {
-    height: 1000vh;
-    width: 100%;
-}
-
-
 
 #replayButton {
     width: 8vh;
@@ -179,8 +176,7 @@ hr {
     background-size: 30%;
     background-repeat: no-repeat;
     background-position: center;
-    rotate: -90deg;
-    transform: translateY(-5vh);
+    transform: rotateZ(-90deg) translateY(-5vh);
     border-bottom-right-radius:2vh;
     border-bottom-left-radius:2vh;
 }
@@ -195,8 +191,7 @@ hr {
     background-size: 30%;
     background-repeat: no-repeat;
     background-position: center;
-    rotate: 90deg;
-    transform: translateY(-5vh);
+    transform: rotate(90deg) translateY(-5vh);
     border-bottom-right-radius:2vh;
     border-bottom-left-radius:2vh;
 }
@@ -277,7 +272,16 @@ hr {
 .screen {
     position: fixed;
     top: 0;
-    z-index: 100;
+    z-index: 7;
+    width: 100%;
+    height: 100%;
+    background-color: #343a40;
+}
+
+.screenForObjs {
+    position: absolute;
+    top: 0;
+    z-index: 2;
     width: 100%;
     height: 100%;
     background-color: #343a40;
@@ -296,4 +300,9 @@ hr {
     position: absolute;
     top:30%;
     left: 40vw;
+}
+
+#PageContainer {
+    z-index: 5;
+    box-shadow: inset 0px 1px 20px #252525;
 }

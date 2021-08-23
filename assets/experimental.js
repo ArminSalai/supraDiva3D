@@ -11,13 +11,11 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
-let loadLine = gsap.timeline({},
-    { smoothChildTiming: true });
-loadLine.to("#sq1", { rotationZ: 45, x: "7vw", y: "3vw", duration: 0.5, ease: "power1.inOut" })
-    .to("#sq2", { rotationZ: -45, x: "-7vw", y: "3vw", delay: "-0.5", duration: 0.5, ease: "power1.inOut" })
-    .to("#sq1", { x: "0vw", duration: 0.5, ease: "power2.inOut" })
-    .to("#sq2", { x: "0vw", delay: "-0.5", duration: 0.5, ease: "power2.inOut" })
-    .to(".screen", { y: "100vh", duration: 0.5, ease: "sine.inOut" });
+if(played) {
+    let loadLine = gsap.timeline({},
+        { smoothChildTiming: true });
+    loadLine.to(".screen", { y: "100vh", delay:1, duration: 0.5, ease: "sine.inOut" });
+}
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();

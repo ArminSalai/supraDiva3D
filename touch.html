@@ -83,12 +83,11 @@
                 </li>
             </ul>
         </div>
-        <div class="whte">
-            <div class="upScroll d-flex">
-                <span class="topIcon p-5"></span>
-            </div>
+        <div class="upScroll d-flex">
+            <span class="topIcon p-5"></span>
         </div>
-        <div id="PageContainer" class="contaiener">
+        <div id="PageContainer" class="container-flex">
+            <div class="whte"></div>
             <div class="row text-light justify-content-center m-0">
                 <div class="col-md-4 leftSide"></div>
                 <div class="col-md-6 text-center">
@@ -234,14 +233,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollToPlugin.min.js"></script>
         <script type="module" src="./assets/touch.js"></script>
         <div id="loadingScreen">
-            <div class="screen">
+            <div class="screen d-flex justify-content-center align-items-center">
                 <div class="load">
-                    <img class="animated" id="sq1" src="assets/Frame 1Square1.svg" />
-                    <img class="animated" id="sq2" src="assets/Frame 2Square2.svg" />
+                    <img id="loaderLoop" src="assets/loadingAnim.gif"/>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

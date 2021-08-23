@@ -12,17 +12,9 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
-function animateLoad() {
-    let loadLine = gsap.timeline({},
-        { smoothChildTiming: true });
-    loadLine.to("#sq1", { rotationZ: 45, x: "7vw", y: "3vw", duration: 0.5, ease: "sine.out" })
-        .to("#sq2", { rotationZ: -45, x: "-7vw", y: "3vw", delay: "-0.5", duration: 0.5, ease: "sine.out" })
-        .to("#sq1", { x: "0vw", duration: 0.5, ease: "sine.out" })
-        .to("#sq2", { x: "0vw", delay: "-0.5", duration: 0.5, ease: "sine.out" })
-        .to(".screen", { y: "100vh", duration: 0.5, ease: "sine.inOut" });
-}
-
-animateLoad();
+let loadLine = gsap.timeline({},
+    { smoothChildTiming: true });
+loadLine.to(".screen", { y: "100vh", delay:1, duration: 0.5, ease: "sine.inOut" });
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
@@ -224,6 +216,22 @@ function play() {
     }
 };
 
+function loadBetweenModels() {
+    let gif = document.createElement("img");
+    gif.setAttribute("src", "assets/loadingAnim.gif");
+    gif.setAttribute("id", "loaderLoop");
+    let load = document.createElement("div");
+    load.setAttribute("class", "load");
+    load.appendChild(gif);
+    let screen = document.createElement("div");
+    screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
+    screen.appendChild(load);
+    let loading = document.createElement("div");
+    loading.setAttribute("id", "loading");
+    let bDrop = document.querySelector("#backDrop");
+    bDrop.appendChild(screen);
+}
+
 var objectIndex = 0;
 
 var initial = 1;
@@ -239,6 +247,16 @@ leftArr.addEventListener('click', function() {
         mobil = glb.scene;
         scene.add(mobil);
         mobil.rotation.y = Math.PI;
+        }, function (xhr) {
+            loadBetweenModels();
+            function remove() {
+                let elements = document.getElementsByClassName("screenForObjs");
+                while (elements.length > 0) elements[0].remove();
+            }
+            if ((xhr.loaded / xhr.total) == 1) {
+                setTimeout(remove, 1500);
+                setTimeout(play, 1800);
+            }
         });
     }
     else
@@ -249,6 +267,16 @@ leftArr.addEventListener('click', function() {
         scene.add(mobil);
         mobil.rotation.y = Math.PI;
         mobil.scale.set(1.5,1.5,1.5);
+        }, function (xhr) {
+            loadBetweenModels();
+            function remove() {
+                let elements = document.getElementsByClassName("screenForObjs");
+                while (elements.length > 0) elements[0].remove();
+            }
+            if ((xhr.loaded / xhr.total) == 1) {
+                setTimeout(remove, 1500);
+                setTimeout(play, 1800);
+            }
         });
     }
 });
@@ -265,6 +293,16 @@ rightArr.addEventListener('click', function() {
         mobil.rotation.y = Math.PI;
         if(objectIndex == 2)
             mobil.scale.set(1.5,1.5,1.5);
+        }, function (xhr) {
+            loadBetweenModels();
+            function remove() {
+                let elements = document.getElementsByClassName("screenForObjs");
+                while (elements.length > 0) elements[0].remove();
+            }
+            if ((xhr.loaded / xhr.total) == 1) {
+                setTimeout(remove, 1500);
+                setTimeout(play, 1800);
+            }
         });
     }
     else
@@ -274,6 +312,16 @@ rightArr.addEventListener('click', function() {
         mobil = glb.scene;
         scene.add(mobil);
         mobil.rotation.y = Math.PI;
+        }, function (xhr) {
+            loadBetweenModels();
+            function remove() {
+                let elements = document.getElementsByClassName("screenForObjs");
+                while (elements.length > 0) elements[0].remove();
+            }
+            if ((xhr.loaded / xhr.total) == 1) {
+                setTimeout(remove, 1500);
+                setTimeout(play, 1800);
+            }
         });
     }
 });
@@ -293,7 +341,7 @@ if(initial == 1)
         }
         if ((xhr.loaded / xhr.total) == 1) {
             setTimeout(remove, 1500);
-            setTimeout(play, 2000);
+            setTimeout(play, 1800);
         }
     });
 }

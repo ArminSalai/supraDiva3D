@@ -12,13 +12,11 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
-let loadLine = gsap.timeline({},
-    { smoothChildTiming: true });
-loadLine.to("#sq1", { rotationZ: 45, x: "7vw", y: "3vw", duration: 0.5, ease: "power1.inOut" })
-    .to("#sq2", { rotationZ: -45, x: "-7vw", y: "3vw", delay: "-0.5", duration: 0.5, ease: "power1.inOut" })
-    .to("#sq1", { x: "0vw", duration: 0.5, ease: "power2.inOut" })
-    .to("#sq2", { x: "0vw", delay: "-0.5", duration: 0.5, ease: "power2.inOut" })
-    .to(".screen", { y: "100vh", duration: 0.5, ease: "sine.inOut" });
+if(played) {
+    let loadLine = gsap.timeline({},
+        { smoothChildTiming: true });
+    loadLine.to(".screen", { y: "100vh", delay:1, duration: 0.5, ease: "sine.inOut" });
+}
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
@@ -28,7 +26,7 @@ let height = canvas.clientHeight;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
 camera.position.set(60, 18, -15);
-camera.lookAt(0, 0, 0);
+camera.lookAt(0, 12, 0);
 camera.zoom = ((width * height) / (height * height)) / 7;
 camera.updateProjectionMatrix();
 scene.add(camera);
@@ -109,6 +107,7 @@ renderer.shadowMap = true;
 
 const constrols = new OrbitControls(camera, document.querySelector(".touchable"));
 constrols.enablePan = false;
+constrols.target.set(0, 12, 0);
 
 function resizeRendererToDisplaySize(renderer) {
     const needResize = canvas.width !== width || canvas.height !== height;

@@ -13,11 +13,7 @@ gsap.registerPlugin(CSSRulePlugin);
 
 let loadLine = gsap.timeline({},
     { smoothChildTiming: true });
-loadLine.to("#sq1", { rotationZ: 45, x: "7vw", y: "3vw", duration: 0.5, ease: "sine.out" })
-    .to("#sq2", { rotationZ: -45, x: "-7vw", y: "3vw", delay: "-0.5", duration: 0.5, ease: "sine.out" })
-    .to("#sq1", { x: "0vw", duration: 0.5, ease: "sine.out" })
-    .to("#sq2", { x: "0vw", delay: "-0.5", duration: 0.5, ease: "sine.out" })
-    .to(".screen", { y: "100vh", duration: 0.5, ease: "sine.inOut" });
+loadLine.to(".screen", { y: "100vh", delay: 1, duration: 0.5, ease: "sine.inOut" });
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
