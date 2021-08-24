@@ -269,11 +269,8 @@ hr {
     }
 
     #expCanvas {
-        height: 50vh !important;
+        height: 100vh !important;
         background: transparent;
-        transform: translateY(-25vh);
-        border-top: solid white 1px;
-        border-bottom: solid white 1px;
     }
 
     .halfScroll {

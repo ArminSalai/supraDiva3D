@@ -158,7 +158,7 @@ gsap.from(".rightSide", {x: 1000, scrollTrigger: {
 }});
 
 let width = canvas.clientWidth;
-let height = canvas.clientHeight;
+let height = window.innerHeight * 0.8;
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
 camera.position.set(3, 14, 26);
 camera.lookAt(0, 0, 0);

@@ -20,7 +20,7 @@ const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
 
 let width = canvas.clientWidth;
-let height = canvas.clientHeight;
+let height = window.innerHeight * 0.8;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
 camera.position.set(58, 30, -10);

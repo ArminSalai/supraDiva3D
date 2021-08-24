@@ -60,7 +60,7 @@ function onWindowResize(){
     if(window.innerWidth < 767)
     {
         width = canvas.clientWidth;
-        height = window.innerHeight / 2;
+        height = window.innerHeight;
         camera.aspect = width / (height);
         camera.zoom = ((width*height)/(height*height))/2;
         camera.updateProjectionMatrix();

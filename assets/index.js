@@ -1,7 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
-import gsapCore, { gsap } from './gsap-core.js';
+import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
 import * as ScrollTrigger from './ScrollTrigger.js';
@@ -156,7 +156,7 @@ gsap.from(".rightSide", {x: 1000, scrollTrigger: {
 }});
 
 let width = canvas.clientWidth;
-let height = canvas.clientHeight;
+let height = window.innerHeight * 0.8;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
 camera.position.set(3, 10, 26);
