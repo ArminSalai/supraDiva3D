@@ -161,7 +161,7 @@ let width = canvas.clientWidth;
 let height = window.innerHeight * 0.8;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
-camera.position.set(3, 10, 26);
+camera.position.set(0, 0, 27);
 camera.lookAt(0, 0, 0);
 camera.zoom = ((width*height)/(height*height))/4;
 camera.updateProjectionMatrix();
@@ -172,8 +172,6 @@ const renderer = new THREE.WebGLRenderer({
     alpha: true,
     antialias: true
 });
-
-RectAreaLightUniformsLib.init();
 
 scene.background = null;
 
@@ -244,34 +242,28 @@ rotateButton.addEventListener("click", function () {
     }
 });
 
-const gLight = new THREE.PointLight(0x979DA6, 19 / 3, 300);
-gLight.position.set(10, 12, 15);
-gLight.castShadow = true;
-scene.add(gLight);
+RectAreaLightUniformsLib.init();
 
-const yLight = new THREE.PointLight(0xF2E4C3, 3, 200);
-yLight.position.set(-15, 12, -21);
-yLight.castShadow = true;
-scene.add(yLight);
+const greyLight = new THREE.RectAreaLight(0x979DA6, 35, 25, 25);
+greyLight.position.set(14, 22, 17);
+greyLight.lookAt(0, 3, 0);
+scene.add(greyLight);
 
-const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 40, 90, 0, 1);
-backLight.position.set(-10, -12, 18);
-backLight.lookAt(5, 0, 10)
+const yellowLight = new THREE.RectAreaLight(0xF2EED3, 40, 13, 13);
+yellowLight.position.set(-25, 2, 10);
+yellowLight.lookAt(0, -10, 0);
+scene.add(yellowLight);
+
+const roughnessLight = new THREE.PointLight(0xffffff, 5, 200);
+roughnessLight.position.set(0, -25, 8);
+scene.add(roughnessLight);
+
+const backLight = new THREE.SpotLight(0x979DA6, 5, 40, 80, 0, 1);
+backLight.position.set(0, -14, -26);
 scene.add(backLight);
 
-const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.6);
-scene.add(hLight);
-
-const areaLight = new THREE.RectAreaLight(0xe6d1ff, 4, 18, 16);
-areaLight.rotation.y += 2;
-areaLight.position.set(3, 10, -3);
-areaLight.lookAt(0, 0, 0);
-scene.add(areaLight);
-
-const secondaryBackLight = new THREE.RectAreaLight(0xffffff, 8, 8, 8);
-secondaryBackLight.position.set(10, -15, -10);
-secondaryBackLight.lookAt(0, 0, 0);
-scene.add(secondaryBackLight);
+const hemiLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.5);
+scene.add(hemiLight);
 
 var mobil;
 
@@ -291,7 +283,8 @@ const loader = new GLTFLoader()
 loader.load("assets/models/Multi.glb", function (glb) {
     mobil = glb.scene;
     scene.add(mobil);
-    mobil.rotation.y = -2.3;
+    mobil.rotation.y = -Math.PI/2;
+    mobil.rotation.x = Math.PI/2;
     window.scrollTo(0, 0);
 }, function (xhr) {
     function remove() {

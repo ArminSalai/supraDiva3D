@@ -1,6 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
@@ -159,7 +160,7 @@ let width = canvas.clientWidth;
 let height = window.innerHeight * 0.8;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
-camera.position.set(3, 10, 26);
+camera.position.set(0, 0, 27);
 camera.lookAt(0, 0, 0);
 camera.zoom = ((width*height)/(height*height))/4;
 camera.updateProjectionMatrix();
@@ -240,37 +241,28 @@ rotateButton.addEventListener("click", function () {
     }
 });
 
-const gLight = new THREE.PointLight(0x979DA6, 19 / 2, 300);
-gLight.position.set(19, 10, 14);
-gLight.castShadow = true;
-scene.add(gLight);
+RectAreaLightUniformsLib.init();
 
-const yLight = new THREE.PointLight(0xF2EED3, 10 / 2, 200);
-yLight.position.set(-20, 12, -1);
-yLight.castShadow = true;
-scene.add(yLight);
+const greyLight = new THREE.RectAreaLight(0x979DA6, 55, 15, 15);
+greyLight.position.set(18, 22, 17);
+greyLight.lookAt(0, 3, 0);
+scene.add(greyLight);
 
-const roughnessLight1 = new THREE.SpotLight(0xffffff, 5 / 8, 40, 80, 0, 1);
-roughnessLight1.position.set(0, -10, -18);
-scene.add(roughnessLight1);
+const yellowLight = new THREE.RectAreaLight(0xF2EED3, 40, 13, 13);
+yellowLight.position.set(-25, 2, 10);
+yellowLight.lookAt(0, -10, 0);
+scene.add(yellowLight);
 
-const roughnessLight2 = new THREE.SpotLight(0xffffff, 5 / 4, 40, 80, 0, 1);
-roughnessLight2.position.set(0, -10, 20);
-roughnessLight2.rotateOnWorldAxis("x", Math.PI);
-scene.add(roughnessLight2);
+const roughnessLight = new THREE.PointLight(0xffffff, 1, 200);
+roughnessLight.position.set(0, -20, -3);
+scene.add(roughnessLight);
 
 const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
-backLight.position.set(0, -10, 10);
+backLight.position.set(0, 11, -16);
 scene.add(backLight);
 
-const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.45);
-scene.add(hLight);
-
-
-const areaLight = new THREE.RectAreaLight(0xffffff, 20, 14, 14);
-areaLight.position.set(-5, 10, -5);
-areaLight.lookAt(0, 0, 0);
-scene.add(areaLight);
+const hemiLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 2);
+scene.add(hemiLight);
 
 var played = false;
 
@@ -290,6 +282,7 @@ loader.load("assets/models/DivaGrey.glb", function (glb) {
     mobil = glb.scene;
     scene.add(mobil);
     window.scrollTo(0, 0);
+    mobil.rotation.x = Math.PI/2;
 }, function (xhr) {
     function remove() {
         let loadScreen = document.getElementById("loadingScreen");

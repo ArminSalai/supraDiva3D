@@ -320,8 +320,10 @@ leftArr.addEventListener('click', function() {
         objectIndex = objectIndex - 1;
         loader.load("assets/models/" + objectNames[objectIndex], function (glb) {
         mobil = glb.scene;
+        if(objectIndex == 0) {
+            mobil.rotation.y = Math.PI;
+        }
         scene.add(mobil);
-        mobil.rotation.y = Math.PI;
         }, function (xhr) {
             loadBetweenModels();
             function remove() {
@@ -340,8 +342,7 @@ leftArr.addEventListener('click', function() {
         loader.load("assets/models/" + objectNames[objectIndex], function (glb) {
         mobil = glb.scene;
         scene.add(mobil);
-        mobil.rotation.y = Math.PI;
-        mobil.scale.set(1.5,1.5,1.5);
+        mobil.scale.set(1.1,1.1,1.1);
         }, function (xhr) {
             loadBetweenModels();
             function remove() {
@@ -354,6 +355,18 @@ leftArr.addEventListener('click', function() {
             }
         });
     }
+    if(objectIndex == 0)
+    {
+        document.querySelector("#chargerName").innerHTML = "supraCharger II";
+    }
+    else if(objectIndex == 1)
+    {
+        document.querySelector("#chargerName").innerHTML = "supraCharger";
+    }
+    else
+    {
+        document.querySelector("#chargerName").innerHTML = "supraCharger <sup> eco</sup>";
+    }
 });
 
 var rightArr = document.querySelector(".rightArrow");
@@ -365,9 +378,8 @@ rightArr.addEventListener('click', function() {
         loader.load("assets/models/" + objectNames[objectIndex], function (glb) {
         mobil = glb.scene;
         scene.add(mobil);
-        mobil.rotation.y = Math.PI;
         if(objectIndex == 2)
-            mobil.scale.set(1.5,1.5,1.5);
+            mobil.scale.set(1.1,1.1,1.1);
         }, function (xhr) {
             loadBetweenModels();
             function remove() {
@@ -385,8 +397,8 @@ rightArr.addEventListener('click', function() {
         objectIndex = 0;
         loader.load("assets/models/" + objectNames[objectIndex], function (glb) {
         mobil = glb.scene;
-        scene.add(mobil);
         mobil.rotation.y = Math.PI;
+        scene.add(mobil);
         }, function (xhr) {
             loadBetweenModels();
             function remove() {
@@ -398,6 +410,18 @@ rightArr.addEventListener('click', function() {
                 setTimeout(play, 1800);
             }
         });
+    }
+    if(objectIndex == 0)
+    {
+        document.querySelector("#chargerName").innerHTML = "supraCharger II";
+    }
+    else if(objectIndex == 1)
+    {
+        document.querySelector("#chargerName").innerHTML = "supraCharger";
+    }
+    else
+    {
+        document.querySelector("#chargerName").innerHTML = "supraCharger <sup> eco</sup>";
     }
 });
 

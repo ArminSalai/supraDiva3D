@@ -255,7 +255,22 @@ hr {
     overflow: hidden;
 }
 
+.deviceName {
+    position: absolute;
+    left: 6vw;
+    bottom: 5vh;
+    border-radius: 1em;
+    font: 1.5em 'Titillium Web', sans-serif;
+    background-color: #10101090;
+}
+
 @media screen and (max-width: 767px) {
+    .deviceName {
+        left: auto;
+        right: auto;
+        bottom: auto;
+        top: 2vh;
+    }
     #ctrlButtons {
         position: relative;
         bottom: 5vh;
