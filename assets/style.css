@@ -153,6 +153,8 @@ footer {
 .sub-title {
     color: #f22e60;
     font: 3em Verdana, sans-serif;
+    overflow: hidden;
+    height: 3em;
 }
 
 hr {
@@ -170,6 +172,11 @@ hr {
     width: 4em;
     height: 4em;
     border-radius: 20%;
+}
+
+.bottomText {
+    color: #ccc;
+    font: 2em 'Titillium Web', sans-serif;
 }
 
 .leftArrow {
@@ -235,6 +242,19 @@ hr {
     background-image: url("./hand-cursor-256.png");
 }
 
+.show > .dropdown-menu {
+    max-height: 800px;
+    visibility: visible;
+  }
+    
+.dropdown-menu {
+    display: block;
+    max-height: 0;
+    visibility: hidden;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+}
+
 @media screen and (max-width: 767px) {
     #ctrlButtons {
         position: relative;
@@ -250,7 +270,7 @@ hr {
 
     #expCanvas {
         height: 50vh !important;
-        background: linear-gradient(0deg,#222, #333);
+        background: transparent;
         transform: translateY(-25vh);
         border-top: solid white 1px;
         border-bottom: solid white 1px;
@@ -265,7 +285,7 @@ hr {
 
     .touchable {
         height: 60vh;
-        width: 60vw;
+        width: 40vw;
     }
 }
 
@@ -274,6 +294,8 @@ hr {
     height: 6em;
     background: radial-gradient(#f22e60, #f40609);
     border-radius: 2em;
+    object-fit: cover;
+    transform-origin: bottom;
 }
 
 #backGround {

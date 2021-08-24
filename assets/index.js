@@ -1,7 +1,7 @@
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
 import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
-import { gsap } from './gsap-core.js';
+import gsapCore, { gsap } from './gsap-core.js';
 import * as CSSPlugin from './CSSPlugin.js';
 import * as CSSRulePlugin from './CSSRulePlugin.js';
 import * as ScrollTrigger from './ScrollTrigger.js';
@@ -92,6 +92,47 @@ leftSides.forEach(box => {
       scrub: 1
     }
   })
+});
+
+const titles = gsap.utils.toArray(".sub-title");
+titles.forEach(box => {
+    gsap.from(box, {
+            y: 100,
+            opacity: 0,
+            ease: "power4",
+            scrollTrigger: {
+                trigger: box,
+                start: "top-=100 top+=500",
+                end: "bottom-=200 bottom",
+                scrub: 1
+            }
+    })
+});
+
+const reds = gsap.utils.toArray(".red");
+reds.forEach(box => {
+    gsap.from(box, {
+            yPercent: 100,
+            scale: 0,
+            scrollTrigger: {
+                trigger: box,
+                start: "top-=200 top+=700",
+                end: "bottom bottom",
+                scrub: 1
+            }
+    })
+});
+
+gsap.from("h1", {
+    y: 100,
+    opacity: 0,
+    ease: "power4",
+    scrollTrigger: {
+        trigger: "h1",
+        start: "top-=100 top+=500",
+        end: "bottom-=200 bottom",
+        scrub: 1
+    }
 });
 
 const texts = gsap.utils.toArray('.text-left');
