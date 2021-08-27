@@ -12,6 +12,16 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
+let Cook;
+
+document.querySelector("#agree").addEventListener("click", function() {
+    document.cookie = "clicked; path=/";
+    Cook = document.cookie;
+    alert(Cook);
+    console.log(Cook);
+    document.querySelector("#cookie").remove();
+});
+
 let loadLine = gsap.timeline({},
     { smoothChildTiming: true });
 loadLine.to(".screen", { y: "100vh", delay: 1, duration: 0.5, ease: "sine.inOut" });
@@ -136,6 +146,11 @@ gsap.from("h1", {
     }
 });
 
+if(document.cookie !== "clicked")
+    gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
+else
+    document.querySelector("#cookie").remove();
+
 const texts = gsap.utils.toArray('.text-left');
 texts.forEach(box => {
   gsap.from(box, { 
@@ -149,12 +164,18 @@ texts.forEach(box => {
   })
 });
 
-gsap.from(".rightSide", {x: 1000, scrollTrigger: {
-    trigger: ".rightSide",
-    start: "top top+=500",
-    end: "bottom-=400 bottom",
-    scrub: true,
-}});
+const rightSides = gsap.utils.toArray('.rightSide');
+rightSides.forEach(box => {
+  gsap.from(box, { 
+    x: 1000,
+    scrollTrigger: {
+      trigger: box,
+      start: "top top+=500",
+      end: "bottom-=400 bottom",
+      scrub: 1
+    }
+  })
+});
 
 let width = canvas.clientWidth;
 let height = window.innerHeight * 0.8;

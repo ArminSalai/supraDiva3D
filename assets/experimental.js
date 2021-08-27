@@ -11,11 +11,26 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
+let Cook;
+
+document.querySelector("#agree").addEventListener("click", function() {
+    document.cookie = "clicked; path=/";
+    Cook = document.cookie;
+    alert(Cook);
+    console.log(Cook);
+    document.querySelector("#cookie").remove();
+});
+
 if(played) {
     let loadLine = gsap.timeline({},
         { smoothChildTiming: true });
     loadLine.to(".screen", { y: "100vh", delay:1, duration: 0.5, ease: "sine.inOut" });
 }
+
+if(document.cookie !== "clicked")
+    gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
+else
+    document.querySelector("#cookie").remove();
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();

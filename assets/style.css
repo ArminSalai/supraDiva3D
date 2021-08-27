@@ -109,16 +109,37 @@ canvas {
 }
 
 .leftSide {
-    background: radial-gradient(#f22e60 20%, #f40609);
-    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
     border-radius: 1em;
+    height: 130vh;
+    max-width: 60%;
 }
 
 .rightSide {
-    background: radial-gradient(#f22e60 20%, #f40609);
-    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
     border-radius: 1em;
+    height: 130vh;
+    max-width: 60%;
 }
+
+#guiding {
+    background-image: url("francesco-ungaro-s8Lttiux5xs-unsplash.jpg");
+}
+
+#cpu {
+    background-image: url("brian-kostiuk-S4jSvcHYcOs-unsplash.jpg");
+}
+
+#communication {
+    background-image: url("brooke-cagle--uHVRvDr7pg-unsplash.jpg");
+    background-position-x: 80%;
+}
+
+
 
 footer {
     z-index: 5;
@@ -154,7 +175,7 @@ footer {
     color: #f22e60;
     font: 3em Verdana, sans-serif;
     overflow: hidden;
-    height: 3em;
+    height: auto;
 }
 
 hr {
@@ -255,6 +276,16 @@ hr {
     overflow: hidden;
 }
 
+.mberLogo {
+    width: 3em;
+    height: 3em;
+}
+
+.awrdLogo {
+    width: 4em;
+    height: 4em;
+}
+
 .deviceName {
     position: absolute;
     left: 6vw;
@@ -262,6 +293,30 @@ hr {
     border-radius: 1em;
     font: 1.5em 'Titillium Web', sans-serif;
     background-color: #10101090;
+}
+
+#fbLogo {
+    width: 3em;
+    height: 3em;
+}
+
+#lInLogo {
+    width: 3em;
+    height: 3em;
+}
+
+#cookie {
+    background-color: #aa2438;
+    height: auto;
+    z-index: 100;
+    border-top: 1px solid white;
+    position: fixed;
+    bottom: -100%;
+    width: 100%;
+}
+
+#footerImg {
+    width: 100vw;
 }
 
 @media screen and (max-width: 767px) {
@@ -272,9 +327,10 @@ hr {
         top: 2vh;
     }
     #ctrlButtons {
-        position: relative;
+        position: absolute;
         bottom: 5vh;
-        right: 0;
+        right: auto;
+        left: auto;
     }
     footer {
         font-size: 1em !important;
@@ -299,19 +355,57 @@ hr {
         height: 60vh;
         width: 40vw;
     }
+
+    .leftSide {
+        height: 80vh;
+    }
+
+    .rightSide {
+        height: 80vh;
+    }
 }
 
 .red {
     width: 6em;
     height: 6em;
-    background: radial-gradient(#f22e60, #f40609);
+    background: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     border-radius: 2em;
     object-fit: cover;
     transform-origin: bottom;
 }
 
+#compassIcon {
+    background-image: url("compass-3-line.svg");
+}
+
+#mapIcon {
+    background-image: url("treasure-map-line.svg");
+}
+
+#infoIcon {
+    background-image: url("information-line.svg");
+}
+
+#editIcon {
+    background-image: url("image-edit-line.svg");
+}
+
+#macIcon {
+    background-image: url("mac-line.svg");
+}
+
+#storeIcon {
+    background-image: url("google-play-line.svg"), url("app-store-line.svg");
+    background-position: right top, left center;
+    background-size: 55%;
+}
+
 #backGround {
     background: linear-gradient(#343a40, #111);
+    width: 100vw;
 }
 
 .screen {

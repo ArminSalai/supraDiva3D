@@ -12,6 +12,16 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
+let Cook;
+
+document.querySelector("#agree").addEventListener("click", function() {
+    document.cookie = "clicked; path=/";
+    Cook = document.cookie;
+    alert(Cook);
+    console.log(Cook);
+    document.querySelector("#cookie").remove();
+});
+
 let loadLine = gsap.timeline({},
     { smoothChildTiming: true });
 loadLine.to(".screen", { y: "100vh", delay:1, duration: 0.5, ease: "sine.inOut" });
@@ -158,12 +168,23 @@ texts.forEach(box => {
   })
 });
 
-gsap.from(".rightSide", {x: 1000, scrollTrigger: {
-    trigger: ".rightSide",
-    start: "top top+=500",
-    end: "bottom-=400 bottom",
-    scrub: true,
-}});
+if(document.cookie !== "clicked")
+    gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
+else
+    document.querySelector("#cookie").remove();
+
+const rightSides = gsap.utils.toArray('.rightSide');
+rightSides.forEach(box => {
+  gsap.from(box, { 
+    x: 1000,
+    scrollTrigger: {
+      trigger: box,
+      start: "top top+=500",
+      end: "bottom-=400 bottom",
+      scrub: 1
+    }
+  })
+});
 
 
 scene.background = null;
@@ -236,48 +257,46 @@ rotateButton.addEventListener("click", function () {
 });
 
 const gLight = new THREE.PointLight(0x979DA6, 19 / 4, 300);
-gLight.position.set(16, 10, 14);
+gLight.position.set(19, 10, 50);
 gLight.castShadow = true;
 scene.add(gLight);
 
-const yLight = new THREE.PointLight(0xF2EED3, 10 / 4, 200);
-yLight.position.set(-10, 12, -23);
+const yLight = new THREE.PointLight(0xF2EED3, 10 / 2, 200);
+yLight.position.set(-15, 12, -58);
 yLight.castShadow = true;
 scene.add(yLight);
 
-const roughnessLight1 = new THREE.SpotLight(0xffffff, 5 / 8, 40, 80, 0, 1);
-roughnessLight1.position.set(0, -10, -18);
-scene.add(roughnessLight1);
-
-const roughnessLight2 = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
-roughnessLight2.position.set(-40, -5, 5);
-roughnessLight2.lookAt(0, 0, 0);
-scene.add(roughnessLight2);
-
-const topLight = new THREE.RectAreaLight(0xffddff, 20, 14, 14);
-topLight.position.set(-38, 25, 0);
-topLight.lookAt(0, 0, 0);
-scene.add(topLight);
-
-const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
-backLight.position.set(0, -10, 10);
+const backLight = new THREE.SpotLight(0xffffff, 5, 150, 150, 0, 1);
+backLight.position.set(-20, -30, 80);
+backLight.lookAt(0, 0, -30);
 scene.add(backLight);
 
-const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.6);
+const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 2);
 scene.add(hLight);
 
+RectAreaLightUniformsLib.init();
+
+const portLightFront = new THREE.RectAreaLight(0xffffff, 6, 30, 3);
+portLightFront.rotation.y = Math.PI / 2;
+portLightFront.position.set(50, -2, 0);
+scene.add(portLightFront);
+
+const portLightBack = new THREE.RectAreaLight(0xffffff, 18, 30, 3);
+portLightBack.rotation.y = -Math.PI / 2;
+portLightBack.position.set(-60, -8, 0);
+scene.add(portLightBack);
+
 const areaLight = new THREE.RectAreaLight(0xffffff, 20, 14, 14);
-areaLight.position.set(30, 10, 30);
+areaLight.position.set(-5, 12, 45);
 areaLight.lookAt(0, 0, 0);
 scene.add(areaLight);
 
-var mobil;
-
-
-const forEco = new THREE.RectAreaLight(0x979DA6, 20, 20, 20);
-forEco.position.set(45, 20, -13);
+const forEco = new THREE.RectAreaLight(0x979DA6, 20, 40, 20);
+forEco.position.set(45, 20, 0);
 forEco.lookAt(0, 11, 0);
 scene.add(forEco);
+
+var mobil;
 
 var played = false;
 

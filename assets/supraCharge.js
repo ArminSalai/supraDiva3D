@@ -12,6 +12,16 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
+let Cook;
+
+document.querySelector("#agree").addEventListener("click", function() {
+    document.cookie = "clicked; path=/";
+    Cook = document.cookie;
+    alert(Cook);
+    console.log(Cook);
+    document.querySelector("#cookie").remove();
+});
+
 if(played) {
     let loadLine = gsap.timeline({},
         { smoothChildTiming: true });
@@ -168,12 +178,23 @@ texts.forEach(box => {
   })
 });
 
-gsap.from(".rightSide", {x: 1000, scrollTrigger: {
-    trigger: ".rightSide",
-    start: "top top+=500",
-    end: "bottom-=400 bottom",
-    scrub: true,
-}});
+if(document.cookie !== "clicked")
+    gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
+else
+    document.querySelector("#cookie").remove();
+
+const rightSides = gsap.utils.toArray('.rightSide');
+rightSides.forEach(box => {
+  gsap.from(box, { 
+    x: 1000,
+    scrollTrigger: {
+      trigger: box,
+      start: "top top+=500",
+      end: "bottom-=400 bottom",
+      scrub: 1
+    }
+  })
+});
 
 renderer.setSize(width, height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -253,7 +274,7 @@ yLight.position.set(-15, 12, -58);
 yLight.castShadow = true;
 scene.add(yLight);
 
-const backLight = new THREE.SpotLight(0xffffff, 5, 100, 120, 0, 1);
+const backLight = new THREE.SpotLight(0xffffff, 5, 150, 150, 0, 1);
 backLight.position.set(-20, -30, 80);
 backLight.lookAt(0, 0, -30);
 scene.add(backLight);
