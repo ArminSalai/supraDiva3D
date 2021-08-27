@@ -16,8 +16,6 @@ let Cook;
 document.querySelector("#agree").addEventListener("click", function() {
     document.cookie = "clicked; path=/";
     Cook = document.cookie;
-    alert(Cook);
-    console.log(Cook);
     document.querySelector("#cookie").remove();
 });
 
