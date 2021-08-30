@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script rel="preload" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer async></script>
+    <script rel="preload" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" defer async></script>
+    <script rel="preload" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" defer async></script>
+    <script rel="preload" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollToPlugin.min.js" defer async></script>
+    <link rel="preconnect" src="https://threejsfundamentals.org">
+    <link rel="preload" as="image" href="assets/guidingOptimized.jpg">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usage Guide</title>
-    <link rel="stylesheet" href="assets/style.css" />
+    <title>User Guide</title>
+    <link rel="preload" as="style" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css"/>
     <link rel="icon" type="image/png" href="./assets/logo_tonwelt.svg">
+    <meta name="description" content="This page is a showcase of tonwelt's products, including their supraGuide and supraCharger devices">
 </head>
 <body id="expBody">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark container-fluid">
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="assets/logo_tonwelt.svg" height="50" /></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-              <span class="navbar-toggler-icon"></span>
+            <a name="brandicon" class="navbar-brand" href="#"><img alt="Brand Icon" src="assets/logo_tonwelt.svg" width="100" height="50"  height="50" loading="lazy"/></a>
+            <button class="navbar-toggler btn" aria-label="Toggle" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+                <a href="#">Toggle Navbar</a>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
                 <ul class="navbar-nav">
@@ -89,5 +94,8 @@
             </div>
         </div>
     </div>
+    <footer>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.css" defer async media="all">
+    </footer>
 </body>
 </html>

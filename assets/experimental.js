@@ -1,10 +1,11 @@
-import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { gsap } from './gsap-core.js';
-import * as CSSPlugin from './CSSPlugin.js';
-import * as CSSRulePlugin from './CSSRulePlugin.js';
-import * as ScrollTrigger from './ScrollTrigger.js';
+const CSSPlugin = await import('./CSSPlugin.js');
+const CSSRulePlugin = await import('./CSSRulePlugin.js');
+const ScrollTrigger = await import('./ScrollTrigger.js');
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -46,7 +47,8 @@ scene.add(camera);
 const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
-    antialias: true
+    antialias: true,
+    powerPreference: "high-performance"
 });
 
 RectAreaLightUniformsLib.init();
@@ -60,6 +62,8 @@ function resizeRendererToDisplaySize(renderer) {
 }
 
 resizeRendererToDisplaySize(renderer);
+
+THREE.Cache.enabled = true;
 
 window.addEventListener( 'resize', onWindowResize, false );
 
@@ -105,6 +109,7 @@ function play() {
 const loader = new GLTFLoader()
 loader.load("assets/models/test.glb", function (glb) {
     mixer = new THREE.AnimationMixer(glb.scene);
+    glb.scene.matrixAutoUpdate = false;
     var clip = glb.animations[ 0 ];
     var action = mixer.clipAction( clip );
     action.clampWhenFinished = true;

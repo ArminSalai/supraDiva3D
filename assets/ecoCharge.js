@@ -1,11 +1,11 @@
-import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
 import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { gsap } from './gsap-core.js';
-import * as CSSPlugin from './CSSPlugin.js';
-import * as CSSRulePlugin from './CSSRulePlugin.js';
-import * as ScrollTrigger from './ScrollTrigger.js';
+const CSSPlugin = await import('./CSSPlugin.js');
+const CSSRulePlugin = await import('./CSSRulePlugin.js');
+const ScrollTrigger = await import('./ScrollTrigger.js');
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -26,6 +26,54 @@ if(played) {
     loadLine.to(".screen", { y: "100vh", delay:1, duration: 0.5, ease: "sine.inOut" });
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+    var lazyloadImages;    
+  
+    if ("IntersectionObserver" in window) {
+      lazyloadImages = document.querySelectorAll(".lazy");
+      var imageObserver = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var image = entry.target;
+            image.classList.remove("lazy");
+            imageObserver.unobserve(image);
+          }
+        });
+      });
+  
+      lazyloadImages.forEach(function(image) {
+        imageObserver.observe(image);
+      });
+    } else {  
+      var lazyloadThrottleTimeout;
+      lazyloadImages = document.querySelectorAll(".lazy");
+      
+      function lazyload () {
+        if(lazyloadThrottleTimeout) {
+          clearTimeout(lazyloadThrottleTimeout);
+        }    
+  
+        lazyloadThrottleTimeout = setTimeout(function() {
+          var scrollTop = window.pageYOffset;
+          lazyloadImages.forEach(function(img) {
+              if(img.offsetTop < (window.innerHeight + scrollTop)) {
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+              }
+          });
+          if(lazyloadImages.length == 0) { 
+            document.removeEventListener("scroll", lazyload);
+            window.removeEventListener("resize", lazyload);
+            window.removeEventListener("orientationChange", lazyload);
+          }
+        }, 20);
+      }
+  
+      document.addEventListener("scroll", lazyload);
+      window.addEventListener("resize", lazyload);
+      window.addEventListener("orientationChange", lazyload);
+    }
+  })
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
@@ -43,7 +91,8 @@ scene.add(camera);
 const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
-    antialias: true
+    antialias: true,
+    powerPreference: "high-performance"
 });
 
 RectAreaLightUniformsLib.init();
@@ -115,6 +164,8 @@ function resizeRendererToDisplaySize(renderer) {
 }
 
 resizeRendererToDisplaySize(renderer);
+
+THREE.Cache.enabled = true;
 
 window.addEventListener( 'resize', onWindowResize, false );
 
@@ -257,6 +308,9 @@ rotateButton.addEventListener("click", function () {
         constrols.enableRotate = true;
     }
 });
+
+renderer.physicallyCorrectLights = true;
+
 const gLight = new THREE.PointLight(0x979DA6, 19 / 4, 300);
 gLight.position.set(19, 10, 50);
 gLight.castShadow = true;
@@ -350,6 +404,7 @@ function play() {
 const loader = new GLTFLoader()
 loader.load("assets/models/ecoCharger.glb", function (glb) {
     mobil = glb.scene;
+    mobil.matrixAutoUpdate = false;
     scene.add(mobil);
 }, function (xhr) {
     function remove() {
