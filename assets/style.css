@@ -12,12 +12,16 @@ body {
     height: 7vw;
 }
 
+.low-contrast {
+    text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+}
+
 html {
     margin: 0;
     height: 100%;
 }
 .hero {
-    background: radial-gradient(#19A1BD, #1A97B0, #007187, #0F6070);
+    background: #343a40;
     background-position: bottom;
 }
 
@@ -37,10 +41,6 @@ nav {
     top:0;
     width: 100%;
     height: 100vh;
-}
-
-.hero3 {
-    background: linear-gradient(#F26EF5,#A674E8);
 }
 
 .dvaSpace {
@@ -97,6 +97,11 @@ nav {
     background-repeat: no-repeat;
 }
 
+.lazy {
+    background-image: none;
+    background-color: #F1F1FA;
+}
+
 canvas {
     width: 100vw !important;
     height: 80vh;
@@ -115,6 +120,7 @@ canvas {
     border-radius: 1em;
     height: 130vh;
     max-width: 60%;
+    will-change: transform;
 }
 
 .rightSide {
@@ -124,18 +130,19 @@ canvas {
     border-radius: 1em;
     height: 130vh;
     max-width: 60%;
+    will-change: transform;
 }
 
 #guiding {
-    background-image: url("francesco-ungaro-s8Lttiux5xs-unsplash.jpg");
+    background-image: url("guidingOptimized.jpg");
 }
 
 #cpu {
-    background-image: url("brian-kostiuk-S4jSvcHYcOs-unsplash.jpg");
+    background-image: url("cpuOptimized.jpg");
 }
 
 #communication {
-    background-image: url("brooke-cagle--uHVRvDr7pg-unsplash.jpg");
+    background-image: url("communicationOptimized.jpg");
     background-position-x: 80%;
 }
 
@@ -176,6 +183,7 @@ footer {
     font: 3em Verdana, sans-serif;
     overflow: hidden;
     height: auto;
+    will-change: transform;
 }
 
 hr {
@@ -317,6 +325,7 @@ hr {
 
 #footerImg {
     width: 100vw;
+    height: auto;
 }
 
 @media screen and (max-width: 767px) {
@@ -325,7 +334,13 @@ hr {
         right: auto;
         bottom: auto;
         top: 2vh;
+        border-radius: 0.5em;
     }
+
+    h2 {
+        font-size: 1em !important;
+    }
+
     #ctrlButtons {
         position: absolute;
         bottom: 5vh;
@@ -352,7 +367,8 @@ hr {
     }
 
     .touchable {
-        height: 60vh;
+        align-self: center;
+        height: 30vh;
         width: 40vw;
     }
 
@@ -379,22 +395,27 @@ hr {
 
 #compassIcon {
     background-image: url("compass-3-line.svg");
+    will-change: transform;
 }
 
 #mapIcon {
     background-image: url("treasure-map-line.svg");
+    will-change: transform;
 }
 
 #infoIcon {
     background-image: url("information-line.svg");
+    will-change: transform;
 }
 
 #editIcon {
     background-image: url("image-edit-line.svg");
+    will-change: transform;
 }
 
 #macIcon {
     background-image: url("mac-line.svg");
+    will-change: transform;
 }
 
 #storeIcon {
@@ -408,13 +429,8 @@ hr {
     width: 100vw;
 }
 
-.screen {
-    position: fixed;
-    top: 0;
-    z-index: 7;
-    width: 100%;
-    height: 100%;
-    background-color: #343a40;
+.navbar-toggler a {
+    font-size: 0;
 }
 
 .screenForObjs {

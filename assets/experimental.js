@@ -1,10 +1,11 @@
-import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js';
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { gsap } from './gsap-core.js';
-import * as CSSPlugin from './CSSPlugin.js';
-import * as CSSRulePlugin from './CSSRulePlugin.js';
-import * as ScrollTrigger from './ScrollTrigger.js';
+const CSSPlugin = await import('./CSSPlugin.js');
+const CSSRulePlugin = await import('./CSSRulePlugin.js');
+const ScrollTrigger = await import('./ScrollTrigger.js');
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -46,7 +47,8 @@ scene.add(camera);
 const renderer = new THREE.WebGLRenderer({
     canvas,
     alpha: true,
-    antialias: true
+    antialias: true,
+    powerPreference: "high-performance"
 });
 
 RectAreaLightUniformsLib.init();
@@ -60,6 +62,8 @@ function resizeRendererToDisplaySize(renderer) {
 }
 
 resizeRendererToDisplaySize(renderer);
+
+THREE.Cache.enabled = true;
 
 window.addEventListener( 'resize', onWindowResize, false );
 
@@ -102,15 +106,45 @@ function play() {
     }
 };
 
-const loader = new GLTFLoader()
+function loadBetweenModels() {
+    let gif = document.createElement("img");
+    gif.setAttribute("src", "assets/loadingAnim.gif");
+    gif.setAttribute("id", "loaderLoop");
+    let load = document.createElement("div");
+    load.setAttribute("class", "load");
+    load.appendChild(gif);
+    let screen = document.createElement("div");
+    screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
+    screen.appendChild(load);
+    let loading = document.createElement("div");
+    loading.setAttribute("id", "loading");
+    let bDrop = document.querySelector("#mainFrame");
+    bDrop.appendChild(screen);
+  }
+  
+  const manager = new THREE.LoadingManager();
+  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+      loadBetweenModels();
+  };
+  
+  manager.onError = function ( url ) {
+      console.log( 'There was an error loading ' + url );
+  };
+
+const loader = new GLTFLoader(manager)
 loader.load("assets/models/test.glb", function (glb) {
     mixer = new THREE.AnimationMixer(glb.scene);
+    glb.scene.matrixAutoUpdate = false;
     var clip = glb.animations[ 0 ];
     var action = mixer.clipAction( clip );
     action.clampWhenFinished = true;
     action.setLoop( THREE.LoopOnce );
-    action.play().reset();
-    action.startAt(1.5);
+    manager.onLoad = function ( ) {
+        let elements = document.getElementsByClassName("screenForObjs");
+        while (elements.length > 0) elements[0].remove();
+        action.play().reset();
+        action.startAt(1);
+    };
     mixer.addEventListener( 'finished', function() {
         document.querySelector(".replayScreen").style.visibility = "visible";
         document.querySelector("#replayButton").addEventListener('click', function() {
@@ -128,15 +162,6 @@ loader.load("assets/models/test.glb", function (glb) {
     scene.add(mobil);
     body[0].style.overflowY = "auto";
     window.scrollTo(0, 0);
-}, function (xhr) {
-    function remove() {
-        let loadScreen = document.getElementById("loadingScreen");
-        loadScreen.remove();
-    }
-    if ((xhr.loaded / xhr.total) == 1) {
-        setTimeout(remove, 1500);
-        setTimeout(play, 1500);
-    }
 });
 
 var clock = new THREE.Clock();
