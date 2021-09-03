@@ -188,7 +188,7 @@ footer {
 
 hr {
     width: 85%;
-    border-color: white;
+    border-color: #111;
 }
 
 .controlButton {
@@ -204,7 +204,7 @@ hr {
 }
 
 .bottomText {
-    color: #ccc;
+    color: #333;
     font: 2em 'Titillium Web', sans-serif;
 }
 
@@ -328,6 +328,11 @@ hr {
     height: auto;
 }
 
+#moon {
+    width: 2em;
+    height: 2em;
+}
+
 @media screen and (max-width: 767px) {
     .deviceName {
         left: auto;
@@ -425,7 +430,8 @@ hr {
 }
 
 #backGround {
-    background: linear-gradient(#343a40, #111);
+    /*background: linear-gradient(#343a40, #111);*/
+    background: linear-gradient(#eee, #ccc);
     width: 100vw;
 }
 

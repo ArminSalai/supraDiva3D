@@ -1,0 +1,15 @@
+{
+    "short_name": "supra3D",
+    "name": "supraGuide3D",
+    "icons": [
+    {
+    "src":"/assets/logo_tonwelt.svg",
+    "sizes": "234.75x108.061",
+    "type": "image/png"
+    }
+    ],
+    "start_url": "/?utm_source=homescreen",
+    "background_color": "#aa2438",
+    "theme_color": "#aa2438",
+    "display": "standalone"
+  }

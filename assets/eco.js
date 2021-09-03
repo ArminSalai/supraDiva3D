@@ -339,17 +339,11 @@ function generateGradient() {
 
 generateGradient();
 
-
-var played = false;
-
 function play() {
-    if (!played) {
-        let body = document.getElementsByTagName("body");
-        played = true;
-        let tl = gsap.timeline({},
-            { smoothChildTiming: true });
-        tl.to(body[0], { overflowX: "hidden", overflowY: "auto" });
-    }
+  let body = document.getElementsByTagName("body");
+  let tl = gsap.timeline({},
+      { smoothChildTiming: true });
+  tl.to(body[0], { overflowX: "hidden", overflowY: "auto" });
 };
 
 function loadBetweenModels() {
@@ -376,6 +370,7 @@ manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
 manager.onLoad = function ( ) {
 	let elements = document.getElementsByClassName("screenForObjs");
     while (elements.length > 0) elements[0].remove();
+    play();
 };
 
 manager.onError = function ( url ) {

@@ -308,6 +308,8 @@ rotateButton.addEventListener("click", function () {
     }
 });
 
+renderer.physicallyCorrectLights = true;
+
 const gLight = new THREE.PointLight(0x979DA6, 19 / 4, 300);
 gLight.position.set(19, 10, 50);
 gLight.castShadow = true;
