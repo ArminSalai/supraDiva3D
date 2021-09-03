@@ -1,11 +1,11 @@
-const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
-import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js');
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { gsap } from './gsap-core.js';
-const CSSPlugin = await import('./CSSPlugin.js');
+const CSSPlugin = await import('./CSSPlugin.min.js');
 const CSSRulePlugin = await import('./CSSRulePlugin.js');
-const ScrollTrigger = await import('./ScrollTrigger.js');
+const ScrollTrigger = await import('./ScrollTrigger.min.js');
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -14,15 +14,15 @@ gsap.registerPlugin(CSSRulePlugin);
 
 let Cook;
 
+var header = new Headers();
+header.set('Content-Encoding', 'gzip');
+header.set('Accept-Encoding', 'gzip');
+
 document.querySelector("#agree").addEventListener("click", function() {
     document.cookie = "clicked; path=/";
     Cook = document.cookie;
     document.querySelector("#cookie").remove();
 });
-
-let loadLine = gsap.timeline({},
-    { smoothChildTiming: true });
-loadLine.to(".screen", { y: "100vh", delay: 1, duration: 0.5, ease: "sine.inOut" });
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
