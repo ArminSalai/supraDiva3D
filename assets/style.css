@@ -72,6 +72,7 @@ nav {
     z-index: 1;
     width:30vw;
     height: 80vh;
+    cursor: pointer;
 }
 
 .replayScreen {
@@ -95,6 +96,7 @@ nav {
     background-position: center;
     background-size: 80%;
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 .lazy {
@@ -171,6 +173,7 @@ footer {
     height: 3em;
     border-radius: 100%;
     background-image: url("./Frame 1.svg");
+    cursor: pointer;
 }
 
 .whte {
@@ -201,6 +204,7 @@ hr {
     width: 4em;
     height: 4em;
     border-radius: 20%;
+    cursor: pointer;
 }
 
 .bottomText {
@@ -409,6 +413,18 @@ hr {
 
     .rightSide {
         height: 80vh;
+    }
+
+    .leftArrow {
+        width: 15vh;
+        height: 7vh;
+        transform: rotateZ(-90deg) translateY(-4vh);
+    }
+
+    .rightArrow {
+        width: 15vh;
+        height: 7vh;
+        transform: rotateZ(90deg) translateY(-4vh);
     }
 }
 

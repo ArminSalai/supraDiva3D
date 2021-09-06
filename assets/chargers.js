@@ -151,7 +151,7 @@ let width = canvas.clientWidth;
 let height = window.innerHeight * 0.8;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
-camera.position.set(58, 30, -10);
+camera.position.set(48, 20, -10);
 camera.lookAt(0, 0, 0);
 camera.zoom = ((width * height) / (height * height)) / 7;
 camera.updateProjectionMatrix();

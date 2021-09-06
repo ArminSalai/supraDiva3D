@@ -362,7 +362,7 @@ const roughnessLight = new THREE.PointLight(0xffffff, 1, 200);
 roughnessLight.position.set(0, -20, -3);
 scene.add(roughnessLight);
 
-const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
+const backLight = new THREE.SpotLight(0xffffff, 30, 40, 80, 0, 1);
 backLight.position.set(0, 11, -16);
 scene.add(backLight);
 
@@ -471,7 +471,7 @@ loader.load("assets/models/eco.glb", function (glb) {
     mobil.matrixAutoUpdate = false;
     mobil.rotation.x = Math.PI/2;
     mobil.rotation.y = -Math.PI/2;
-    mobil.position.y -= 5;
+    mobil.position.x = 2.5;
     mobil.updateMatrix();
     window.scrollTo(0, 0);
 });

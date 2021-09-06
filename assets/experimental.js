@@ -20,7 +20,7 @@ header.set('Accept-Encoding', 'gzip');
 
 let mode = "light";
 let navB = document.querySelector("nav");
-let backG = document.querySelector("#backGround");
+let backG = document.querySelector("#mainFrame");
 let optionT = document.querySelectorAll(".optionText");
 
 function switchToDark() {
@@ -35,7 +35,7 @@ function switchToDark() {
 
 function switchToLight() {
     navB.className = "navbar navbar-expand-lg bg-light navbar-light";
-    backG.style.background = "linear-gradient(#eee, #ccc)";
+    backG.style.background = "linear-gradient(#666, #333)";
     document.querySelector("#moon").style.display = "inline";
     document.querySelector("#moonW").style.display = "none";
     document.querySelector(".dropdown-menu").className = "dropdown-menu bg-light";
