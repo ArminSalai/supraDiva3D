@@ -179,7 +179,7 @@ footer {
 }
 
 .sub-title {
-    color: #f22e60;
+    color: rgb(220,53,69);
     font: 3em Verdana, sans-serif;
     overflow: hidden;
     height: auto;
@@ -221,6 +221,15 @@ hr {
     transform: rotateZ(-90deg) translateY(-5vh);
     border-bottom-right-radius:2vh;
     border-bottom-left-radius:2vh;
+    cursor: pointer;
+}
+
+.leftArrow:hover {
+    background-color: #303030b7;
+}
+
+.leftArrow:active {
+    background-color: #101010b7;
 }
 
 .rightArrow {
@@ -236,6 +245,15 @@ hr {
     transform: rotate(90deg) translateY(-5vh);
     border-bottom-right-radius:2vh;
     border-bottom-left-radius:2vh;
+    cursor: pointer;
+}
+
+.rightArrow:hover {
+    background-color: #303030b7;
+}
+
+.rightArrow:active {
+    background-color: #101010b7;
 }
 
 #ctrlButtons {
@@ -314,7 +332,7 @@ hr {
 }
 
 #cookie {
-    background-color: #aa2438;
+    background-color: rgb(220,53,69);
     height: auto;
     z-index: 100;
     border-top: 1px solid white;
@@ -331,6 +349,14 @@ hr {
 #moon {
     width: 2em;
     height: 2em;
+    cursor: pointer;
+}
+
+#moonW {
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    display: none;
 }
 
 @media screen and (max-width: 767px) {
@@ -461,6 +487,10 @@ hr {
     position: absolute;
     top:30%;
     left: 40vw;
+}
+
+.botLogosW {
+    display: none;
 }
 
 #PageContainer {

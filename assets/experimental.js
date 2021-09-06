@@ -18,16 +18,74 @@ var header = new Headers();
 header.set('Content-Encoding', 'gzip');
 header.set('Accept-Encoding', 'gzip');
 
+let mode = "light";
+let navB = document.querySelector("nav");
+let backG = document.querySelector("#backGround");
+let optionT = document.querySelectorAll(".optionText");
+
+function switchToDark() {
+    navB.className = "navbar navbar-expand-lg bg-dark navbar-dark";
+    backG.style.background = "linear-gradient(#343a40, #111)";
+    document.querySelector("#moon").style.display = "none";
+    document.querySelector("#moonW").style.display = "inline";
+    document.querySelector(".dropdown-menu").className = "dropdown-menu bg-dark";
+    for(var i = 0; i < optionT.length; i++)
+      optionT[i].className = "dropdown-item optionText lead text-light"
+}
+
+function switchToLight() {
+    navB.className = "navbar navbar-expand-lg bg-light navbar-light";
+    backG.style.background = "linear-gradient(#eee, #ccc)";
+    document.querySelector("#moon").style.display = "inline";
+    document.querySelector("#moonW").style.display = "none";
+    document.querySelector(".dropdown-menu").className = "dropdown-menu bg-light";
+    for(var i = 0; i < optionT.length; i++)
+      optionT[i].className = "dropdown-item optionText lead text-dark"
+}
+
+let darkMode = document.querySelector("#darkMode");
+darkMode.addEventListener("click", function() {
+  if(mode == "light")
+  {
+    mode = "dark";
+    switchToDark();
+  }
+  else
+  {
+    mode = "light";
+    switchToLight();
+  }
+  if(decodeURIComponent(document.cookie).includes("clicked"))
+    document.cookie = "Mode=" + mode+ "; path=/; SameSite = None; Secure";
+});
+
 document.querySelector("#agree").addEventListener("click", function() {
-    document.cookie = "clicked; path=/";
+    document.cookie = "Aggreed = clicked; path=/; SameSite = None; Secure";
     Cook = document.cookie;
     document.querySelector("#cookie").remove();
 });
 
-if(document.cookie !== "clicked")
+let cookieText = decodeURIComponent(document.cookie);
+
+if(!(cookieText.includes("clicked")))
     gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
 else
-    document.querySelector("#cookie").remove();
+{
+  console.log(cookieText)
+  document.querySelector("#cookie").remove();
+  let modeData = cookieText.split(";").slice(5);
+  mode = modeData;
+  if(cookieText.includes("Mode=dark"))
+  {
+    mode = "dark";
+    switchToDark();
+  }
+  else
+  {
+    mode = "light";
+    switchToLight();
+  }
+}
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();

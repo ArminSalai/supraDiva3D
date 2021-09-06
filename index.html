@@ -42,19 +42,19 @@
                             <div class="dropdown-menu bg-light" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item disabled lead text-muted" href="#">Devices</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item lead text-dark font-weight-lighter" href="/index.html">D.I.V.A</a>
-                                <a class="dropdown-item lead text-dark" href="/touch.html">Touch</a>
-                                <a class="dropdown-item lead text-dark" href="/multi.html">Multi</a>
-                                <a class="dropdown-item lead text-dark" href="/eco.html">eco</a>
+                                <a class="dropdown-item optionText lead text-dark font-weight-lighter" href="index.html">D.I.V.A</a>
+                                <a class="dropdown-item optionText lead text-dark" href="touch.html">Touch</a>
+                                <a class="dropdown-item optionText lead text-dark" href="multi.html">Multi</a>
+                                <a class="dropdown-item optionText lead text-dark" href="eco.html">eco</a>
                                 <a class="dropdown-item disabled lead text-muted" href="#">Chargers</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item lead text-dark" href="/ecoCharge.html">supraCharger eco</a>
-                                <a class="dropdown-item lead text-dark" href="/supraCharge.html">supraCharger</a>
-                                <a class="dropdown-item lead text-dark" href="/dock.html">supraCharge II</a>
-                                <a class="dropdown-item lead text-dark font-weight-bold" href="/chargers.html">All Chargers</a>
+                                <a class="dropdown-item optionText lead text-dark" href="ecoCharge.html">supraCharger eco</a>
+                                <a class="dropdown-item optionText lead text-dark" href="supraCharge.html">supraCharger</a>
+                                <a class="dropdown-item optionText lead text-dark" href="dock.html">supraCharge II</a>
+                                <a class="dropdown-item optionText lead text-dark font-weight-bold" href="chargers.html">All Chargers</a>
                                 <a class="dropdown-item disabled lead text-muted" href="#">Showcase</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item lead text-dark" href="/experimental.html">Usage Guide</a>
+                                <a class="dropdown-item optionText lead text-dark" href="experimental.html">Usage Guide</a>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -66,8 +66,9 @@
                         <li class="nav-item">
                             <a class="nav-link lead disabled" href="#">About Us</a>
                         </li>
-                        <li class="nav-item pl-3 d-flex align-items-center">
-                            <img id="moon" width="100" height="100" id="fbLogo" alt="dark-mode" src="assets/moon-regular.svg" loading="lazy"/>
+                        <li id="darkMode" class="nav-item pl-3 d-flex align-items-center">
+                            <img id="moon" width="100" height="100" alt="dark-mode" src="assets/moon-regular.svg" loading="lazy"/>
+                            <img id="moonW" width="100" height="100" alt="light-mode" src="assets/sun-regular.svg" loading="lazy"/>
                         </li>
                     </ul>
                 </div>
@@ -110,7 +111,7 @@
         </div>
         <div id="PageContainer" class="container-flex">
             <div class="whte"></div>
-            <div class="row text-dark justify-content-center m-0">
+            <div class="textContent row text-dark justify-content-center m-0">
                 <div id="guiding" class="col-md-4 leftSide lazy"></div>
                 <div class="col-md-6 text-center align-items-center">
                     <div class="whte d-md-none"></div>
@@ -137,7 +138,7 @@
                 </div>
             </div>
             <div class="whte"></div>
-            <div class="row text-dark m-0 justify-content-center">
+            <div class="textContent row text-dark m-0 justify-content-center">
                 <div id="cpu" class="d-inline d-md-none col-md-4 rightSide lazy"></div>
                 <div class="col-md-6 text-center">
                     <div class="row justify-content-center">
@@ -168,7 +169,7 @@
                     <div id="cpu" class="d-none d-md-inline col-md-4 rightSide lazy"></div>
                 </div>
                 <div class="whte"></div>
-                <div class="row text-dark justify-content-center m-0">
+                <div class="textContent row text-dark justify-content-center m-0">
                     <div id="communication" class="col-md-4 leftSide lazy"></div>
                     <div class="col-md-6 text-center">
                         <div class="whte d-md-none"></div>
@@ -214,29 +215,29 @@
                 <div class="row d-flex justify-content-center m-0 featuresContainer">
                     <div class="col-md-2 m-5">
                         <div class="reveal"><div id="compassIcon" class="red m-auto"></div></div><br />
-                        <p class="lead bottomText text-center">Maps & wayfinding</p>
+                        <p class="botText lead bottomText text-dark text-center">Maps & wayfinding</p>
                     </div>
                     <div class="col-md-2 m-5">
                         <div class="reveal"><div id="mapIcon" class="red m-auto"></div></div><br />
-                        <p class="lead bottomText text-center">Tours & quizz</p>
+                        <p class="botText lead bottomText text-dark text-center">Tours & quizz</p>
                     </div>
                     <div class="col-md-2 m-5">
                         <div class="reveal"><div id="infoIcon" class="red m-auto"></div></div><br />
-                        <p class="lead bottomText text-center">Tourguide mode</p>
+                        <p class="botText lead bottomText text-dark text-center">Tourguide mode</p>
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center m-0 featuresContainer">
                     <div class="col-md-2 m-5">
                         <div class="reveal"><div id="editIcon" class="red m-auto"></div></div><br />
-                        <p class="lead bottomText text-center">Triggering & media control</p>
+                        <p class="botText lead bottomText text-dark text-center">Triggering & media control</p>
                     </div>
                     <div class="col-md-2 m-5">
                         <div class="reveal"><div id="macIcon" class="red m-auto"></div></div><br />
-                        <p class="lead bottomText text-center">supraCMS content- & tour management</p>
+                        <p class="botText lead bottomText text-dark text-center">supraCMS content- & tour management</p>
                     </div>
                     <div class="col-md-2 m-5">
                         <div class="reveal"><div id="storeIcon" class="red m-auto"></div></div><br />
-                        <p class="lead bottomText text-center">Third party & Apps</p>
+                        <p class="botText lead bottomText text-dark text-center">Third party & Apps</p>
                     </div>
                 </div>
             <footer class="bg-light">
@@ -249,7 +250,7 @@
                             <img alt="footer image" width="1920" height="800" id="footerImg" src="assets/footerImg.jpg" loading="lazy"/>
                         </div>
                     </div>
-                    <div class="row ml-5 ml-md-0 flex-column flex-md-row justify-content-center text-dark mt-4">
+                    <div class="footText row ml-5 ml-md-0 flex-column flex-md-row justify-content-center text-dark mt-4">
                         <div class="col-10 col-md-2 mx-2">
                             <h5 class="display-5 mb-4">Contact & Post address</h5>
                             <pclass="mb-1"><b>tonwelt GmbH</b></p>
@@ -285,21 +286,26 @@
                         </div>
                         <div class="col-10 col-md-2 mx-2">
                             <h5 class="display-5 mb-4">Social Media</h5>
-                            <img alt="facebook" width="100" height="100" id="fbLogo" src="assets/Facbook.svg" loading="lazy"/>
-                            <img alt="linkedin" width="100" height="100" id="lInLogo" src="assets/LinkedIn.svg" loading="lazy"/>
+                            <img class="botLogos" alt="facebook" width="100" height="100" id="fbLogo" src="assets/Facbook.svg" loading="lazy"/>
+                            <img class="botLogosW" alt="facebook" width="100" height="100" id="fbLogo" src="assets/logo_socialmedia_Facbook.svg" loading="lazy"/>
+                            <img class="botLogos" alt="linkedin" width="100" height="100" id="lInLogo" src="assets/LinkedIn.svg" loading="lazy"/>
+                            <img class="botLogosW" alt="linkedin" width="100" height="100" id="lInLogo" src="assets/logo_socialmedia_LinkedIn.svg" loading="lazy"/>
                             <h5 class="display-5 mt-5 mb-4">Memberships</h5>
-                            <img alt="museumsbund" width="100" height="100" class="mberLogo" src="assets/Logo-Deutscher_Museumsbund.svg" loading="lazy"/>
-                            <img alt="macorp" width="100" height="100" class="mberLogo" src="assets/MACorp_member_tab-01.svg" loading="lazy"/>
+                            <img alt="museumsbund" class="mberLogo" width="100" height="100" src="assets/Logo-Deutscher_Museumsbund.svg" loading="lazy"/>
+                            <img alt="macorp" class="mberLogo" width="100" height="100" src="assets/MACorp_member_tab-01.svg" loading="lazy"/>
                         </div>
                         <div class="col-10 col-md-2 mx-2">
                             <h5 class="display-5 mb-3">Awards</h5>
-                            <img alt="reddot" width="100" height="100" class="awrdLogo" src="assets/reddot.svg" loading="lazy"/>
-                            <img alt="ifawards" width="100" height="100" class="awrdLogo" src="assets/if.svg" loading="lazy"/>
-                            <img alt="germandesign" width="100" height="100" class="awrdLogo" src="assets/germandesign.svg" loading="lazy"/>
+                            <img class="botLogos awrdLogo" alt="reddot" width="100" height="100" src="assets/reddot.svg" loading="lazy"/>
+                            <img class="botLogosW awrdLogo" alt="reddot" width="100" height="100" src="assets/awards_reddot.svg" loading="lazy"/>
+                            <img class="botLogos awrdLogo" alt="ifawards" width="100" height="100" src="assets/if.svg" loading="lazy"/>
+                            <img class="botLogosW awrdLogo" alt="ifawards" width="100" height="100" src="assets/awards_if.svg" loading="lazy"/>
+                            <img class="botLogos awrdLogo" alt="germandesign" width="100" height="100" src="assets/germandesign.svg" loading="lazy"/>
+                            <img class="botLogosW awrdLogo" alt="germandesign" width="100" height="100" src="assets/awards_germandesign.svg" loading="lazy"/>
                         </div>
                     </div>
                     <div class="mt-3 row justify-content-end align-items-end">
-                        <p class="text-dark text-right mr-5">Legal Notice | Data Privacy Statement | Credits<br/>
+                        <p class="endText text-dark text-right mr-5">Legal Notice | Data Privacy Statement | Credits<br/>
                             © 2018-2021 tonwelt - all rights reserved</p>
                     </div>
                 </div>

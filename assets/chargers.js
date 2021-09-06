@@ -19,8 +19,78 @@ var header = new Headers();
 header.set('Content-Encoding', 'gzip');
 header.set('Accept-Encoding', 'gzip');
 
+let mode = "light";
+let navB = document.querySelector("nav");
+let backG = document.querySelector("#backGround");
+let textC = document.querySelectorAll(".textContent");
+let botT = document.querySelectorAll(".botText");
+let footText = document.querySelector(".footText");
+let footer = document.querySelector("footer");
+let endT = document.querySelector(".endText");
+let botL = document.querySelectorAll(".botLogos");
+let botLW = document.querySelectorAll(".botLogosW");
+let optionT = document.querySelectorAll(".optionText");
+
+function switchToDark() {
+  navB.className = "navbar navbar-expand-lg bg-dark navbar-dark";
+    backG.style.background = "linear-gradient(#343a40, #111)";
+    document.querySelector("#moon").style.display = "none";
+    document.querySelector("#moonW").style.display = "inline";
+    document.querySelector(".dropdown-menu").className = "dropdown-menu bg-dark";
+    for(var i = 0; i < textC.length; i++)
+      textC[i].className = "textContent row text-light justify-content-center m-0";
+    for(var i = 0; i < botT.length; i++)
+      botT[i].className = "botText lead bottomText text-light text-center"
+    footer.className = "bg-dark";
+    footText.className = "footText row ml-5 ml-md-0 flex-column flex-md-row justify-content-center text-light mt-4"
+    endT.className = "endText text-light text-right mr-5";
+    for(var i = 0; i < botL.length; i++) {
+      botL[i].style.display = "none";
+      botLW[i].style.display = "inline";
+    }
+    for(var i = 0; i < optionT.length; i++)
+      optionT[i].className = "dropdown-item optionText lead text-light"
+}
+
+function switchToLight() {
+  navB.className = "navbar navbar-expand-lg bg-light navbar-light";
+    backG.style.background = "linear-gradient(#eee, #ccc)";
+    document.querySelector("#moon").style.display = "inline";
+    document.querySelector("#moonW").style.display = "none";
+    document.querySelector(".dropdown-menu").className = "dropdown-menu bg-light";
+    for(var i = 0; i < textC.length; i++)
+      textC[i].className = "textContent row text-dark justify-content-center m-0";
+    for(var i = 0; i < botT.length; i++)
+      botT[i].className = "botText lead bottomText text-dark text-center"
+    footer.className = "bg-light";
+    footText.className = "footText row ml-5 ml-md-0 flex-column flex-md-row justify-content-center text-dark mt-4"
+    endT.className = "endText text-dark text-right mr-5";
+    for(var i = 0; i < botL.length; i++) {
+      botL[i].style.display = "inline";
+      botLW[i].style.display = "none";
+    }
+    for(var i = 0; i < optionT.length; i++)
+      optionT[i].className = "dropdown-item optionText lead text-dark"
+}
+
+let darkMode = document.querySelector("#darkMode");
+darkMode.addEventListener("click", function() {
+  if(mode == "light")
+  {
+    mode = "dark";
+    switchToDark();
+  }
+  else
+  {
+    mode = "light";
+    switchToLight();
+  }
+  if(decodeURIComponent(document.cookie).includes("clicked"))
+    document.cookie = "Mode=" + mode+ "; path=/; SameSite = None; Secure";
+});
+
 document.querySelector("#agree").addEventListener("click", function() {
-    document.cookie = "clicked; path=/";
+    document.cookie = "Aggreed = clicked; path=/; SameSite = None; Secure";
     Cook = document.cookie;
     document.querySelector("#cookie").remove();
 });
@@ -217,10 +287,27 @@ texts.forEach(box => {
   })
 });
 
-if(document.cookie !== "clicked")
+let cookieText = decodeURIComponent(document.cookie);
+
+if(!(cookieText.includes("clicked")))
     gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
 else
-    document.querySelector("#cookie").remove();
+{
+  console.log(cookieText)
+  document.querySelector("#cookie").remove();
+  let modeData = cookieText.split(";").slice(5);
+  mode = modeData;
+  if(cookieText.includes("Mode=dark"))
+  {
+    mode = "dark";
+    switchToDark();
+  }
+  else
+  {
+    mode = "light";
+    switchToLight();
+  }
+}
 
 const rightSides = gsap.utils.toArray('.rightSide');
 rightSides.forEach(box => {
