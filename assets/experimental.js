@@ -18,7 +18,7 @@ var header = new Headers();
 header.set('Content-Encoding', 'gzip');
 header.set('Accept-Encoding', 'gzip');
 
-let mode = "light";
+let mode = "dark";
 let navB = document.querySelector("nav");
 let backG = document.querySelector("#mainFrame");
 let optionT = document.querySelectorAll(".optionText");

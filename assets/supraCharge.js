@@ -1,8 +1,8 @@
-const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js');
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
-import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/DRACOLoader.js';
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/DRACOLoader.js';
 import { gsap } from './gsap-core.js';
 const CSSPlugin = await import('./CSSPlugin.min.js');
 const CSSRulePlugin = await import('./CSSRulePlugin.js');
@@ -20,7 +20,7 @@ header.set('Content-Encoding', 'gzip');
 header.set('Accept-Encoding', 'gzip');
 header.set('Cache-Control', 'max-age=31536000');
 
-let mode = "light";
+let mode = "dark";
 let navB = document.querySelector("nav");
 let backG = document.querySelector("#backGround");
 let textC = document.querySelectorAll(".textContent");
@@ -480,7 +480,12 @@ function loadBetweenModels() {
       console.log( 'There was an error loading ' + url );
   };
 
-const divaLoader = new GLTFLoader(manager)
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
+dracoLoader.preload();
+  
+const divaLoader = new GLTFLoader(manager);
+divaLoader.setDRACOLoader(dracoLoader);
 divaLoader.load("assets/models/cordlessTouch.glb", function (glb) {
     divaRed = glb.scene;
     scene.add(divaRed);
@@ -495,6 +500,7 @@ divaLoader.load("assets/models/cordlessTouch.glb", function (glb) {
 var played = false;
 
 const ecoLoader = new GLTFLoader(manager)
+ecoLoader.setDRACOLoader(dracoLoader);
 ecoLoader.load("assets/models/cordlessMulti.glb", function (glb) {
     eco = glb.scene;
     scene.add(eco);
@@ -524,10 +530,6 @@ function play() {
             .to(body[0], { overflowX: "hidden", overflowY: "auto" });
     }
 };
-
-const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
-dracoLoader.preload();
 
 const loader = new GLTFLoader(manager);
 loader.setDRACOLoader(dracoLoader);

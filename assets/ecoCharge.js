@@ -1,8 +1,8 @@
-const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js');
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
-import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/DRACOLoader.js';
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/DRACOLoader.js';
 import { gsap } from './gsap-core.js';
 const CSSPlugin = await import('./CSSPlugin.min.js');
 const CSSRulePlugin = await import('./CSSRulePlugin.js');
@@ -19,7 +19,7 @@ var header = new Headers();
 header.set('Content-Encoding', 'gzip');
 header.set('Accept-Encoding', 'gzip');
 
-let mode = "light";
+let mode = "dark";
 let navB = document.querySelector("nav");
 let backG = document.querySelector("#backGround");
 let textC = document.querySelectorAll(".textContent");
@@ -444,56 +444,62 @@ let eco;
 var played = false;
 
 function loadBetweenModels() {
-    let gif = document.createElement("img");
-    gif.setAttribute("src", "assets/loadingAnim.gif");
-    gif.setAttribute("id", "loaderLoop");
-    let load = document.createElement("div");
-    load.setAttribute("class", "load");
-    load.appendChild(gif);
-    let screen = document.createElement("div");
-    screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
-    screen.appendChild(load);
-    let loading = document.createElement("div");
-    loading.setAttribute("id", "loading");
-    let bDrop = document.querySelector("#backDrop");
-    bDrop.appendChild(screen);
-  }
+  let gif = document.createElement("img");
+  gif.setAttribute("src", "assets/loadingAnim.gif");
+  gif.setAttribute("id", "loaderLoop");
+  let load = document.createElement("div");
+  load.setAttribute("class", "load");
+  load.appendChild(gif);
+  let screen = document.createElement("div");
+  screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
+  screen.appendChild(load);
+  let loading = document.createElement("div");
+  loading.setAttribute("id", "loading");
+  let bDrop = document.querySelector("#backDrop");
+  bDrop.appendChild(screen);
+}
   
-  const manager = new THREE.LoadingManager();
-  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-      loadBetweenModels();
-  };
-  
-  manager.onLoad = function ( ) {
-      let elements = document.getElementsByClassName("screenForObjs");
-      while (elements.length > 0) elements[0].remove();
-      play();
-  };
-  
-  manager.onError = function ( url ) {
-      console.log( 'There was an error loading ' + url );
-  };
+const manager = new THREE.LoadingManager();
+manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    loadBetweenModels();
+};
 
-const divaLoader = new GLTFLoader(manager)
+manager.onLoad = function ( ) {
+    let elements = document.getElementsByClassName("screenForObjs");
+    while (elements.length > 0) elements[0].remove();
+    play();
+};
+
+manager.onError = function ( url ) {
+    console.log( 'There was an error loading ' + url );
+};
+
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
+dracoLoader.preload();
+
+const divaLoader = new GLTFLoader(manager);
+divaLoader.setDRACOLoader(dracoLoader);
 divaLoader.load("assets/models/cordlessEcoRed.glb", function (glb) {
     divaRed = glb.scene;
     scene.add(divaRed);
     divaRed.scale.set(0.83, 0.83, 0.83);
-    divaRed.position.y += 16;
-    divaRed.position.x += 10.1;
-    divaRed.position.z += 6;
+    divaRed.position.y += 19;
+    divaRed.position.x -= 10.1;
+    divaRed.position.z += 7;
     divaRed.rotation.y += 0.1;
     divaRed.rotation.z -= Math.PI / 2 - 0.8;
 });
 
-const ecoLoader = new GLTFLoader(manager)
+const ecoLoader = new GLTFLoader(manager);
+ecoLoader.setDRACOLoader(dracoLoader);
 ecoLoader.load("assets/models/ecoWithoutString.glb", function (glb) {
     eco = glb.scene;
     scene.add(eco);
     eco.scale.set(0.83, 0.83, 0.83);
-    eco.position.y += 16;
-    eco.position.x -= 5.1;
-    eco.position.z -= 16.6;
+    eco.position.y += 18.5;
+    eco.position.x -= 10.1;
+    eco.position.z -= 12.4;
     eco.rotation.y -= 0.2;
     eco.rotation.z -= Math.PI / 2 - 1.4;
 });
@@ -504,22 +510,18 @@ function play() {
         played = true;
         let tl = gsap.timeline({},
             { smoothChildTiming: true });
-        tl.to(eco.position, { x: "26.1", z: "-10.6", duration: 1.5, ease: "power2.inOut" })
+        tl.to(eco.position, { x: "21.8", z: "-8.3", duration: 1.5, ease: "power2.inOut" })
             .to(eco.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
             .to(camera, { zoom: "+=0.2", delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
-            .to(eco.position, { y: "9.8", duration: 0.5, ease: "power4.inOut" });
+            .to(eco.position, { y: "11.4", duration: 0.5, ease: "power4.inOut" });
         let tlParalell = gsap.timeline({},
             { smoothChildTiming: true });
-        tlParalell.to(divaRed.position, { x: "26.1", z: "6", duration: 1.5, ease: "power2.inOut" })
+        tlParalell.to(divaRed.position, { x: "21.8", z: "7.9", duration: 1.5, ease: "power2.inOut" })
             .to(divaRed.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.5, ease: "power3.inOut" })
-            .to(divaRed.position, { y: "9.8", duration: 0.5, ease: "power4.inOut" })
+            .to(divaRed.position, { y: "12.05", duration: 0.5, ease: "power4.inOut" })
             .to(body[0], { overflowX: "hidden", overflowY: "auto" });
     }
 };
-
-const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
-dracoLoader.preload();
 
 const loader = new GLTFLoader(manager);
 loader.setDRACOLoader(dracoLoader);

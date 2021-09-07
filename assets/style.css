@@ -354,13 +354,13 @@ hr {
     width: 2em;
     height: 2em;
     cursor: pointer;
+    display: none;
 }
 
 #moonW {
     width: 2em;
     height: 2em;
     cursor: pointer;
-    display: none;
 }
 
 @media screen and (max-width: 767px) {
@@ -472,8 +472,7 @@ hr {
 }
 
 #backGround {
-    /*background: linear-gradient(#343a40, #111);*/
-    background: linear-gradient(#eee, #ccc);
+    background: linear-gradient(#343a40, #111);
     width: 100vw;
 }
 
@@ -505,7 +504,7 @@ hr {
     left: 40vw;
 }
 
-.botLogosW {
+.botLogos {
     display: none;
 }
 

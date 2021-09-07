@@ -1,7 +1,8 @@
-const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js');
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
-import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/lights/RectAreaLightUniformsLib.js';
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/DRACOLoader.js';
 import { gsap } from './gsap-core.js';
 const CSSPlugin = await import('./CSSPlugin.min.js');
 const CSSRulePlugin = await import('./CSSRulePlugin.js');
@@ -18,7 +19,7 @@ var header = new Headers();
 header.set('Content-Encoding', 'gzip');
 header.set('Accept-Encoding', 'gzip');
 
-let mode = "light";
+let mode = "dark";
 let navB = document.querySelector("nav");
 let backG = document.querySelector("#backGround");
 let textC = document.querySelectorAll(".textContent");
@@ -281,7 +282,6 @@ if(!(cookieText.includes("clicked")))
     gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
 else
 {
-  console.log(cookieText)
   document.querySelector("#cookie").remove();
   let modeData = cookieText.split(";").slice(5);
   mode = modeData;
@@ -409,7 +409,7 @@ yellowLight.position.set(-25, 2, 10);
 yellowLight.lookAt(0, -10, 0);
 scene.add(yellowLight);
 
-const roughnessLight = new THREE.PointLight(0xffffff, 5, 200);
+const roughnessLight = new THREE.PointLight(0xffffff, 1, 200);
 roughnessLight.position.set(0, -25, 8);
 scene.add(roughnessLight);
 
@@ -465,7 +465,12 @@ manager.onError = function ( url ) {
 	console.log( 'There was an error loading ' + url );
 };
 
-const loader = new GLTFLoader(manager)
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
+dracoLoader.preload();
+
+const loader = new GLTFLoader(manager);
+loader.setDRACOLoader(dracoLoader);
 loader.load("assets/models/TouchWithCase.glb", function (glb) {
     mobil = glb.scene;
     scene.add(mobil);

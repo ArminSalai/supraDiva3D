@@ -1,8 +1,8 @@
-const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js');
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
-import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/DRACOLoader.js';
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/DRACOLoader.js';
 import { gsap } from './gsap-core.js';
 const CSSPlugin = await import('./CSSPlugin.min.js');
 const CSSRulePlugin = await import('./CSSRulePlugin.js');
@@ -19,7 +19,7 @@ var header = new Headers();
 header.set('Content-Encoding', 'gzip');
 header.set('Accept-Encoding', 'gzip');
 
-let mode = "light";
+let mode = "dark";
 let navB = document.querySelector("nav");
 let backG = document.querySelector("#backGround");
 let textC = document.querySelectorAll(".textContent");

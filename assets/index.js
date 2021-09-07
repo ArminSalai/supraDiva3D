@@ -18,7 +18,7 @@ var header = new Headers();
 header.set('Content-Encoding', 'gzip');
 header.set('Accept-Encoding', 'gzip');
 
-let mode = "light";
+let mode = "dark";
 let navB = document.querySelector("nav");
 let backG = document.querySelector("#backGround");
 let textC = document.querySelectorAll(".textContent");
@@ -413,7 +413,7 @@ yellowLight.position.set(-25, 2, 10);
 yellowLight.lookAt(0, -10, 0);
 scene.add(yellowLight);
 
-const roughnessLight = new THREE.PointLight(0xffffff, 1, 200);
+const roughnessLight = new THREE.PointLight(0xffffff, 10, 200);
 roughnessLight.position.set(0, -20, -3);
 scene.add(roughnessLight);
 
