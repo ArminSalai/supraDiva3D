@@ -3,10 +3,10 @@ import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/DRACOLoader.js';
-import { gsap } from './gsap-core.js';
-const CSSPlugin = await import('./CSSPlugin.min.js');
-const CSSRulePlugin = await import('./CSSRulePlugin.js');
-const ScrollTrigger = await import('./ScrollTrigger.min.js');
+import { gsap } from '../plugins/gsap-core.js';
+const CSSPlugin = await import('../plugins/CSSPlugin.min.js');
+const CSSRulePlugin = await import('../plugins/CSSRulePlugin.js');
+const ScrollTrigger = await import('../plugins/ScrollTrigger.min.js');
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -18,6 +18,7 @@ let Cook;
 var header = new Headers();
 header.set('Content-Encoding', 'gzip');
 header.set('Accept-Encoding', 'gzip');
+header.set('Cache-Control', 'max-age=31536000');
 
 let mode = "dark";
 let navB = document.querySelector("nav");
@@ -142,7 +143,8 @@ document.addEventListener("DOMContentLoaded", function() {
       window.addEventListener("resize", lazyload);
       window.addEventListener("orientationChange", lazyload);
     }
-  })
+  });
+
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
@@ -151,7 +153,7 @@ let width = canvas.clientWidth;
 let height = window.innerHeight * 0.8;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
-camera.position.set(60, 20, 0);
+camera.position.set(60, 30, 0);
 camera.lookAt(0, 12, 0);
 camera.zoom = ((width * height) / (height * height)) / 7;
 camera.updateProjectionMatrix();
@@ -164,18 +166,16 @@ const renderer = new THREE.WebGLRenderer({
     powerPreference: "high-performance"
 });
 
-RectAreaLightUniformsLib.init();
-
 scene.background = null;
 
 function generateGradient() {
-    let lessOne = 28;
-    let moreOne = 0;
-    let lessTwo = 181;
-    let moreTwo = 8;
-    let lessThree = 224;
-    let moreThree = 81;
-    var gradients = [0, 2, 3 ,4];
+    let lessOne;
+    let moreOne;
+    let lessTwo;
+    let moreTwo;
+    let lessThree;
+    let moreThree;
+    var gradients = [0, 1, 2, 3 ,4];
     var rand = gradients[Math.floor(Math.random() * gradients.length)];
     if (rand == 0) {
         lessOne = 0;
@@ -184,6 +184,14 @@ function generateGradient() {
         moreTwo = 46;
         lessThree = 150;
         moreThree = 83;
+    }
+    if (rand == 1) {
+        lessOne = 158;
+        moreOne = 98;
+        lessTwo = 10;
+        moreTwo = 6;
+        lessThree = 30;
+        moreThree = 20;
     }
     if (rand == 2) {
         lessOne = 123;
@@ -214,39 +222,6 @@ function generateGradient() {
 }
 
 generateGradient();
-
-
-renderer.setSize(width, height);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap = true;
-
-const constrols = new OrbitControls(camera, document.querySelector(".touchable"));
-constrols.enablePan = false;
-constrols.target.set(0, 12, 0);
-
-function resizeRendererToDisplaySize(renderer) {
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-        renderer.setSize(width, height, false);
-    }
-    return needResize;
-}
-
-resizeRendererToDisplaySize(renderer);
-
-THREE.Cache.enabled = true;
-
-window.addEventListener( 'resize', onWindowResize, false );
-
-function onWindowResize(){
-    let width = canvas.clientWidth;
-    let height = window.innerHeight * 0.8;
-    camera.aspect = width / (height);
-    camera.zoom = ((width*height)/(height*height))/7;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize( width, height );
-}
 
 gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
     trigger: "#PageContainer",
@@ -356,6 +331,36 @@ rightSides.forEach(box => {
   })
 });
 
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap = true;
+
+const constrols = new OrbitControls(camera, document.querySelector(".touchable"));
+constrols.enablePan = false;
+constrols.target.set(0, 12, 0);
+
+function resizeRendererToDisplaySize(renderer) {
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+        renderer.setSize(width, height, false);
+    }
+    return needResize;
+}
+
+resizeRendererToDisplaySize(renderer);
+
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize(){
+    let width = canvas.clientWidth;
+    let height = window.innerHeight * 0.8;
+    camera.aspect = width / (height);
+    camera.zoom = ((width*height)/(height*height))/7;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( width, height );
+}
+
 document.querySelector(".topIcon").addEventListener("click", function() {gsap.to(window, { scrollTo: 0, duration: 1, ease:"power2.inOut" });});
 
 let zoomButton = document.querySelector("#zoomButton");
@@ -394,6 +399,7 @@ rotateButton.addEventListener("click", function () {
     }
 });
 
+THREE.Cache.enabled = true;
 renderer.physicallyCorrectLights = true;
 
 const gLight = new THREE.PointLight(0x979DA6, 19 / 4, 300);
@@ -401,13 +407,15 @@ gLight.position.set(19, 10, 50);
 gLight.castShadow = true;
 scene.add(gLight);
 
-const yLight = new THREE.PointLight(0xF2EED3, 10 / 4, 200);
+const yLight = new THREE.PointLight(0xF2EED3, 10 / 2, 200);
 yLight.position.set(-15, 12, -58);
 yLight.castShadow = true;
 scene.add(yLight);
 
-const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 1.4);
+const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 2);
 scene.add(hLight);
+
+RectAreaLightUniformsLib.init();
 
 const portLightFront = new THREE.RectAreaLight(0xffffff, 6, 30, 3);
 portLightFront.rotation.y = Math.PI / 2;
@@ -424,7 +432,7 @@ areaLight.position.set(-5, 12, 45);
 areaLight.lookAt(0, 0, 0);
 scene.add(areaLight);
 
-const forEco = new THREE.RectAreaLight(0xffffff, 10, 40, 20);
+const forEco = new THREE.RectAreaLight(0x979DA6, 20, 40, 20);
 forEco.position.set(45, 20, 0);
 forEco.lookAt(0, 11, 0);
 scene.add(forEco);
@@ -435,8 +443,8 @@ underLight.lookAt(0, 0, 0);
 underLight.castShadow = true;
 scene.add(underLight);
 
-const lightBehind = new THREE.RectAreaLight(0xffffff, 2, 25, 8);
-lightBehind.position.set(-38, 10, 0);
+const lightBehind = new THREE.RectAreaLight(0xffffff, 2, 28, 10);
+lightBehind.position.set(-50, 10, 0);
 lightBehind.lookAt(0, 0, 0);
 scene.add(lightBehind);
 
@@ -446,67 +454,67 @@ let divaRed;
 
 let eco;
 
-var played = false;
-
 function loadBetweenModels() {
-  let gif = document.createElement("img");
-  gif.setAttribute("src", "assets/loadingAnim.gif");
-  gif.setAttribute("id", "loaderLoop");
-  let load = document.createElement("div");
-  load.setAttribute("class", "load");
-  load.appendChild(gif);
-  let screen = document.createElement("div");
-  screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
-  screen.appendChild(load);
-  let loading = document.createElement("div");
-  loading.setAttribute("id", "loading");
-  let bDrop = document.querySelector("#backDrop");
-  bDrop.appendChild(screen);
-}
+    let gif = document.createElement("img");
+    gif.setAttribute("src", "assets/images/loadingAnim.gif");
+    gif.setAttribute("id", "loaderLoop");
+    let load = document.createElement("div");
+    load.setAttribute("class", "load");
+    load.appendChild(gif);
+    let screen = document.createElement("div");
+    screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
+    screen.appendChild(load);
+    let loading = document.createElement("div");
+    loading.setAttribute("id", "loading");
+    let bDrop = document.querySelector("#backDrop");
+    bDrop.appendChild(screen);
+  }
   
-const manager = new THREE.LoadingManager();
-manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-    loadBetweenModels();
-};
-
-manager.onLoad = function ( ) {
-    let elements = document.getElementsByClassName("screenForObjs");
-    while (elements.length > 0) elements[0].remove();
-    play();
-};
-
-manager.onError = function ( url ) {
-    console.log( 'There was an error loading ' + url );
-};
+  const manager = new THREE.LoadingManager();
+  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+      loadBetweenModels();
+  };
+  
+  manager.onLoad = function ( ) {
+      let elements = document.getElementsByClassName("screenForObjs");
+      while (elements.length > 0) elements[0].remove();
+      play();
+  };
+  
+  manager.onError = function ( url ) {
+      console.log( 'There was an error loading ' + url );
+  };
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
 dracoLoader.preload();
-
+  
 const divaLoader = new GLTFLoader(manager);
 divaLoader.setDRACOLoader(dracoLoader);
-divaLoader.load("assets/models/cordlessEcoRed.glb", function (glb) {
+divaLoader.load("assets/models/cordlessTouch.glb", function (glb) {
     divaRed = glb.scene;
     scene.add(divaRed);
-    divaRed.scale.set(0.83, 0.83, 0.83);
+    divaRed.scale.y = 1.45;
     divaRed.position.y += 19;
-    divaRed.position.x -= 10.1;
-    divaRed.position.z += 7;
-    divaRed.rotation.y += 0.1;
-    divaRed.rotation.z -= Math.PI / 2 - 0.8;
+    divaRed.position.x += 12.6;
+    divaRed.position.z += 31.6;
+    divaRed.rotation.x += 2.5;
+    divaRed.rotation.z -= Math.PI / 2 - 0.25;
 });
 
-const ecoLoader = new GLTFLoader(manager);
+var played = false;
+
+const ecoLoader = new GLTFLoader(manager)
 ecoLoader.setDRACOLoader(dracoLoader);
-ecoLoader.load("assets/models/ecoWithoutString.glb", function (glb) {
+ecoLoader.load("assets/models/cordlessMulti.glb", function (glb) {
     eco = glb.scene;
     scene.add(eco);
-    eco.scale.set(0.83, 0.83, 0.83);
-    eco.position.y += 18.5;
-    eco.position.x -= 10.1;
-    eco.position.z -= 12.4;
-    eco.rotation.y -= 0.2;
-    eco.rotation.z -= Math.PI / 2 - 1.4;
+    eco.scale.y = 1.45;
+    eco.position.y += 19;
+    eco.position.x += 4.6;
+    eco.position.z -= 28.6;
+    eco.rotation.x -= 2.4;
+    eco.rotation.z -= Math.PI / 2 - 0.5;
 });
 
 function play() {
@@ -515,25 +523,26 @@ function play() {
         played = true;
         let tl = gsap.timeline({},
             { smoothChildTiming: true });
-        tl.to(eco.position, { x: "21.8", z: "-8.3", duration: 1.5, ease: "power2.inOut" })
-            .to(eco.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
+        tl.to(eco.position, { x: "21.6", z: "-9.52", duration: 1.5, ease: "power2.inOut" })
+            .to(eco.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.4, ease: "power2.inOut" })
             .to(camera, { zoom: "+=0.2", delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
-            .to(eco.position, { y: "11.4", duration: 0.5, ease: "power4.inOut" });
+            .to(eco.position, { y: "13.5", duration: 0.5, ease: "power4.inOut" });
         let tlParalell = gsap.timeline({},
             { smoothChildTiming: true });
-        tlParalell.to(divaRed.position, { x: "21.8", z: "7.9", duration: 1.5, ease: "power2.inOut" })
-            .to(divaRed.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.5, ease: "power3.inOut" })
-            .to(divaRed.position, { y: "12.05", duration: 0.5, ease: "power4.inOut" })
+        tlParalell.to(divaRed.position, { x: "21.6", z: "9.52", duration: 1.5, ease: "power2.inOut" })
+            .to(divaRed.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.4, ease: "power2.inOut" })
+            .to(divaRed.position, { y: "13.5", duration: 0.5, ease: "power4.inOut" })
             .to(body[0], { overflowX: "hidden", overflowY: "auto" });
     }
 };
 
 const loader = new GLTFLoader(manager);
 loader.setDRACOLoader(dracoLoader);
-loader.load("assets/models/ecoCharger.glb", function (glb) {
+loader.load("assets/models/supraCharge.glb", function (glb) {
     mobil = glb.scene;
-    mobil.matrixAutoUpdate = false;
     scene.add(mobil);
+    window.scrollTo(0, 0);
+    mobil.matrixAutoUpdate = false;
 });
 
 

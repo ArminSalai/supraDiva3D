@@ -1,12 +1,12 @@
-const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js');
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
-import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/DRACOLoader.js';
-import { gsap } from './gsap-core.js';
-const CSSPlugin = await import('./CSSPlugin.min.js');
-const CSSRulePlugin = await import('./CSSRulePlugin.js');
-const ScrollTrigger = await import('./ScrollTrigger.min.js');
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/DRACOLoader.js';
+import { gsap } from '../plugins/gsap-core.js';
+const CSSPlugin = await import('../plugins/CSSPlugin.min.js');
+const CSSRulePlugin = await import('../plugins/CSSRulePlugin.js');
+const ScrollTrigger = await import('../plugins/ScrollTrigger.min.js');
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -151,7 +151,8 @@ let width = canvas.clientWidth;
 let height = window.innerHeight * 0.8;
 
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
-camera.position.set(60, 30, 0);
+camera.position.set(60, 20, 0);
+camera.lookAt(0, 12, 0);
 camera.zoom = ((width * height) / (height * height)) / 7;
 camera.updateProjectionMatrix();
 scene.add(camera);
@@ -164,6 +165,8 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 RectAreaLightUniformsLib.init();
+
+scene.background = null;
 
 function generateGradient() {
     let lessOne = 28;
@@ -211,6 +214,39 @@ function generateGradient() {
 }
 
 generateGradient();
+
+
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap = true;
+
+const constrols = new OrbitControls(camera, document.querySelector(".touchable"));
+constrols.enablePan = false;
+constrols.target.set(0, 12, 0);
+
+function resizeRendererToDisplaySize(renderer) {
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+        renderer.setSize(width, height, false);
+    }
+    return needResize;
+}
+
+resizeRendererToDisplaySize(renderer);
+
+THREE.Cache.enabled = true;
+
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize(){
+    let width = canvas.clientWidth;
+    let height = window.innerHeight * 0.8;
+    camera.aspect = width / (height);
+    camera.zoom = ((width*height)/(height*height))/7;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( width, height );
+}
 
 gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
     trigger: "#PageContainer",
@@ -320,38 +356,6 @@ rightSides.forEach(box => {
   })
 });
 
-scene.background = null;
-
-renderer.setSize(width, height);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap = true;
-
-const constrols = new OrbitControls(camera, document.querySelector(".touchable"));
-constrols.enablePan = false;
-constrols.target.set(0, 12, 0);
-
-function resizeRendererToDisplaySize(renderer) {
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-        renderer.setSize(width, height, false);
-    }
-    return needResize;
-}
-
-resizeRendererToDisplaySize(renderer);
-
-window.addEventListener( 'resize', onWindowResize, false );
-
-function onWindowResize(){
-    let width = canvas.clientWidth;
-    let height = window.innerHeight * 0.8;
-    camera.aspect = width / (height);
-    camera.zoom = ((width*height)/(height*height))/7;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize( width, height );
-}
-
 document.querySelector(".topIcon").addEventListener("click", function() {gsap.to(window, { scrollTo: 0, duration: 1, ease:"power2.inOut" });});
 
 let zoomButton = document.querySelector("#zoomButton");
@@ -390,44 +394,40 @@ rotateButton.addEventListener("click", function () {
     }
 });
 
-THREE.Cache.enabled = true;
 renderer.physicallyCorrectLights = true;
 
 const gLight = new THREE.PointLight(0x979DA6, 19 / 4, 300);
-gLight.position.set(16, 10, 14);
+gLight.position.set(19, 10, 50);
 gLight.castShadow = true;
 scene.add(gLight);
 
 const yLight = new THREE.PointLight(0xF2EED3, 10 / 4, 200);
-yLight.position.set(-10, 12, -23);
+yLight.position.set(-15, 12, -58);
 yLight.castShadow = true;
 scene.add(yLight);
 
-const roughnessLight1 = new THREE.SpotLight(0xffffff, 5 / 8, 40, 80, 0, 1);
-roughnessLight1.position.set(0, -10, -18);
-scene.add(roughnessLight1);
-
-const roughnessLight2 = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
-roughnessLight2.position.set(-40, -5, 5);
-roughnessLight2.lookAt(0, 0, 0);
-scene.add(roughnessLight2);
-
-const topLight = new THREE.RectAreaLight(0xffddff, 20, 14, 14);
-topLight.position.set(-38, 25, 0);
-topLight.lookAt(0, 0, 0);
-scene.add(topLight);
-
-const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 40, 80, 0, 1);
-backLight.position.set(0, -10, 10);
-scene.add(backLight);
-
-const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.6);
+const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 1.4);
 scene.add(hLight);
 
+const portLightFront = new THREE.RectAreaLight(0xffffff, 6, 30, 3);
+portLightFront.rotation.y = Math.PI / 2;
+portLightFront.position.set(50, -2, 0);
+scene.add(portLightFront);
+
+const portLightBack = new THREE.RectAreaLight(0xffffff, 18, 30, 3);
+portLightBack.rotation.y = -Math.PI / 2;
+portLightBack.position.set(-60, -2, 0);
+scene.add(portLightBack);
+
 const areaLight = new THREE.RectAreaLight(0xffffff, 20, 14, 14);
-areaLight.position.set(30, 10, 30);
+areaLight.position.set(-5, 12, 45);
 areaLight.lookAt(0, 0, 0);
 scene.add(areaLight);
+
+const forEco = new THREE.RectAreaLight(0xffffff, 10, 40, 20);
+forEco.position.set(45, 20, 0);
+forEco.lookAt(0, 11, 0);
+scene.add(forEco);
 
 const underLight = new THREE.RectAreaLight(0xffffff, 5, 60, 20);
 underLight.position.set(0, -30, 0);
@@ -435,11 +435,79 @@ underLight.lookAt(0, 0, 0);
 underLight.castShadow = true;
 scene.add(underLight);
 
+const lightBehind = new THREE.RectAreaLight(0xffffff, 2, 25, 8);
+lightBehind.position.set(-38, 10, 0);
+lightBehind.lookAt(0, 0, 0);
+scene.add(lightBehind);
+
 var mobil;
+
+let divaRed;
 
 let eco;
 
-let divaRed;
+var played = false;
+
+function loadBetweenModels() {
+  let gif = document.createElement("img");
+  gif.setAttribute("src", "assets/images/loadingAnim.gif");
+  gif.setAttribute("id", "loaderLoop");
+  let load = document.createElement("div");
+  load.setAttribute("class", "load");
+  load.appendChild(gif);
+  let screen = document.createElement("div");
+  screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
+  screen.appendChild(load);
+  let loading = document.createElement("div");
+  loading.setAttribute("id", "loading");
+  let bDrop = document.querySelector("#backDrop");
+  bDrop.appendChild(screen);
+}
+  
+const manager = new THREE.LoadingManager();
+manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    loadBetweenModels();
+};
+
+manager.onLoad = function ( ) {
+    let elements = document.getElementsByClassName("screenForObjs");
+    while (elements.length > 0) elements[0].remove();
+    play();
+};
+
+manager.onError = function ( url ) {
+    console.log( 'There was an error loading ' + url );
+};
+
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
+dracoLoader.preload();
+
+const divaLoader = new GLTFLoader(manager);
+divaLoader.setDRACOLoader(dracoLoader);
+divaLoader.load("assets/models/cordlessEcoRed.glb", function (glb) {
+    divaRed = glb.scene;
+    scene.add(divaRed);
+    divaRed.scale.set(0.83, 0.83, 0.83);
+    divaRed.position.y += 19;
+    divaRed.position.x -= 10.1;
+    divaRed.position.z += 7;
+    divaRed.rotation.y += 0.1;
+    divaRed.rotation.z -= Math.PI / 2 - 0.8;
+});
+
+const ecoLoader = new GLTFLoader(manager);
+ecoLoader.setDRACOLoader(dracoLoader);
+ecoLoader.load("assets/models/ecoWithoutString.glb", function (glb) {
+    eco = glb.scene;
+    scene.add(eco);
+    eco.scale.set(0.83, 0.83, 0.83);
+    eco.position.y += 18.5;
+    eco.position.x -= 10.1;
+    eco.position.z -= 12.4;
+    eco.rotation.y -= 0.2;
+    eco.rotation.z -= Math.PI / 2 - 1.4;
+});
 
 function play() {
     if (!played) {
@@ -447,92 +515,25 @@ function play() {
         played = true;
         let tl = gsap.timeline({},
             { smoothChildTiming: true });
-        tl.to(eco.position, { z: "0", duration: 1.5, ease: "power2.inOut" })
-            .to(eco.rotation, { y: "0", z: -Math.PI / 2, x: Math.PI / 2, delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
-            .to(camera, { zoom: "+=0.2", delay: "-1.5", duration: 1.5, ease: "power1.inOut" })
-            .to(eco.position, { y: "15.5", duration: 0.5, ease: "power4.inOut" });
+        tl.to(eco.position, { x: "21.8", z: "-8.3", duration: 1.5, ease: "power2.inOut" })
+            .to(eco.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
+            .to(camera, { zoom: "+=0.2", delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
+            .to(eco.position, { y: "11.4", duration: 0.5, ease: "power4.inOut" });
         let tlParalell = gsap.timeline({},
             { smoothChildTiming: true });
-        tlParalell.to(divaRed.position, { z: "0", duration: 1.5, ease: "power2.inOut" })
-            .to(divaRed.rotation, { y: "0", z: -Math.PI / 2, x: Math.PI / 2, delay: "-1.5", duration: 1.5, ease: "power2.inOut" })
-            .to(divaRed.position, { y: "15.5", duration: 0.5, ease: "power4.inOut" })
+        tlParalell.to(divaRed.position, { x: "21.8", z: "7.9", duration: 1.5, ease: "power2.inOut" })
+            .to(divaRed.rotation, { y: "0", z: -Math.PI / 2, x: "0", delay: "-1.5", duration: 1.5, ease: "power3.inOut" })
+            .to(divaRed.position, { y: "12.05", duration: 0.5, ease: "power4.inOut" })
             .to(body[0], { overflowX: "hidden", overflowY: "auto" });
     }
 };
 
-function loadBetweenModels() {
-    let gif = document.createElement("img");
-    gif.setAttribute("src", "assets/loadingAnim.gif");
-    gif.setAttribute("id", "loaderLoop");
-    let load = document.createElement("div");
-    load.setAttribute("class", "load");
-    load.appendChild(gif);
-    let screen = document.createElement("div");
-    screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
-    screen.appendChild(load);
-    let loading = document.createElement("div");
-    loading.setAttribute("id", "loading");
-    let bDrop = document.querySelector("#backDrop");
-    bDrop.appendChild(screen);
-  }
-  
-  const manager = new THREE.LoadingManager();
-  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-      loadBetweenModels();
-  };
-  
-  manager.onLoad = function ( ) {
-      let elements = document.getElementsByClassName("screenForObjs");
-      while (elements.length > 0) elements[0].remove();
-      play();
-  };
-  
-  manager.onError = function ( url ) {
-      console.log( 'There was an error loading ' + url );
-  };
-
-const forEco = new THREE.RectAreaLight(0x979DA6, 20, 20, 20);
-forEco.position.set(45, 20, -13);
-forEco.lookAt(0, 11, 0);
-scene.add(forEco);
-
-const divaLoader = new GLTFLoader(manager)
-divaLoader.load("assets/models/Diva.glb", function (glb) {
-    divaRed = glb.scene;
-    scene.add(divaRed);
-    divaRed.position.y += 21;
-    divaRed.position.x += 27.3;
-    divaRed.position.z += 23.6;
-    divaRed.rotation.x += 2.5;
-    divaRed.rotation.z -= Math.PI / 2;
-});
-
-var played = false;
-
-const ecoLoader = new GLTFLoader(manager)
-ecoLoader.load("assets/models/DivaGrey.glb", function (glb) {
-    eco = glb.scene;
-    scene.add(eco);
-    eco.position.y += 19;
-    eco.position.x += 32.3;
-    eco.position.z -= 28.6;
-    eco.rotation.x += 0.5;
-    eco.rotation.z -= Math.PI / 2;
-});
-
-const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
-dracoLoader.preload();
-
 const loader = new GLTFLoader(manager);
 loader.setDRACOLoader(dracoLoader);
-loader.load("assets/models/dock.glb", function (glb) {
+loader.load("assets/models/ecoCharger.glb", function (glb) {
     mobil = glb.scene;
-    scene.add(mobil);
     mobil.matrixAutoUpdate = false;
-    mobil.rotation.y = Math.PI;
-    mobil.updateMatrix();
-    window.scrollTo(0, 0);
+    scene.add(mobil);
 });
 
 

@@ -1,12 +1,12 @@
-const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js');
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/GLTFLoader.js';
-import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/loaders/DRACOLoader.js';
-import { gsap } from './gsap-core.js';
-const CSSPlugin = await import('./CSSPlugin.min.js');
-const CSSRulePlugin = await import('./CSSRulePlugin.js');
-const ScrollTrigger = await import('./ScrollTrigger.min.js');
+const THREE = await import('https://threejsfundamentals.org/threejs/resources/threejs/r127/build/three.module.js');
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
+import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
+import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/DRACOLoader.js';
+import { gsap } from '../plugins/gsap-core.js';
+const CSSPlugin = await import('../plugins/CSSPlugin.min.js');
+const CSSRulePlugin = await import('../plugins/CSSRulePlugin.js');
+const ScrollTrigger = await import('../plugins/ScrollTrigger.min.js');
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -435,7 +435,7 @@ function play() {
 
 function loadBetweenModels() {
   let gif = document.createElement("img");
-  gif.setAttribute("src", "assets/loadingAnim.gif");
+  gif.setAttribute("src", "assets/images/loadingAnim.gif");
   gif.setAttribute("id", "loaderLoop");
   let load = document.createElement("div");
   load.setAttribute("class", "load");

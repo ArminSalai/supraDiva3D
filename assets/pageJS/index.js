@@ -2,11 +2,10 @@ const THREE = await import('https://threejsfundamentals.org/threejs/resources/th
 import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/DRACOLoader.js';
-import { gsap } from './gsap-core.js';
-const CSSPlugin = await import('./CSSPlugin.min.js');
-const CSSRulePlugin = await import('./CSSRulePlugin.js');
-const ScrollTrigger = await import('./ScrollTrigger.min.js');
+import { gsap } from '../plugins/gsap-core.js';
+const CSSPlugin = await import('../plugins/CSSPlugin.min.js');
+const CSSRulePlugin = await import('../plugins/CSSRulePlugin.js');
+const ScrollTrigger = await import('../plugins/ScrollTrigger.min.js');
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -95,6 +94,10 @@ document.querySelector("#agree").addEventListener("click", function() {
     document.querySelector("#cookie").remove();
 });
 
+const canvas = document.querySelector(".webgl");
+const scene = new THREE.Scene();
+let body = document.getElementsByTagName("body");
+
 document.addEventListener("DOMContentLoaded", function() {
     var lazyloadImages;    
   
@@ -142,10 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
       window.addEventListener("resize", lazyload);
       window.addEventListener("orientationChange", lazyload);
     }
-  });
-
-const canvas = document.querySelector(".webgl");
-const scene = new THREE.Scene();
+  })
 
 function generateGradient() {
     let lessOne;
@@ -263,19 +263,6 @@ gsap.from("h1", {
     }
 });
 
-const texts = gsap.utils.toArray('.text-left');
-texts.forEach(box => {
-  gsap.from(box, { 
-    y: 1000,
-    scrollTrigger: {
-      trigger: box,
-      start: "top-=1000 top+=700",
-      end: "bottom-=1000 bottom",
-      scrub: 2
-    }
-  })
-});
-
 let cookieText = decodeURIComponent(document.cookie);
 
 if(!(cookieText.includes("clicked")))
@@ -297,6 +284,19 @@ else
   }
 }
 
+const texts = gsap.utils.toArray('.text-left');
+texts.forEach(box => {
+  gsap.from(box, { 
+    y: 1000,
+    scrollTrigger: {
+      trigger: box,
+      start: "top-=1000 top+=700",
+      end: "bottom-=1000 bottom",
+      scrub: 2
+    }
+  })
+});
+
 const rightSides = gsap.utils.toArray('.rightSide');
 rightSides.forEach(box => {
   gsap.from(box, { 
@@ -312,6 +312,7 @@ rightSides.forEach(box => {
 
 let width = canvas.clientWidth;
 let height = window.innerHeight * 0.8;
+
 const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
 camera.position.set(0, 0, 27);
 camera.lookAt(0, 0, 0);
@@ -346,6 +347,8 @@ function resizeRendererToDisplaySize(renderer) {
 resizeRendererToDisplaySize(renderer);
 
 window.addEventListener( 'resize', onWindowResize, false );
+
+THREE.Cache.enabled = true;
 
 function onWindowResize(){
     let width = canvas.clientWidth;
@@ -395,12 +398,12 @@ rotateButton.addEventListener("click", function () {
     }
 });
 
+renderer.physicallyCorrectLights = true;
+
 RectAreaLightUniformsLib.init();
 
-THREE.Cache.enabled = true;
-
-const greyLight = new THREE.RectAreaLight(0x979DA6, 35, 25, 25);
-greyLight.position.set(14, 22, 17);
+const greyLight = new THREE.RectAreaLight(0x979DA6, 55, 15, 15);
+greyLight.position.set(18, 22, 17);
 greyLight.lookAt(0, 3, 0);
 scene.add(greyLight);
 
@@ -409,22 +412,23 @@ yellowLight.position.set(-25, 2, 10);
 yellowLight.lookAt(0, -10, 0);
 scene.add(yellowLight);
 
-const roughnessLight = new THREE.PointLight(0xffffff, 1, 200);
-roughnessLight.position.set(0, -25, 8);
+const roughnessLight = new THREE.PointLight(0xffffff, 10, 200);
+roughnessLight.position.set(0, -20, -3);
 scene.add(roughnessLight);
 
-const backLight = new THREE.SpotLight(0x979DA6, 5, 40, 80, 0, 1);
-backLight.position.set(0, -14, -26);
+const backLight = new THREE.SpotLight(0xffffff, 30, 40, 80, 0, 1);
+backLight.position.set(0, 11, -16);
 scene.add(backLight);
 
-const hemiLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.5);
+const hemiLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 2);
 scene.add(hemiLight);
 
 var played = false;
 
+var mobil;
+
 function play() {
     if (!played) {
-        let body = document.getElementsByTagName("body");
         played = true;
         let tl = gsap.timeline({},
             { smoothChildTiming: true });
@@ -432,11 +436,9 @@ function play() {
     }
 };
 
-var mobil;
-
 function loadBetweenModels() {
   let gif = document.createElement("img");
-  gif.setAttribute("src", "assets/loadingAnim.gif");
+  gif.setAttribute("src", "assets/images/loadingAnim.gif");
   gif.setAttribute("id", "loaderLoop");
   let load = document.createElement("div");
   load.setAttribute("class", "load");
@@ -465,20 +467,14 @@ manager.onError = function ( url ) {
 	console.log( 'There was an error loading ' + url );
 };
 
-const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
-dracoLoader.preload();
-
-const loader = new GLTFLoader(manager);
-loader.setDRACOLoader(dracoLoader);
-loader.load("assets/models/TouchWithCase.glb", function (glb) {
+const loader = new GLTFLoader( manager )
+loader.load("assets/models/DivaGrey.glb", function (glb) {
     mobil = glb.scene;
     scene.add(mobil);
+    window.scrollTo(0, 0);
     mobil.matrixAutoUpdate = false;
-    mobil.rotation.y = -Math.PI/2;
     mobil.rotation.x = Math.PI/2;
     mobil.updateMatrix();
-    window.scrollTo(0, 0);
 });
 
 function animate() {

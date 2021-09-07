@@ -92,7 +92,7 @@ nav {
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     border-radius: 100%;
-    background-image: url("./Frame\ 1ReplayButton.svg");
+    background-image: url("./images/Frame 1ReplayButton.svg");
     background-position: center;
     background-size: 80%;
     background-repeat: no-repeat;
@@ -136,15 +136,15 @@ canvas {
 }
 
 #guiding {
-    background-image: url("guidingOptimized.jpg");
+    background-image: url("images/guidingOptimized.jpg");
 }
 
 #cpu {
-    background-image: url("cpuOptimized.jpg");
+    background-image: url("images/cpuOptimized.jpg");
 }
 
 #communication {
-    background-image: url("communicationOptimized.jpg");
+    background-image: url("images/communicationOptimized.jpg");
     background-position-x: 80%;
 }
 
@@ -172,7 +172,7 @@ footer {
     width: 3em;
     height: 3em;
     border-radius: 100%;
-    background-image: url("./Frame 1.svg");
+    background-image: url("./images/Frame 1.svg");
     cursor: pointer;
 }
 
@@ -218,7 +218,7 @@ hr {
     width: 20vh;
     height: 10vh;
     background-color: #202020b7;
-    background-image: url("Frame\ 2.svg");
+    background-image: url("images/Frame 2.svg");
     background-size: 30%;
     background-repeat: no-repeat;
     background-position: center;
@@ -242,7 +242,7 @@ hr {
     width: 20vh;
     height: 10vh;
     background-color: #202020b7;
-    background-image: url("Frame\ 2.svg");
+    background-image: url("images/Frame 2.svg");
     background-size: 30%;
     background-repeat: no-repeat;
     background-position: center;
@@ -281,16 +281,16 @@ hr {
 }
 
 #zoomButton {
-    background-image: url("./magnifying-glass-3-256.png");
+    background-image: url("./images/magnifying-glass-3-256.png");
 }
 
 #rotateButton {
-    background-image: url("./rotate-2-256.png");
+    background-image: url("./images/rotate-2-256.png");
 }
 
 #panButton {
     background-color: #aa2438;
-    background-image: url("./hand-cursor-256.png");
+    background-image: url("./images/hand-cursor-256.png");
 }
 
 .show > .dropdown-menu {
@@ -441,32 +441,32 @@ hr {
 }
 
 #compassIcon {
-    background-image: url("compass-3-line.svg");
+    background-image: url("images/compass-3-line.svg");
     will-change: transform;
 }
 
 #mapIcon {
-    background-image: url("treasure-map-line.svg");
+    background-image: url("images/treasure-map-line.svg");
     will-change: transform;
 }
 
 #infoIcon {
-    background-image: url("information-line.svg");
+    background-image: url("images/information-line.svg");
     will-change: transform;
 }
 
 #editIcon {
-    background-image: url("image-edit-line.svg");
+    background-image: url("images/image-edit-line.svg");
     will-change: transform;
 }
 
 #macIcon {
-    background-image: url("mac-line.svg");
+    background-image: url("images/mac-line.svg");
     will-change: transform;
 }
 
 #storeIcon {
-    background-image: url("google-play-line.svg"), url("app-store-line.svg");
+    background-image: url("images/google-play-line.svg"), url("images/app-store-line.svg");
     background-position: right top, left center;
     background-size: 55%;
 }

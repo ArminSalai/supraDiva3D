@@ -3,10 +3,10 @@ import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources
 import { GLTFLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/GLTFLoader.js';
 import { RectAreaLightUniformsLib } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import { DRACOLoader } from 'https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/jsm/loaders/DRACOLoader.js';
-import { gsap } from './gsap-core.js';
-const CSSPlugin = await import('./CSSPlugin.min.js');
-const CSSRulePlugin = await import('./CSSRulePlugin.js');
-const ScrollTrigger = await import('./ScrollTrigger.min.js');
+import { gsap } from '../plugins/gsap-core.js';
+const CSSPlugin = await import('../plugins/CSSPlugin.min.js');
+const CSSRulePlugin = await import('../plugins/CSSRulePlugin.js');
+const ScrollTrigger = await import('../plugins/ScrollTrigger.min.js');
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -142,10 +142,29 @@ document.addEventListener("DOMContentLoaded", function() {
       window.addEventListener("resize", lazyload);
       window.addEventListener("orientationChange", lazyload);
     }
-  });
+  })
 
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
+
+let width = canvas.clientWidth;
+let height = window.innerHeight * 0.8;
+
+const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
+camera.position.set(48, 20, -10);
+camera.lookAt(0, 0, 0);
+camera.zoom = ((width * height) / (height * height)) / 7;
+camera.updateProjectionMatrix();
+scene.add(camera);
+
+const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true,
+    powerPreference: "high-performance"
+});
+
+RectAreaLightUniformsLib.init();
 
 function generateGradient() {
     let lessOne = 28;
@@ -154,7 +173,7 @@ function generateGradient() {
     let moreTwo = 8;
     let lessThree = 224;
     let moreThree = 81;
-    var gradients = [0, 1, 2, 3 ,4];
+    var gradients = [0, 2, 3 ,4];
     var rand = gradients[Math.floor(Math.random() * gradients.length)];
     if (rand == 0) {
         lessOne = 0;
@@ -163,14 +182,6 @@ function generateGradient() {
         moreTwo = 46;
         lessThree = 150;
         moreThree = 83;
-    }
-    if (rand == 1) {
-        lessOne = 158;
-        moreOne = 98;
-        lessTwo = 10;
-        moreTwo = 6;
-        lessThree = 30;
-        moreThree = 20;
     }
     if (rand == 2) {
         lessOne = 123;
@@ -310,27 +321,12 @@ rightSides.forEach(box => {
   })
 });
 
-let width = canvas.clientWidth;
-let height = window.innerHeight * 0.8;
-
-const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 300);
-camera.position.set(0, 0, 27);
-camera.lookAt(0, 0, 0);
-camera.zoom = ((width*height)/(height*height))/4;
-camera.updateProjectionMatrix();
-scene.add(camera);
-
-const renderer = new THREE.WebGLRenderer({
-    canvas,
-    alpha: true,
-    antialias: true
-});
 
 scene.background = null;
 
 renderer.setSize(width, height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
+renderer.shadowMap = true;
 
 const constrols = new OrbitControls(camera, document.querySelector(".touchable"));
 constrols.enablePan = false;
@@ -351,7 +347,7 @@ function onWindowResize(){
     let width = canvas.clientWidth;
     let height = window.innerHeight * 0.8;
     camera.aspect = width / (height);
-    camera.zoom = ((width*height)/(height*height))/4;
+    camera.zoom = ((width*height)/(height*height))/7;
     camera.updateProjectionMatrix();
 
     renderer.setSize( width, height );
@@ -395,32 +391,56 @@ rotateButton.addEventListener("click", function () {
     }
 });
 
+THREE.Cache.enabled = true;
+renderer.physicallyCorrectLights = true;
+
+const gLight = new THREE.PointLight(0x979DA6, 19 / 4, 300);
+gLight.position.set(19, 10, 50);
+gLight.castShadow = true;
+scene.add(gLight);
+
+const yLight = new THREE.PointLight(0xF2EED3, 10 / 2, 200);
+yLight.position.set(-15, 12, -58);
+yLight.castShadow = true;
+scene.add(yLight);
+
+const underLight = new THREE.RectAreaLight(0xffffff, 5, 60, 20);
+underLight.position.set(0, -30, 0);
+underLight.lookAt(0, 0, 0);
+underLight.castShadow = true;
+scene.add(underLight);
+
+const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 2);
+scene.add(hLight);
+
 RectAreaLightUniformsLib.init();
 
-THREE.Cache.enabled = true;
+const portLightFront = new THREE.RectAreaLight(0xffffff, 6, 30, 3);
+portLightFront.rotation.y = Math.PI / 2;
+portLightFront.position.set(50, -2, 0);
+scene.add(portLightFront);
 
-const greyLight = new THREE.RectAreaLight(0x979DA6, 35, 25, 25);
-greyLight.position.set(14, 22, 17);
-greyLight.lookAt(0, 3, 0);
-scene.add(greyLight);
+const portLightBack = new THREE.RectAreaLight(0xffffff, 18, 30, 3);
+portLightBack.rotation.y = -Math.PI / 2;
+portLightBack.position.set(-60, -8, 0);
+scene.add(portLightBack);
 
-const yellowLight = new THREE.RectAreaLight(0xF2EED3, 40, 13, 13);
-yellowLight.position.set(-25, 2, 10);
-yellowLight.lookAt(0, -10, 0);
-scene.add(yellowLight);
+const areaLight = new THREE.RectAreaLight(0xffffff, 20, 14, 14);
+areaLight.position.set(-5, 12, 45);
+areaLight.lookAt(0, 0, 0);
+scene.add(areaLight);
 
-const roughnessLight = new THREE.PointLight(0xffffff, 1, 200);
-roughnessLight.position.set(0, -25, 8);
-scene.add(roughnessLight);
+const forEco = new THREE.RectAreaLight(0x979DA6, 20, 40, 20);
+forEco.position.set(45, 20, 0);
+forEco.lookAt(0, 11, 0);
+scene.add(forEco);
 
-const backLight = new THREE.SpotLight(0x979DA6, 5, 40, 80, 0, 1);
-backLight.position.set(0, -14, -26);
-scene.add(backLight);
+const lightBehind = new THREE.RectAreaLight(0xffffff, 2, 45, 8);
+lightBehind.position.set(-48, 10, 0);
+lightBehind.lookAt(0, 0, 0);
+scene.add(lightBehind);
 
-const hemiLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.5);
-scene.add(hemiLight);
-
-var mobil;
+var mobil, mobil1, mobil2;
 
 var played = false;
 
@@ -435,19 +455,19 @@ function play() {
 };
 
 function loadBetweenModels() {
-  let gif = document.createElement("img");
-  gif.setAttribute("src", "assets/loadingAnim.gif");
-  gif.setAttribute("id", "loaderLoop");
-  let load = document.createElement("div");
-  load.setAttribute("class", "load");
-  load.appendChild(gif);
-  let screen = document.createElement("div");
-  screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
-  screen.appendChild(load);
-  let loading = document.createElement("div");
-  loading.setAttribute("id", "loading");
-  let bDrop = document.querySelector("#backDrop");
-  bDrop.appendChild(screen);
+    let gif = document.createElement("img");
+    gif.setAttribute("src", "assets/images/loadingAnim.gif");
+    gif.setAttribute("id", "loaderLoop");
+    let load = document.createElement("div");
+    load.setAttribute("class", "load");
+    load.appendChild(gif);
+    let screen = document.createElement("div");
+    screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
+    screen.appendChild(load);
+    let loading = document.createElement("div");
+    loading.setAttribute("id", "loading");
+    let bDrop = document.querySelector("#backDrop");
+    bDrop.appendChild(screen);
 }
 
 const manager = new THREE.LoadingManager();
@@ -458,31 +478,111 @@ manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
 manager.onLoad = function ( ) {
 	let elements = document.getElementsByClassName("screenForObjs");
     while (elements.length > 0) elements[0].remove();
-    play();
 };
 
 manager.onError = function ( url ) {
 	console.log( 'There was an error loading ' + url );
 };
 
+var currentObject = 0;
+
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
 dracoLoader.preload();
 
-const loader = new GLTFLoader(manager);
+var loader1 = new GLTFLoader(manager);
+loader1.setDRACOLoader(dracoLoader);
+loader1.load("assets/models/supraCharge.glb", function (glb) {
+    mobil1 = glb.scene;
+    mobil1.visible = false;
+    scene.add(mobil1);
+    mobil1.matrixAutoUpdate = false;
+    mobil1.updateMatrix();
+});
+
+var loader2 = new GLTFLoader(manager);
+loader2.setDRACOLoader(dracoLoader);
+loader2.load("assets/models/ecoCharger.glb", function (glb) {
+    mobil2 = glb.scene;
+    mobil2.visible = false;
+    scene.add(mobil2);
+    mobil2.matrixAutoUpdate = false;
+    mobil2.scale.set(1.1,1.1,1.1);
+    mobil2.updateMatrix();
+});
+
+var loader = new GLTFLoader(manager);
 loader.setDRACOLoader(dracoLoader);
-loader.load("assets/models/Multi.glb", function (glb) {
+loader.load("assets/models/dock.glb", function (glb) {
     mobil = glb.scene;
     scene.add(mobil);
     mobil.matrixAutoUpdate = false;
-    mobil.rotation.y = -Math.PI/2;
-    mobil.rotation.x = Math.PI/2;
+    mobil.rotation.y = Math.PI;
     mobil.updateMatrix();
     window.scrollTo(0, 0);
+}, function (xhr) {
+    if ((xhr.loaded / xhr.total) == 1) {
+        setTimeout(play, 2000);
+}});
+
+var rightArr = document.querySelector(".rightArrow");
+rightArr.addEventListener('click', function() {
+    switch(currentObject) {
+        case 0:
+            mobil.visible = false;
+            mobil1.visible = true;
+            mobil2.visible = false;
+            document.querySelector("#chargerName").innerHTML = "supraCharger";
+            currentObject = 1;
+            break;
+        case 1:
+            mobil.visible = false;
+            mobil1.visible = false;
+            mobil2.visible = true;
+            document.querySelector("#chargerName").innerHTML = "supraCharger<sup>eco</sup>";
+            currentObject = 2;
+            break;
+        case 2:
+            mobil.visible = true;
+            mobil1.visible = false;
+            mobil2.visible = false;
+            document.querySelector("#chargerName").innerHTML = "supraCharger II";
+            currentObject = 0;
+            break;
+    }
 });
+
+var leftArr = document.querySelector(".leftArrow");
+leftArr.addEventListener('click', function() {
+    switch(currentObject) {
+        case 0:
+            mobil.visible = false;
+            mobil1.visible = false;
+            mobil2.visible = true;
+            document.querySelector("#chargerName").innerHTML = "supraCharger<sup>eco</sup>";
+            currentObject = 2;
+            break;
+        case 1:
+            mobil.visible = true;
+            mobil1.visible = false;
+            mobil2.visible = false;
+            document.querySelector("#chargerName").innerHTML = "supraCharger II";
+            currentObject = 0;
+            break;
+        case 2:
+            mobil.visible = false;
+            mobil1.visible = true;
+            mobil2.visible = false;
+            document.querySelector("#chargerName").innerHTML = "supraCharger";
+            currentObject = 1;
+            break;
+    }
+});
+
 
 function animate() {
     requestAnimationFrame(animate);
+    camera.updateProjectionMatrix();
     renderer.render(scene, camera);
 }
 
