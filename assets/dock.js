@@ -292,7 +292,6 @@ if(!(cookieText.includes("clicked")))
     gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
 else
 {
-  console.log(cookieText)
   document.querySelector("#cookie").remove();
   let modeData = cookieText.split(";").slice(5);
   mode = modeData;
@@ -429,6 +428,12 @@ const areaLight = new THREE.RectAreaLight(0xffffff, 20, 14, 14);
 areaLight.position.set(30, 10, 30);
 areaLight.lookAt(0, 0, 0);
 scene.add(areaLight);
+
+const underLight = new THREE.RectAreaLight(0xffffff, 5, 60, 20);
+underLight.position.set(0, -30, 0);
+underLight.lookAt(0, 0, 0);
+underLight.castShadow = true;
+scene.add(underLight);
 
 var mobil;
 

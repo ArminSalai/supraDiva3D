@@ -328,7 +328,6 @@ if(!(cookieText.includes("clicked")))
     gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
 else
 {
-  console.log(cookieText)
   document.querySelector("#cookie").remove();
   let modeData = cookieText.split(";").slice(5);
   mode = modeData;
@@ -407,11 +406,6 @@ yLight.position.set(-15, 12, -58);
 yLight.castShadow = true;
 scene.add(yLight);
 
-const backLight = new THREE.SpotLight(0xffffff, 5 / 2, 100, 120, 0, 1);
-backLight.position.set(-20, -30, 80);
-backLight.lookAt(0, 0, -30);
-scene.add(backLight);
-
 const hLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 1.4);
 scene.add(hLight);
 
@@ -434,6 +428,17 @@ const forEco = new THREE.RectAreaLight(0xffffff, 10, 40, 20);
 forEco.position.set(45, 20, 0);
 forEco.lookAt(0, 11, 0);
 scene.add(forEco);
+
+const underLight = new THREE.RectAreaLight(0xffffff, 5, 60, 20);
+underLight.position.set(0, -30, 0);
+underLight.lookAt(0, 0, 0);
+underLight.castShadow = true;
+scene.add(underLight);
+
+const lightBehind = new THREE.RectAreaLight(0xffffff, 2, 25, 8);
+lightBehind.position.set(-38, 10, 0);
+lightBehind.lookAt(0, 0, 0);
+scene.add(lightBehind);
 
 var mobil;
 

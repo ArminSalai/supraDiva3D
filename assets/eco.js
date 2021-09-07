@@ -278,7 +278,6 @@ if(!(cookieText.includes("clicked")))
     gsap.to("#cookie", {bottom:"0", ease: "power3.inOut", delay: 3});
 else
 {
-  console.log(cookieText)
   document.querySelector("#cookie").remove();
   let modeData = cookieText.split(";").slice(5);
   mode = modeData;
