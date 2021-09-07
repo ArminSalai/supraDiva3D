@@ -1,15 +1,18 @@
 {
-    "short_name": "supra3D",
+    "short_name": "/",
     "name": "supraGuide3D",
+    "description" : "Check out Tonwelt's supraGuide lineup of devices",
+    "start_url" : "../index.html",
+    "lang" : "English",
+    "display" : "standalone",
+    "theme_color": "#3d3d3d",
+    "background_color": "#f2f2f2",
+    "orientation" : "portrait",
     "icons": [
     {
-    "src":"/assets/logo_tonwelt.svg",
-    "sizes": "234.75x108.061",
-    "type": "image/png"
-    }
-    ],
-    "start_url": "/?utm_source=homescreen",
-    "background_color": "#aa2438",
-    "theme_color": "#aa2438",
-    "display": "standalone"
+    "src":"/assets/TonweltAppLogo.svg",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any maskable"
+    }]
   }
