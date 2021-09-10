@@ -1,4 +1,4 @@
-const CACHE_NAME = 'PreFinalV5';
+const CACHE_NAME = 'FinalBuild';
 
 let urlsToCache = [
   '/'

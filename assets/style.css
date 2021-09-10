@@ -115,6 +115,54 @@ nav {
     cursor: pointer;
 }
 
+.leftArrow {
+    position: absolute;
+    left:0;
+    width: 20vh;
+    height: 10vh;
+    background-color: #202020b7;
+    background-image: url("./images/Frame 2.svg");
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotateZ(-90deg) translateY(-5vh);
+    border-bottom-right-radius:2vh;
+    border-bottom-left-radius:2vh;
+    cursor: pointer;
+}
+
+.leftArrow:hover {
+    background-color: #303030b7;
+}
+
+.leftArrow:active {
+    background-color: #101010b7;
+}
+
+.rightArrow {
+    position: absolute;
+    right:0;
+    width: 20vh;
+    height: 10vh;
+    background-color: #202020b7;
+    background-image: url("./images/Frame 2.svg");
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: rotate(90deg) translateY(-5vh);
+    border-bottom-right-radius:2vh;
+    border-bottom-left-radius:2vh;
+    cursor: pointer;
+}
+
+.rightArrow:hover {
+    background-color: #303030b7;
+}
+
+.rightArrow:active {
+    background-color: #101010b7;
+}
+
 .deviceName {
     position: absolute;
     left: 6vw;

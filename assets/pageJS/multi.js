@@ -13,12 +13,8 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
-let Cook;
-
-var header = new Headers();
-header.set('Content-Encoding', 'gzip');
-header.set('Accept-Encoding', 'gzip');
-
+//Switching between light and dark modes
+//variables for modes
 let mode = "dark";
 let navB = document.querySelector("nav");
 let backG = document.querySelector("#backGround");
@@ -32,57 +28,65 @@ let botLW = document.querySelectorAll(".botLogosW");
 let optionT = document.querySelectorAll(".optionText");
 let icons = document.querySelectorAll(".red");
 let hr = document.querySelector("hr");
-
+//DarkMode
 function switchToDark() {
+  document.documentElement.style.setProperty("--red-theme-color", "rgb(220, 53, 69)");
   navB.className = "navbar navbar-expand-lg bg-dark navbar-dark";
-    backG.style.background = "linear-gradient(#343a40, #111)";
-    document.querySelector("#moon").style.display = "none";
-    document.querySelector("#moonW").style.display = "inline";
-    document.querySelector(".dropdown-menu").className = "dropdown-menu bg-dark";
-    for(var i = 0; i < textC.length; i++)
-      textC[i].className = "textContent row text-light justify-content-center m-0";
-    for(var i = 0; i < botT.length; i++)
-      botT[i].className = "botText lead bottomText text-light text-center"
-    footer.className = "bg-dark";
-    footText.className = "footText row ml-5 ml-md-0 flex-column flex-md-row justify-content-center text-light mt-4"
-    endT.className = "endText text-light text-right mr-5";
-    for(var i = 0; i < botL.length; i++) {
-      botL[i].style.display = "none";
-      botLW[i].style.display = "inline";
-    }
-    for(var i = 0; i < optionT.length; i++)
-      optionT[i].className = "dropdown-item optionText lead text-light"
-      document.documentElement.style.setProperty("--red-theme-color", "rgb(220, 53, 69)");
-    for(var i = 0; i < icons.length; i++)
-      icons[i].style.backgroundColor = "rgb(220, 53, 69)";
-      hr.style.backgroundColor = "rgb(238, 238, 238)";
+  backG.style.background = "linear-gradient(#343a40, #111)";
+  document.querySelector("#moon").style.display = "none";
+  document.querySelector("#moonW").style.display = "inline";
+  document.querySelector(".dropdown-menu").className = "dropdown-menu bg-dark";
+  textC.forEach(tC => {
+    tC.className = "textContent row text-light justify-content-center m-0";
+  });
+  botT.forEach(bT => {
+    bT.className = "botText lead bottomText text-light text-center";
+  });
+  footer.className = "bg-dark";
+  footText.className = "footText row ml-5 ml-md-0 flex-column flex-md-row justify-content-center text-light mt-4";
+  endT.className = "endText text-light text-right mr-5";
+  for(var i = 0; i < botL.length; i++) {
+    botL[i].style.display = "none";
+    botLW[i].style.display = "inline";
+  }
+  optionT.forEach(oT => {
+    oT.className = "dropdown-item optionText lead text-light"
+  });
+  icons.forEach(i => {
+    i.style.backgroundColor = "rgb(220, 53, 69)";
+  });
+  hr.style.backgroundColor = "rgb(238, 238, 238)";
 }
-
+//LightMode
 function switchToLight() {
+  document.documentElement.style.setProperty("--red-theme-color", "rgb(170, 36, 56)");
   navB.className = "navbar navbar-expand-lg bg-light navbar-light";
-    backG.style.background = "linear-gradient(#eee, #ccc)";
-    document.querySelector("#moon").style.display = "inline";
-    document.querySelector("#moonW").style.display = "none";
-    document.querySelector(".dropdown-menu").className = "dropdown-menu bg-light";
-    for(var i = 0; i < textC.length; i++)
-      textC[i].className = "textContent row text-dark justify-content-center m-0";
-    for(var i = 0; i < botT.length; i++)
-      botT[i].className = "botText lead bottomText text-dark text-center"
-    footer.className = "bg-light";
-    footText.className = "footText row ml-5 ml-md-0 flex-column flex-md-row justify-content-center text-dark mt-4"
-    endT.className = "endText text-dark text-right mr-5";
-    for(var i = 0; i < botL.length; i++) {
-      botL[i].style.display = "inline";
-      botLW[i].style.display = "none";
-    }
-    for(var i = 0; i < optionT.length; i++)
-      optionT[i].className = "dropdown-item optionText lead text-dark"
-      document.documentElement.style.setProperty("--red-theme-color", "rgb(170, 36, 56)");
-    for(var i = 0; i < icons.length; i++)
-      icons[i].style.backgroundColor = "rgb(170, 36, 56)";
-      hr.style.backgroundColor = "rgb(17, 17, 17)";
+  backG.style.background = "linear-gradient(#eee, #ccc)";
+  document.querySelector("#moon").style.display = "inline";
+  document.querySelector("#moonW").style.display = "none";
+  document.querySelector(".dropdown-menu").className = "dropdown-menu bg-light";
+  textC.forEach(tC => {
+    tC.className = "textContent row text-dark justify-content-center m-0";
+  });
+  botT.forEach(bT => {
+    bT.className = "botText lead bottomText text-dark text-center";
+  });
+  footer.className = "bg-light";
+  footText.className = "footText row ml-5 ml-md-0 flex-column flex-md-row justify-content-center text-dark mt-4";
+  endT.className = "endText text-dark text-right mr-5";
+  for(var i = 0; i < botL.length; i++) {
+    botL[i].style.display = "inline";
+    botLW[i].style.display = "none";
+  }
+  optionT.forEach(oT => {
+    oT.className = "dropdown-item optionText lead text-dark";
+  });
+  icons.forEach(i => {
+    i.style.backgroundColor = "rgb(170, 36, 56)";
+  });
+  hr.style.backgroundColor = "rgb(17, 17, 17)";
 }
-
+//Mode switch button function
 let darkMode = document.querySelector("#darkMode");
 darkMode.addEventListener("click", function() {
   if(mode == "light")
@@ -98,65 +102,61 @@ darkMode.addEventListener("click", function() {
   if(decodeURIComponent(document.cookie).includes("clicked"))
     document.cookie = "Mode=" + mode+ "; path=/; SameSite = None; Secure";
 });
-
+//Cookie agreement button
 document.querySelector("#agree").addEventListener("click", function() {
-    document.cookie = "Aggreed = clicked; path=/; SameSite = None; Secure";
-    Cook = document.cookie;
-    document.querySelector("#cookie").remove();
+  document.cookie = "Aggreed = clicked; path=/; SameSite = None; Secure";
+  document.querySelector("#cookie").remove();
 });
-
+//Lazy load images
 document.addEventListener("DOMContentLoaded", function() {
-    var lazyloadImages;    
-  
-    if ("IntersectionObserver" in window) {
-      lazyloadImages = document.querySelectorAll(".lazy");
-      var imageObserver = new IntersectionObserver(function(entries, observer) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            var image = entry.target;
-            image.classList.remove("lazy");
-            imageObserver.unobserve(image);
-          }
+  var lazyloadImages;    
+
+  if ("IntersectionObserver" in window) {
+    lazyloadImages = document.querySelectorAll(".lazy");
+    var imageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var image = entry.target;
+          image.classList.remove("lazy");
+          imageObserver.unobserve(image);
+        }
+      });
+    });
+
+    lazyloadImages.forEach(function(image) {
+      imageObserver.observe(image);
+    });
+  } else {  
+    var lazyloadThrottleTimeout;
+    lazyloadImages = document.querySelectorAll(".lazy");
+    
+    function lazyload () {
+      if(lazyloadThrottleTimeout) {
+        clearTimeout(lazyloadThrottleTimeout);
+      }    
+
+      lazyloadThrottleTimeout = setTimeout(function() {
+        var scrollTop = window.pageYOffset;
+        lazyloadImages.forEach(function(img) {
+            if(img.offsetTop < (window.innerHeight + scrollTop)) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+            }
         });
-      });
-  
-      lazyloadImages.forEach(function(image) {
-        imageObserver.observe(image);
-      });
-    } else {  
-      var lazyloadThrottleTimeout;
-      lazyloadImages = document.querySelectorAll(".lazy");
-      
-      function lazyload () {
-        if(lazyloadThrottleTimeout) {
-          clearTimeout(lazyloadThrottleTimeout);
-        }    
-  
-        lazyloadThrottleTimeout = setTimeout(function() {
-          var scrollTop = window.pageYOffset;
-          lazyloadImages.forEach(function(img) {
-              if(img.offsetTop < (window.innerHeight + scrollTop)) {
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-              }
-          });
-          if(lazyloadImages.length == 0) { 
-            document.removeEventListener("scroll", lazyload);
-            window.removeEventListener("resize", lazyload);
-            window.removeEventListener("orientationChange", lazyload);
-          }
-        }, 20);
-      }
-  
-      document.addEventListener("scroll", lazyload);
-      window.addEventListener("resize", lazyload);
-      window.addEventListener("orientationChange", lazyload);
+        if(lazyloadImages.length == 0) { 
+          document.removeEventListener("scroll", lazyload);
+          window.removeEventListener("resize", lazyload);
+          window.removeEventListener("orientationChange", lazyload);
+        }
+      }, 20);
     }
-  });
 
-const canvas = document.querySelector(".webgl");
-const scene = new THREE.Scene();
-
+    document.addEventListener("scroll", lazyload);
+    window.addEventListener("resize", lazyload);
+    window.addEventListener("orientationChange", lazyload);
+  }
+});
+//Generate hero gradient
 function generateGradient() {
   let lessOne;
   let moreOne;
@@ -256,13 +256,15 @@ function generateGradient() {
 }
 
 generateGradient();
-
+//GSAP animations
 gsap.from(".upScroll", {autoAlpha: 0, scrollTrigger: {
     trigger: "#PageContainer",
     start: "top top+=400",
     end: "end+=800 +=800",
     scrub: true
 }});
+
+document.querySelector(".topIcon").addEventListener("click", function() {gsap.to(window, { scrollTo: 0, duration: 1, ease:"power2.inOut" });});
 
 const leftSides = gsap.utils.toArray('.leftSide');
 leftSides.forEach(box => {
@@ -333,6 +335,19 @@ texts.forEach(box => {
   })
 });
 
+const rightSides = gsap.utils.toArray('.rightSide');
+rightSides.forEach(box => {
+  gsap.from(box, { 
+    x: 1000,
+    scrollTrigger: {
+      trigger: box,
+      start: "top top+=500",
+      end: "bottom-=400 bottom",
+      scrub: 1
+    }
+  })
+});
+//Cookie controller
 let cookieText = decodeURIComponent(document.cookie);
 
 if(!(cookieText.includes("clicked")))
@@ -353,19 +368,11 @@ else
     switchToLight();
   }
 }
-
-const rightSides = gsap.utils.toArray('.rightSide');
-rightSides.forEach(box => {
-  gsap.from(box, { 
-    x: 1000,
-    scrollTrigger: {
-      trigger: box,
-      start: "top top+=500",
-      end: "bottom-=400 bottom",
-      scrub: 1
-    }
-  })
-});
+//THREE.JS
+//Setting up basic variables
+const canvas = document.querySelector(".webgl");
+const scene = new THREE.Scene();
+scene.background = null;
 
 let width = canvas.clientWidth;
 let height = window.innerHeight * 0.8;
@@ -383,38 +390,13 @@ const renderer = new THREE.WebGLRenderer({
     antialias: true
 });
 
-scene.background = null;
-
 renderer.setSize(width, height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
-
+THREE.Cache.enabled = true;
+//Orbit controls and control buttons
 const constrols = new OrbitControls(camera, document.querySelector(".touchable"));
 constrols.enablePan = false;
-
-function resizeRendererToDisplaySize(renderer) {
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-        renderer.setSize(width, height, false);
-    }
-    return needResize;
-}
-
-resizeRendererToDisplaySize(renderer);
-
-window.addEventListener( 'resize', onWindowResize, false );
-
-function onWindowResize(){
-    let width = canvas.clientWidth;
-    let height = window.innerHeight * 0.8;
-    camera.aspect = width / (height);
-    camera.zoom = ((width*height)/(height*height))/4;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize( width, height );
-}
-
-document.querySelector(".topIcon").addEventListener("click", function() {gsap.to(window, { scrollTo: 0, duration: 1, ease:"power2.inOut" });});
 
 let zoomButton = document.querySelector("#zoomButton");
 zoomButton.addEventListener("click", function () {
@@ -451,10 +433,30 @@ rotateButton.addEventListener("click", function () {
         constrols.enableRotate = true;
     }
 });
+//Renderer resize on page load and window resize
+function resizeRendererToDisplaySize(renderer) {
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+        renderer.setSize(width, height, false);
+    }
+    return needResize;
+}
 
+resizeRendererToDisplaySize(renderer);
+
+window.addEventListener( 'resize', onWindowResize, false );
+
+function onWindowResize(){
+    let width = canvas.clientWidth;
+    let height = window.innerHeight * 0.8;
+    camera.aspect = width / (height);
+    camera.zoom = ((width*height)/(height*height))/4;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( width, height );
+}
+//Lightting setup
 RectAreaLightUniformsLib.init();
-
-THREE.Cache.enabled = true;
 
 const greyLight = new THREE.RectAreaLight(0x979DA6, 35, 25, 25);
 greyLight.position.set(14, 22, 17);
@@ -476,9 +478,7 @@ scene.add(backLight);
 
 const hemiLight = new THREE.HemisphereLight(0xF2D64B, 0x68788C, 0.5);
 scene.add(hemiLight);
-
-var mobil;
-
+//Loading animations
 var played = false;
 
 function play() {
@@ -521,7 +521,8 @@ manager.onLoad = function ( ) {
 manager.onError = function ( url ) {
 	console.log( 'There was an error loading ' + url );
 };
-
+//Loading in models
+var multi;
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
 dracoLoader.preload();
@@ -529,15 +530,15 @@ dracoLoader.preload();
 const loader = new GLTFLoader(manager);
 loader.setDRACOLoader(dracoLoader);
 loader.load("assets/models/Multi.glb", function (glb) {
-    mobil = glb.scene;
-    scene.add(mobil);
-    mobil.matrixAutoUpdate = false;
-    mobil.rotation.y = -Math.PI/2;
-    mobil.rotation.x = Math.PI/2;
-    mobil.updateMatrix();
+    multi = glb.scene;
+    scene.add(multi);
+    multi.matrixAutoUpdate = false;
+    multi.rotation.y = -Math.PI/2;
+    multi.rotation.x = Math.PI/2;
+    multi.updateMatrix();
     window.scrollTo(0, 0);
 });
-
+//Update function
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);

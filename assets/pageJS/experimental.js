@@ -12,17 +12,13 @@ gsap.registerPlugin(ScrollToPlugin);
 gsap.registerPlugin(CSSPlugin);
 gsap.registerPlugin(CSSRulePlugin);
 
-let Cook;
-
-var header = new Headers();
-header.set('Content-Encoding', 'gzip');
-header.set('Accept-Encoding', 'gzip');
-
+//Switching between light and dark modes
+//variables for modes
 let mode = "dark";
 let navB = document.querySelector("nav");
 let backG = document.querySelector("#mainFrame");
 let optionT = document.querySelectorAll(".optionText");
-
+//DarkMode
 function switchToDark() {
     navB.className = "navbar navbar-expand-lg bg-dark navbar-dark";
     backG.style.background = "linear-gradient(#343a40, #111)";
@@ -32,7 +28,7 @@ function switchToDark() {
     for(var i = 0; i < optionT.length; i++)
       optionT[i].className = "dropdown-item optionText lead text-light"
 }
-
+//LightMode
 function switchToLight() {
     navB.className = "navbar navbar-expand-lg bg-light navbar-light";
     backG.style.background = "#27BAB8";
@@ -43,6 +39,7 @@ function switchToLight() {
       optionT[i].className = "dropdown-item optionText lead text-dark"
 }
 
+//Mode switch button function
 let darkMode = document.querySelector("#darkMode");
 darkMode.addEventListener("click", function() {
   if(mode == "light")
@@ -58,11 +55,10 @@ darkMode.addEventListener("click", function() {
   if(decodeURIComponent(document.cookie).includes("clicked"))
     document.cookie = "Mode=" + mode+ "; path=/; SameSite = None; Secure";
 });
-
+//Cookie agreement button
 document.querySelector("#agree").addEventListener("click", function() {
-    document.cookie = "Aggreed = clicked; path=/; SameSite = None; Secure";
-    Cook = document.cookie;
-    document.querySelector("#cookie").remove();
+  document.cookie = "Aggreed = clicked; path=/; SameSite = None; Secure";
+  document.querySelector("#cookie").remove();
 });
 
 let cookieText = decodeURIComponent(document.cookie);
@@ -85,9 +81,11 @@ else
     switchToLight();
   }
 }
-
+//THREE.JS
+//Setting up basic variables
 const canvas = document.querySelector(".webgl");
 const scene = new THREE.Scene();
+scene.background = null;
 
 let width = canvas.clientWidth;
 let height = canvas.clientHeight;
@@ -106,8 +104,11 @@ const renderer = new THREE.WebGLRenderer({
     powerPreference: "high-performance"
 });
 
-RectAreaLightUniformsLib.init();
-
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap = true;
+THREE.Cache.enabled = true;
+//Resize renderer on window resize an window load
 function resizeRendererToDisplaySize(renderer) {
     const needResize = canvas.width !== width || canvas.height !== height;
     if (needResize) {
@@ -117,8 +118,6 @@ function resizeRendererToDisplaySize(renderer) {
 }
 
 resizeRendererToDisplaySize(renderer);
-
-THREE.Cache.enabled = true;
 
 window.addEventListener( 'resize', onWindowResize, false );
 
@@ -139,56 +138,42 @@ function onWindowResize(){
         renderer.setSize( width, height );
     }
 }
+//Loading animations
+function loadBetweenModels() {
+  let gif = document.createElement("img");
+  gif.setAttribute("src", "assets/images/loadingAnim.gif");
+  gif.setAttribute("id", "loaderLoop");
+  let load = document.createElement("div");
+  load.setAttribute("class", "load");
+  load.appendChild(gif);
+  let screen = document.createElement("div");
+  screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
+  screen.appendChild(load);
+  let loading = document.createElement("div");
+  loading.setAttribute("id", "loading");
+  let bDrop = document.querySelector("#mainFrame");
+  bDrop.appendChild(screen);
+}
 
-scene.background = null;
-
-renderer.setSize(width, height);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap = true;
-
-var played = false;
-var mobil;
-
-let mixer;
-let body = document.getElementsByTagName("body");
-
-function play() {
-    if (!played) {
-        played = true;
-        let tl = gsap.timeline({},
-            { smoothChildTiming: true });
-        tl.to(body[0], { overflowX: "hidden", overflowY: "auto" });
-    }
+const manager = new THREE.LoadingManager();
+manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    loadBetweenModels();
 };
 
-function loadBetweenModels() {
-    let gif = document.createElement("img");
-    gif.setAttribute("src", "assets/images/loadingAnim.gif");
-    gif.setAttribute("id", "loaderLoop");
-    let load = document.createElement("div");
-    load.setAttribute("class", "load");
-    load.appendChild(gif);
-    let screen = document.createElement("div");
-    screen.setAttribute("class", "screenForObjs d-flex justify-content-center align-items-center");
-    screen.appendChild(load);
-    let loading = document.createElement("div");
-    loading.setAttribute("id", "loading");
-    let bDrop = document.querySelector("#mainFrame");
-    bDrop.appendChild(screen);
-  }
-  
-  const manager = new THREE.LoadingManager();
-  manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-      loadBetweenModels();
-  };
-  
-  manager.onError = function ( url ) {
-      console.log( 'There was an error loading ' + url );
-  };
+manager.onError = function ( url ) {
+    console.log( 'There was an error loading ' + url );
+};
+
+//Model and animation setup
+let mixer;
+let body = document.getElementsByTagName("body");
+var model;
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath('https://threejsfundamentals.org/threejs/resources/threejs/r127/examples/js/libs/draco/');
 dracoLoader.preload();
+
+RectAreaLightUniformsLib.init();
 
 const loader = new GLTFLoader(manager);
 loader.setDRACOLoader(dracoLoader);
@@ -212,18 +197,18 @@ loader.load("assets/models/test.glb", function (glb) {
             document.querySelector(".replayScreen").style.visibility = "hidden";
         })
      });     
-    mobil = glb.scene;
-    mobil.traverse((object) => {
+    model = glb.scene;
+    model.traverse((object) => {
         if (object.isCamera) camera = object;
       });
     camera.aspect = width / (height);
     camera.zoom = ((width*height)/(height*height))/2;
     camera.updateProjectionMatrix();
-    scene.add(mobil);
+    scene.add(model);
     body[0].style.overflowY = "auto";
     window.scrollTo(0, 0);
 });
-
+//Animation functions
 var clock = new THREE.Clock();
 
 function animate() {
@@ -235,12 +220,3 @@ function animate() {
     renderer.render(scene, camera);
 }
 animate();
-
-document.getElementById("mainFrame").onclick = function show(event) {
-    if ((event.clientX / width < 0.5) && ((window.pageYOffset / ((window.innerHeight * 2) - 76)) > 2.33)) {
-        let clickTimeLine = gsap.timeline({},
-            { smoothChildTiming: true });
-        clickTimeLine.to(window, { scrollTo: (window.pageYOffset / ((window.innerHeight * 2) - 76)) * 1200, duration: 1, ease: "power2.in" })
-            .to(window, { scrollTo: 0, duration: 0 });
-    }
-}
