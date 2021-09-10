@@ -1,38 +1,127 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@200&display=swap');
 
-body {
-    margin: 0;
-    height: 100%;
-    overflow: hidden;
-    font-size: 1em;
-}
-
-#loaderLoop {
-    width: 7vw;
-    height: 7vw;
-}
-
-.low-contrast {
-    text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+:root {
+    --red-theme-color: rgb(220, 53, 69);
 }
 
 html {
     margin: 0;
-    height: 100%;
-}
-.hero {
-    background: #343a40;
-    background-position: bottom;
 }
 
-#expBody{
-    position: relative;
-    height: auto;
+body {
+    margin: 0;
+    overflow: hidden;
+    font-size: 1em;
+}
+
+#PageContainer {
+    z-index: 5;
+    box-shadow: inset 0px 1px 20px #252525;
+}
+
+#backGround {
+    background: linear-gradient(#343a40, #111);
+    width: 100vw;
 }
 
 nav {
     z-index: 3;
     box-shadow: 0px 2px 10px #111;
+}
+
+#moon {
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    display: none;
+}
+
+#moonW {
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+}
+
+.navbar-toggler a {
+    font-size: 0;
+}
+
+.show > .dropdown-menu {
+    max-height: 800px;
+    visibility: visible;
+}
+
+.dropdown-menu {
+    display: block;
+    max-height: 0;
+    visibility: hidden;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+}
+   
+#backDrop {
+    position: relative;
+}
+
+.hero {
+    background: #343a40;
+    background-position: bottom;
+}
+
+#ctrlButtons {
+    list-style-type: none;
+    position: absolute;
+    bottom: 5vh;
+    right: 10%;
+}
+
+.ctrlBtn {
+    display: inline;
+    padding-right: 5em;
+}
+
+.controlButton {
+    display: inline-block;
+    background-color: #343a4067;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    width: 4em;
+    height: 4em;
+    border-radius: 20%;
+    cursor: pointer;
+}
+
+#zoomButton {
+    background-image: url("./images/magnifying-glass-3-256.png");
+}
+
+#rotateButton {
+    background-image: url("./images/rotate-2-256.png");
+}
+
+#panButton {
+    background-color: #aa2438;
+    background-image: url("./images/hand-cursor-256.png");
+}
+
+.touchable {
+    position: absolute;
+    margin: auto;
+    z-index: 1;
+    width:30vw;
+    height: 80vh;
+    cursor: pointer;
+}
+
+.deviceName {
+    position: absolute;
+    left: 6vw;
+    bottom: 5vh;
+    border-radius: 1em;
+    font: 1.5em 'Titillium Web', sans-serif;
+    background-color: #10101090;
 }
 
 .hero2 {
@@ -43,36 +132,34 @@ nav {
     height: 100vh;
 }
 
-.dvaSpace {
-    width: 25vw;
-    height: 1em;
-}
-.laptopSpace {
-    width: 60vw;
-    height: 1em;
+#mainFrame canvas {
+    margin-top: auto;
+    height: 92vh;
 }
 
-.bigPadding {
-    width: 12vw;;
-}
-
-.editCont {
-    width: 80vw;
-}
-
-.infoText {
-    max-width: 25vw;
-    margin-right: 5vw;
-    font: 1.5em 'Titillium Web', sans-serif;
-}
-
-.touchable {
-    position: absolute;
-    margin: auto;
-    z-index: 1;
-    width:30vw;
+canvas {
+    width: 100vw !important;
     height: 80vh;
-    cursor: pointer;
+    display: block;
+}
+
+.screenForObjs {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: #343a40;
+}
+
+#loaderLoop {
+    width: 7vw;
+    height: 7vw;
+}
+
+#expBody{
+    position: relative;
+    height: auto;
 }
 
 .replayScreen {
@@ -99,22 +186,6 @@ nav {
     cursor: pointer;
 }
 
-.lazy {
-    background-image: none;
-    background-color: #F1F1FA;
-}
-
-canvas {
-    width: 100vw !important;
-    height: 80vh;
-    display: block;
-}
-
-#mainFrame canvas {
-    margin-top: auto;
-    height: 92vh;
-}
-
 .leftSide {
     background-size: cover;
     background-repeat: no-repeat;
@@ -135,6 +206,15 @@ canvas {
     will-change: transform;
 }
 
+.lazy {
+    background-image: none;
+    background-color: #F1F1FA;
+}
+
+.featuresContainer .lead {
+    font-size: 2em;
+}
+
 #guiding {
     background-image: url("images/guidingOptimized.jpg");
 }
@@ -148,12 +228,6 @@ canvas {
     background-position-x: 80%;
 }
 
-
-
-footer {
-    z-index: 5;
-}
-
 .upScroll {
     position: fixed;
     width: 100%;
@@ -165,6 +239,7 @@ footer {
     display: inline-block;
     right: 2vw;
     background-color: #9e9e9e67;
+    backdrop-filter: blur(10px);
     background-size: 60%;
     background-repeat: no-repeat;
     background-position: center;
@@ -176,35 +251,83 @@ footer {
     cursor: pointer;
 }
 
-.whte {
-    height: 25vh;
+#cookie {
+    background-color: var(--red-theme-color);
+    height: auto;
+    z-index: 100;
+    border-top: 1px solid white;
+    position: fixed;
+    bottom: -100%;
     width: 100%;
 }
 
 .sub-title {
-    color: rgb(220,53,69);
-    font: 3em Verdana, sans-serif;
+    color: var(--red-theme-color);
+    font: 3em "Verdana", sans-serif;
     overflow: hidden;
     height: auto;
     will-change: transform;
 }
 
-hr {
-    width: 85%;
-    border-color: #111;
+.whte {
+    height: 25vh;
+    width: 100%;
 }
 
-.controlButton {
-    display: inline-block;
-    background-color: #343a4067;
-    background-size: 80%;
-    background-repeat: no-repeat;
-    background-position: center;
-    position: absolute;
-    width: 4em;
-    height: 4em;
-    border-radius: 20%;
-    cursor: pointer;
+hr {
+    width: 85%;
+}
+
+.red {
+    width: 6em;
+    height: 6em;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-size: cover;
+    -webkit-mask-size: cover;
+    mask-clip: 100%;
+    -webkit-mask-clip: 100%;
+    border: none;
+}
+
+#compassIcon {
+    background-color: rgb(170, 36, 56);
+    mask-image: url("images/compass-3-line.svg");
+    -webkit-mask-image: url("images/compass-3-line.svg");
+}
+
+#mapIcon {
+    background-color: rgb(170, 36, 56);
+    mask-image: url("images/treasure-map-line.svg");
+    -webkit-mask-image: url("images/treasure-map-line.svg");
+}
+
+#infoIcon {
+    background-color: rgb(170, 36, 56);
+    mask-image: url("images/information-line.svg");
+    -webkit-mask-image: url("images/information-line.svg");
+}
+
+#editIcon {
+    background-color: rgb(170, 36, 56);
+    mask-image: url("images/image-edit-line.svg");
+    -webkit-mask-image: url("images/image-edit-line.svg");
+}
+
+#macIcon {
+    background-color: rgb(170, 36, 56);
+    mask-image: url("images/mac-line.svg");
+    -webkit-mask-image: url("images/mac-line.svg");
+}
+
+#storeIcon {
+    background-color: rgb(170, 36, 56);
+    mask-image: url("images/google-play-line.svg"), url("images/app-store-line.svg");
+    -webkit-mask-image: url("images/google-play-line.svg"), url("images/app-store-line.svg");
+    mask-position: right top, left center;
+    -webkit-mask-position: right top, left center;
+    mask-size: 55%;
+    -webkit-mask-size: 55%;
 }
 
 .bottomText {
@@ -212,98 +335,22 @@ hr {
     font: 2em 'Titillium Web', sans-serif;
 }
 
-.leftArrow {
-    position: absolute;
-    left:0;
-    width: 20vh;
-    height: 10vh;
-    background-color: #202020b7;
-    background-image: url("images/Frame 2.svg");
-    background-size: 30%;
-    background-repeat: no-repeat;
-    background-position: center;
-    transform: rotateZ(-90deg) translateY(-5vh);
-    border-bottom-right-radius:2vh;
-    border-bottom-left-radius:2vh;
-    cursor: pointer;
+footer {
+    z-index: 5;
 }
 
-.leftArrow:hover {
-    background-color: #303030b7;
+.low-contrast {
+    text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000;
+    background-color: var(--red-theme-color);
 }
 
-.leftArrow:active {
-    background-color: #101010b7;
+.botLogos {
+    display: none;
 }
 
-.rightArrow {
-    position: absolute;
-    right:0;
-    width: 20vh;
-    height: 10vh;
-    background-color: #202020b7;
-    background-image: url("images/Frame 2.svg");
-    background-size: 30%;
-    background-repeat: no-repeat;
-    background-position: center;
-    transform: rotate(90deg) translateY(-5vh);
-    border-bottom-right-radius:2vh;
-    border-bottom-left-radius:2vh;
-    cursor: pointer;
-}
-
-.rightArrow:hover {
-    background-color: #303030b7;
-}
-
-.rightArrow:active {
-    background-color: #101010b7;
-}
-
-#ctrlButtons {
-    list-style-type: none;
-    position: absolute;
-    bottom: 5vh;
-    right: 10%;
-}
-
-.featuresContainer .lead {
-    font-size: 2em;
-}
-
-#backDrop {
-    position: relative;
-}
-
-.ctrlBtn {
-    display: inline;
-    padding-right: 5em;
-}
-
-#zoomButton {
-    background-image: url("./images/magnifying-glass-3-256.png");
-}
-
-#rotateButton {
-    background-image: url("./images/rotate-2-256.png");
-}
-
-#panButton {
-    background-color: #aa2438;
-    background-image: url("./images/hand-cursor-256.png");
-}
-
-.show > .dropdown-menu {
-    max-height: 800px;
-    visibility: visible;
-  }
-    
-.dropdown-menu {
-    display: block;
-    max-height: 0;
-    visibility: hidden;
-    transition: all 0.4s ease-in-out;
-    overflow: hidden;
+#footerImg {
+    width: 100vw;
+    height: auto;
 }
 
 .mberLogo {
@@ -316,15 +363,6 @@ hr {
     height: 4em;
 }
 
-.deviceName {
-    position: absolute;
-    left: 6vw;
-    bottom: 5vh;
-    border-radius: 1em;
-    font: 1.5em 'Titillium Web', sans-serif;
-    background-color: #10101090;
-}
-
 #fbLogo {
     width: 3em;
     height: 3em;
@@ -335,56 +373,7 @@ hr {
     height: 3em;
 }
 
-#cookie {
-    background-color: rgb(220,53,69);
-    height: auto;
-    z-index: 100;
-    border-top: 1px solid white;
-    position: fixed;
-    bottom: -100%;
-    width: 100%;
-}
-
-#footerImg {
-    width: 100vw;
-    height: auto;
-}
-
-#moon {
-    width: 2em;
-    height: 2em;
-    cursor: pointer;
-    display: none;
-}
-
-#moonW {
-    width: 2em;
-    height: 2em;
-    cursor: pointer;
-}
-
 @media screen and (max-width: 767px) {
-    .deviceName {
-        left: auto;
-        right: auto;
-        bottom: auto;
-        top: 2vh;
-        border-radius: 0.5em;
-    }
-
-    h2 {
-        font-size: 1em !important;
-    }
-
-    #ctrlButtons {
-        position: absolute;
-        bottom: 5vh;
-        right: auto;
-        left: auto;
-    }
-    footer {
-        font-size: 1em !important;
-    }
     canvas {
         height: 60vh;
     }
@@ -394,25 +383,10 @@ hr {
         background: transparent;
     }
 
-    .halfScroll {
-        padding-top: 20vh;
-    }
-    .textCont {
-        padding-top: 10vh;
-    }
-
     .touchable {
         align-self: center;
         height: 30vh;
         width: 40vw;
-    }
-
-    .leftSide {
-        height: 80vh;
-    }
-
-    .rightSide {
-        height: 80vh;
     }
 
     .leftArrow {
@@ -426,89 +400,35 @@ hr {
         height: 7vh;
         transform: rotateZ(90deg) translateY(-4vh);
     }
-}
 
-.red {
-    width: 6em;
-    height: 6em;
-    background: transparent;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 2em;
-    object-fit: cover;
-    transform-origin: bottom;
-}
+    .deviceName {
+        left: auto;
+        right: auto;
+        bottom: auto;
+        top: 2vh;
+        border-radius: 0.5em;
+    }
 
-#compassIcon {
-    background-image: url("images/compass-3-line.svg");
-    will-change: transform;
-}
+    #ctrlButtons {
+        position: absolute;
+        bottom: 5vh;
+        right: auto;
+        left: auto;
+    }
 
-#mapIcon {
-    background-image: url("images/treasure-map-line.svg");
-    will-change: transform;
-}
+    h2 {
+        font-size: 1em !important;
+    }
 
-#infoIcon {
-    background-image: url("images/information-line.svg");
-    will-change: transform;
-}
+    .leftSide {
+        height: 80vh;
+    }
 
-#editIcon {
-    background-image: url("images/image-edit-line.svg");
-    will-change: transform;
-}
+    .rightSide {
+        height: 80vh;
+    }
 
-#macIcon {
-    background-image: url("images/mac-line.svg");
-    will-change: transform;
-}
-
-#storeIcon {
-    background-image: url("images/google-play-line.svg"), url("images/app-store-line.svg");
-    background-position: right top, left center;
-    background-size: 55%;
-}
-
-#backGround {
-    background: linear-gradient(#343a40, #111);
-    width: 100vw;
-}
-
-.navbar-toggler a {
-    font-size: 0;
-}
-
-.screenForObjs {
-    position: absolute;
-    top: 0;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    background-color: #343a40;
-}
-
-#sq1 {
-    width: 20%;
-    position: absolute;
-    top:30%;
-    left: 40vw;
-    z-index: 20;
-}
-
-#sq2 {
-    width: 20%;
-    position: absolute;
-    top:30%;
-    left: 40vw;
-}
-
-.botLogos {
-    display: none;
-}
-
-#PageContainer {
-    z-index: 5;
-    box-shadow: inset 0px 1px 20px #252525;
+    footer {
+        font-size: 1em !important;
+    }
 }

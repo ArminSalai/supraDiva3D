@@ -35,7 +35,7 @@ function switchToDark() {
 
 function switchToLight() {
     navB.className = "navbar navbar-expand-lg bg-light navbar-light";
-    backG.style.background = "linear-gradient(#666, #333)";
+    backG.style.background = "#27BAB8";
     document.querySelector("#moon").style.display = "inline";
     document.querySelector("#moonW").style.display = "none";
     document.querySelector(".dropdown-menu").className = "dropdown-menu bg-light";

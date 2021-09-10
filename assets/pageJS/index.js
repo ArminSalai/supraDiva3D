@@ -29,6 +29,8 @@ let endT = document.querySelector(".endText");
 let botL = document.querySelectorAll(".botLogos");
 let botLW = document.querySelectorAll(".botLogosW");
 let optionT = document.querySelectorAll(".optionText");
+let icons = document.querySelectorAll(".red");
+let hr = document.querySelector("hr");
 
 function switchToDark() {
   navB.className = "navbar navbar-expand-lg bg-dark navbar-dark";
@@ -49,6 +51,10 @@ function switchToDark() {
     }
     for(var i = 0; i < optionT.length; i++)
       optionT[i].className = "dropdown-item optionText lead text-light"
+    document.documentElement.style.setProperty("--red-theme-color", "rgb(220, 53, 69)");
+    for(var i = 0; i < icons.length; i++)
+      icons[i].style.backgroundColor = "rgb(220, 53, 69)";
+    hr.style.backgroundColor = "rgb(238, 238, 238)";
 }
 
 function switchToLight() {
@@ -70,6 +76,10 @@ function switchToLight() {
     }
     for(var i = 0; i < optionT.length; i++)
       optionT[i].className = "dropdown-item optionText lead text-dark"
+    document.documentElement.style.setProperty("--red-theme-color", "rgb(170, 36, 56)");
+    for(var i = 0; i < icons.length; i++)
+      icons[i].style.backgroundColor = "rgb(170, 36, 56)";
+    hr.style.backgroundColor = "rgb(17, 17, 17)";
 }
 
 let darkMode = document.querySelector("#darkMode");
@@ -154,7 +164,7 @@ function generateGradient() {
     let moreTwo;
     let lessThree;
     let moreThree;
-    var gradients = [0, 1, 2, 3 ,4];
+    var gradients = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     var rand = gradients[Math.floor(Math.random() * gradients.length)];
     if (rand == 0) {
         lessOne = 0;
@@ -195,6 +205,51 @@ function generateGradient() {
         moreTwo = 28;
         lessThree = 81;
         moreThree = 28;
+    }
+
+    if (rand == 5) {
+      moreOne = 15;
+      lessOne = 44;
+      moreTwo = 32;
+      lessTwo = 83;
+      moreThree = 39;
+      lessThree = 100;
+    }
+
+    if (rand == 6) {
+      moreOne = 55;
+      lessOne = 66;
+      moreTwo = 59;
+      lessTwo = 134;
+      moreThree = 68;
+      lessThree = 244;
+    }
+
+    if (rand == 7) {
+      moreOne = 54;
+      lessOne = 11;
+      moreTwo = 0;
+      lessTwo = 135;
+      moreThree = 51;
+      lessThree = 147;
+    }
+
+    if (rand == 8) {
+      moreOne = 0;
+      lessOne = 232;
+      moreTwo = 34;
+      lessTwo = 74;
+      moreThree = 62;
+      lessThree = 74;
+    }
+
+    if (rand == 9) {
+      moreOne = 72;
+      lessOne = 192;
+      moreTwo = 0;
+      lessTwo = 72;
+      moreThree = 72;
+      lessThree = 72;
     }
 
     document.getElementById("backDrop").style.backgroundImage = 'radial-gradient(rgb(' + lessOne + ',' + lessTwo + ',' + lessThree + ')30%, rgb(' + moreOne + ',' + moreTwo + ',' + moreThree + '))';
@@ -242,6 +297,8 @@ reds.forEach(box => {
     gsap.from(box, {
             yPercent: 100,
             scale: 0,
+            border: "none",
+            transformOrigin: "bottom",
             scrollTrigger: {
                 trigger: box,
                 start: "top-=200 top+=700",
